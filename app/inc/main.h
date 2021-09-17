@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// @file     UID.H
-/// @author   PX Liu
+/// @file     MAIN.H
+/// @author   
 /// @version  v2.0.0
 /// @date     2019-03-13
 /// @brief    THIS FILE CONTAINS ALL THE FUNCTIONS PROTOTYPES FOR THE UID
@@ -19,8 +19,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // Define to prevent recursive inclusion  --------------------------------------
-#ifndef __MUSIC_H
-#define __MUSIC_H
+#ifndef __MAIN_H
+#define __MAIN_H
 
 // Files includes  -------------------------------------------------------------
 
@@ -34,26 +34,49 @@
 /// @brief UID example modules
 /// @{
 
-typedef enum {
-    PLAYSTEP1,
-    PLAYSTEP2,
-    PLAYSTEP3
-} emMusicStep;
+
+
+
+
+
+
+enum{
+	REFRESH_ADC,
+	REFRESH_TEMP,
+	REFRESH_FLASH,
+	REFRESH_I2C,
+	REFRESH_CAN,
+	REFRESH_RTC,
+	REFRESH_UART1,
+	REFRESH_UART2,
+	REFRESH_IR,
+	REFRESH_LED,
+    REFRESH_MUSIC,
+    REFRESH_SDIO,
+    REFRESH_ETH
+};
 
 typedef struct {
-    u8 PlayFlag;
-    u8 CurrentPlayFlag; 
-    emMusicStep PlayStep;
-    s8 MusicNum;
-    u16 ToneCount;
-    u16 ToneNumCount;
-} _sPlayMusic;
+	u16 adc;
+	u16 temp;
+	u16 flash;
+	u16 i2c;
+	u16 can;
+	u16 rtc;
+	u16 uart1;
+	u16 uart2;
+	u16 led;
+	u16 lcd;
+    u16 music;
+    u16 sdio;
+    u16 eth;
+}Peripheraldef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup UID_Exported_Variables
 /// @{
 
-#ifdef _MUSIC_C_
+#ifdef _MAIN_C_
 
 #define GLOBAL
 #else
@@ -61,8 +84,14 @@ typedef struct {
 
 #endif
 
-GLOBAL _sPlayMusic  sPlayMusic;
-GLOBAL u16          playCnt;
+GLOBAL char ready;
+GLOBAL u32 tickCnt;
+
+GLOBAL Peripheraldef error;
+GLOBAL Peripheraldef rf;
+GLOBAL Peripheraldef rfCnt;
+GLOBAL Peripheraldef rfOverCnt;
+
 #undef GLOBAL
 
 /// @}
@@ -73,14 +102,12 @@ GLOBAL u16          playCnt;
 
 /// @}
 
-void musicTick(void);
-void setBuzzerEn(FunctionalState NewState);
-void setBuzzerFreq(u16 Period);
+void processOver();
 
 /// @}
 
 /// @}
 
 ////////////////////////////////////////////////////////////////////////////////
-#endif /* __MUSIC_H */
+#endif /* __UID_H */
 ////////////////////////////////////////////////////////////////////////////////

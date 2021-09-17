@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// @file     UID.C
+/// @file     CAN.C
 /// @author   D CHEN
 /// @version  v2.0.0
 /// @date     2019-03-13
@@ -25,10 +25,10 @@
 #include "mm32_types.h"
 
 #include "common.h"
-#include "main.h" 
+#include "main.h"
 #include "hal_can.h"
-#include "hal_gpio.h"	
-#include "hal_nvic.h"	
+#include "hal_gpio.h"
+#include "hal_nvic.h"
 
 #include "main.h"
 #include "can.h"
@@ -39,15 +39,15 @@ void initGPIO_CAN()
     GPIO_InitTypeDef	GPIO_InitStructure;
     COMMON_EnableIpClock(emCLOCK_GPIOB);
     COMMON_EnableIpClock(emCLOCK_EXTI);
-    
+
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_8;   		//can rx  pb8
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; //GPIO_Mode_FLOATING
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource8, GPIO_AF_9);
-    
+
 	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_9;   		//can tx  pb9
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
     GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_9);
 }
@@ -68,9 +68,9 @@ void NVIC_CAN()
 void initCAN()
 {
 	CAN_Peli_InitTypeDef  CAN_Peli_InitStruct;
-	
-	COMMON_EnableIpClock(emCLOCK_CAN); 
-	
+
+	COMMON_EnableIpClock(emCLOCK_CAN);
+
 	CAN_Mode_Cmd(CAN1, CAN_PELIMode);
 	CAN_ResetMode_Cmd(CAN1,ENABLE);
 
@@ -86,16 +86,16 @@ void initCAN()
 	else if (canSel == 1)
 		CAN_Peli_InitStruct.STM = DISABLE;
 
-//	CAN_Peli_InitStruct.SRR = ENABLE; 
+//	CAN_Peli_InitStruct.SRR = ENABLE;
 	CAN_Peli_InitStruct.SRR = DISABLE;
-	
+
 	/* Initialize the SM member*/
 	CAN_Peli_InitStruct.SM = DISABLE;
-	
+
 	CAN_Peli_InitStruct.EWLR = 0x96;
 	CAN_Peli_Init(&CAN_Peli_InitStruct);
 
-///////	
+///////
 	CAN_Peli_FilterInitTypeDef CAN_Peli_FilterInitStruct;
 
 	CAN_Peli_FilterInitStruct.AFM = CAN_FilterMode_Singal;
@@ -111,7 +111,7 @@ void initCAN()
 
 	CAN_Peli_FilterInit( &CAN_Peli_FilterInitStruct );
 	CAN_ResetMode_Cmd(CAN1,DISABLE);
-    
+
     CAN_Peli_ITConfig(CAN_IT_RI , ENABLE);
 }
 

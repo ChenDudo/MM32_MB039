@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// @file     UID.C
+/// @file     SDIO.C
 /// @author   D CHEN
 /// @version  v2.0.0
 /// @date     2019-03-13
@@ -51,7 +51,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 void sdio_task()
 {
-#if defined(__USE_SDIO)    
+#if defined(__USE_SDIO)
     static bool reflag = true;
     if (SD_DET){
         if (cardFirst){
@@ -79,7 +79,7 @@ void sdio_tick()
         cardInitFlag = false;
         initSDIO();
     }
-    
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

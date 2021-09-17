@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// @file     UID.C
+/// @file     I2C.C
 /// @author   D CHEN
 /// @version  v2.0.0
 /// @date     2019-03-13
@@ -25,9 +25,9 @@
 #include "mm32_types.h"
 
 #include "common.h"
-#include "main.h" 
+#include "main.h"
 #include "hal_i2c.h"
-#include "hal_gpio.h"	
+#include "hal_gpio.h"
 #include "hal_nvic.h"
 #include "hal_rcc.h"
 
@@ -41,9 +41,9 @@
 void initGPIO_I2C(I2C_TypeDef *I2Cx)
 {
     GPIO_InitTypeDef GPIO_InitStruct;
-    
+
     COMMON_EnableIpClock(emCLOCK_GPIOB);
-    
+
     GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_4);
     GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_4);
 
@@ -63,13 +63,13 @@ void NVIC_I2C(I2C_TypeDef* I2Cx)
     NVIC_InitTypeDef  NVIC_InitStructure;
 
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
-  
+
     if(I2Cx == I2C1)
         NVIC_InitStructure.NVIC_IRQChannel = I2C1_IRQn;//check I2C1_EV_IRQn
-  
+
     if(I2Cx == I2C2)
         NVIC_InitStructure.NVIC_IRQChannel = I2C2_IRQn;
-  
+
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00;
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x1;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -77,21 +77,21 @@ void NVIC_I2C(I2C_TypeDef* I2Cx)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void i2cInitMaster(I2C_TypeDef *I2Cx, u8 sla, u32 uiI2C_speed) 
+void i2cInitMaster(I2C_TypeDef *I2Cx, u8 sla, u32 uiI2C_speed)
 {
     I2C_InitTypeDef I2C_InitStruct;
 
     COMMON_EnableIpClock(emCLOCK_I2C1);
 
     I2C_StructInit(&I2C_InitStruct);
-    
+
     //Configure I2C as master mode
     I2C_InitStruct.Mode = I2C_CR_MASTER;
     I2C_InitStruct.OwnAddress = 0;
     I2C_InitStruct.Speed = I2C_CR_FAST;
     I2C_InitStruct.ClockSpeed = uiI2C_speed;
     I2C_Init(I2Cx, &I2C_InitStruct);
-    
+
     I2C_Send7bitAddress(I2C1, SLAVE_ADDR, WR);
     I2C_Cmd(I2Cx, ENABLE);
 }
@@ -102,7 +102,7 @@ void i2cComplete(u16 sta)
 {
 	I2C_ClearFlag(I2C2,sta);
 	I2C_ClearITPendingBit(I2C2, I2C_IT_TX_EMPTY);
-	
+
 	i2c.rev = WR;
 	i2c.sadd = true;
 	i2c.ack = true;
@@ -115,7 +115,7 @@ void I2C2_EV_IRQHandler()
 //    static  u8 n = 0;		// Rcv length or Send length
 //	static  u8 m = 0;		// Rcv length
 //	static	u8 _cnt;
-//    
+//
 //    u16 status = I2C2->IC_RAW_INTR_STAT;
 //
 //	if (!i2c.busy) {
@@ -130,10 +130,10 @@ void I2C2_EV_IRQHandler()
 //			if (status & I2C_IT_TX_EMPTY) {
 //				(m++ < (i2c.cnt - 1)) ? I2C_ReadCmd(I2C2) : I2C_ClearITPendingBit(I2C2, I2C_IT_TX_EMPTY);
 //			}
-//			
+//
 //			if (status & I2C_IT_RX_FULL) {
 //				*i2c.ptr++ = I2C_ReceiveData(I2C2);
-//				
+//
 //				if  ((n++ >= (i2c.cnt - 1))){
 //					error.i2c = FALSE;
 //					rf.i2c = TRUE;
@@ -144,13 +144,13 @@ void I2C2_EV_IRQHandler()
 //	}
 //	else if (status & I2C_IT_TX_EMPTY){
 //		if (i2c.sadd) {															// send slave address
-//			I2C_SendData(I2C2, i2c.sub);								
+//			I2C_SendData(I2C2, i2c.sub);
 //			i2c.sadd = FALSE;
 //			 m = 0; n = 0;
 //			_cnt = (i2c.opt == RD) ?  0 : i2c.cnt;								// cnt = 0 if RD , eles _cnt = i2c.cnt
 //		}
 //		else if (n < _cnt) {													// write
-//			I2C_SendData(I2C2, *i2c.ptr++);	
+//			I2C_SendData(I2C2, *i2c.ptr++);
 //			n++;
 //		}
 //		else if  (status &  I2C_IT_STOP_DET) {
@@ -195,7 +195,7 @@ void i2cSendPacket(u8 sub, u8* ptr, u16 cnt)
 	i2c.opt = WR;
 	i2cAccess(sub,  ptr,  cnt);
 }
-	 
+
 ////////////////////////////////////////////////////////////////////////////////
 void i2cRcvPacket(u8 sub, u8* ptr, u16 cnt )
 {
@@ -206,29 +206,29 @@ void i2cRcvPacket(u8 sub, u8* ptr, u16 cnt )
 ////////////////////////////////////////////////////////////////////////////////
 void i2cRead(u8 sub, u8* ptr, u16 len)
 {
-	do{	
-		i2cRcvPacket(sub, ptr, len);	
+	do{
+		i2cRcvPacket(sub, ptr, len);
 		while(i2c.busy);
-	} 
+	}
 	while(!i2c.ack);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void i2cWrite(u8 sub, u8* ptr, u16 len)
 {
-	do{	
-		i2cSendPacket(sub, ptr, len);	
+	do{
+		i2cSendPacket(sub, ptr, len);
 		while(i2c.busy);
-	} 
+	}
 	while(!i2c.ack);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void i2cCheck()
 {
-	i2cRcvPacket(0, &i2cRx[0], 8);	
+	i2cRcvPacket(0, &i2cRx[0], 8);
 	while(!i2c.ack);
-	
+
 	if (memcmp(i2cRx, i2cTx, 8) != 0) {
 		i2cSendPacket(0, &i2cTx[0], 8);
 	}
@@ -449,9 +449,9 @@ void BSP_I2C_Configure()
 {
     initGPIO_I2C(I2C1);
     i2cInitMaster(I2C1, SLAVE_ADDR, 100000);
-    
+
     EEPROM_Read(0x00, i2cRx, 8);
-    
+
     if (memcmp(i2cRx, i2cTx, 8) != 0) {
         EEPROM_Write(0x00, i2cTx, 8);
 	}

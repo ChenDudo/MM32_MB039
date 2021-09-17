@@ -316,21 +316,22 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\..\..\bsp\inc</state>
-          <state>$PROJ_DIR$\..\..\driver\inc</state>
-          <state>$PROJ_DIR$\..\..\app\eth\inc</state>
-          <state>$PROJ_DIR$\..\..\lib\HAL_lib\inc</state>
-          <state>$PROJ_DIR$\..\..\lib\startup\inc</state>
-          <state>$PROJ_DIR$\..\..\lwip\src</state>
-          <state>$PROJ_DIR$\..\..\lwip\src\include</state>
-          <state>$PROJ_DIR$\..\..\lwip\src\include\compat</state>
-          <state>$PROJ_DIR$\..\..\lwip\src\include\netif</state>
-          <state>$PROJ_DIR$\..\..\lwip\src\include\lwip</state>
-          <state>$PROJ_DIR$\..\..\lwip\src\include\lwip\apps</state>
-          <state>$PROJ_DIR$\..\..\lwip\src\include\lwip\priv</state>
-          <state>$PROJ_DIR$\..\..\lwip\src\include\lwip\prot</state>
-          <state>$PROJ_DIR$\..\..\app\eth\arch</state>
-          <state>$PROJ_DIR$\..\..\app\eth</state>
+          <state>$PROJ_DIR$\..\bsp\inc</state>
+          <state>$PROJ_DIR$\..\driver\inc</state>
+          <state>$PROJ_DIR$\..\app\inc</state>
+          <state>$PROJ_DIR$\..\app\eth\inc</state>
+          <state>$PROJ_DIR$\..\lib\HAL_lib\inc</state>
+          <state>$PROJ_DIR$\..\lib\startup\inc</state>
+          <state>$PROJ_DIR$\..\lwip\src</state>
+          <state>$PROJ_DIR$\..\lwip\src\include</state>
+          <state>$PROJ_DIR$\..\lwip\src\include\compat</state>
+          <state>$PROJ_DIR$\..\lwip\src\include\netif</state>
+          <state>$PROJ_DIR$\..\lwip\src\include\lwip</state>
+          <state>$PROJ_DIR$\..\lwip\src\include\lwip\apps</state>
+          <state>$PROJ_DIR$\..\lwip\src\include\lwip\priv</state>
+          <state>$PROJ_DIR$\..\lwip\src\include\lwip\prot</state>
+          <state>$PROJ_DIR$\..\app\eth\arch</state>
+          <state>$PROJ_DIR$\..\app\eth</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -745,7 +746,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$\eth.icf</state>
+          <state>$PROJ_DIR$\evboard.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -990,239 +991,221 @@
     <group>
       <name>com</name>
       <file>
-        <name>$PROJ_DIR$\..\..\app\eth\can.c</name>
+        <name>$PROJ_DIR$\..\app\com\can.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\app\eth\i2c.c</name>
+        <name>$PROJ_DIR$\..\app\com\i2c.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\app\eth\sdio.c</name>
+        <name>$PROJ_DIR$\..\app\com\sdio.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\app\eth\spi.c</name>
+        <name>$PROJ_DIR$\..\app\com\spi.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\app\eth\spiflash.c</name>
+        <name>$PROJ_DIR$\..\app\com\spiflash.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\app\eth\uart.c</name>
+        <name>$PROJ_DIR$\..\app\com\uart.c</name>
       </file>
     </group>
     <group>
       <name>eth</name>
       <file>
-        <name>$PROJ_DIR$\..\..\app\eth\dhcp_client.c</name>
+        <name>$PROJ_DIR$\..\app\eth\dhcp_client.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\app\eth\eth.c</name>
+        <name>$PROJ_DIR$\..\app\eth\eth.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\app\eth\http_server.c</name>
+        <name>$PROJ_DIR$\..\app\eth\http_server.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\app\eth\tcp_server.c</name>
+        <name>$PROJ_DIR$\..\app\eth\tcp_server.c</name>
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$\..\..\app\eth\adc.c</name>
+      <name>$PROJ_DIR$\..\app\adc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\app\eth\datetime.c</name>
+      <name>$PROJ_DIR$\..\app\datetime.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\app\eth\hci.c</name>
+      <name>$PROJ_DIR$\..\app\hci.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\app\eth\lcd.c</name>
+      <name>$PROJ_DIR$\..\app\lcd.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\app\eth\main.c</name>
+      <name>$PROJ_DIR$\..\app\main.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\app\eth\music.c</name>
+      <name>$PROJ_DIR$\..\app\music.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\app\eth\rtc.c</name>
+      <name>$PROJ_DIR$\..\app\rtc.c</name>
     </file>
   </group>
   <group>
     <name>bsp</name>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_adc.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_adc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_beep.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_beep.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_can.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_can.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_comp.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_comp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_crs.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_crs.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_dac.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_dac.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_eth.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_eth.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_fatFS.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_fatFS.c</name>
       <excluded>
         <configuration>MB039</configuration>
       </excluded>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_i2c.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_i2c.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_key.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_key.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_lcd.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_lcd.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_led.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_led.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_mco.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_mco.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_opamp.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_opamp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_phy8720.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_phy8720.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_sdio.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_sdio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_spi.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_spi.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_tim.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_tim.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\bsp\bsp_uart.c</name>
-    </file>
-  </group>
-  <group>
-    <name>FatFs</name>
-    <excluded>
-      <configuration>MB039</configuration>
-    </excluded>
-    <file>
-      <name>$PROJ_DIR$\..\..\thirdParty\FATFS\diskio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\thirdParty\FATFS\ff.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\thirdParty\FATFS\ffsystem.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\thirdParty\FATFS\ffunicode.c</name>
+      <name>$PROJ_DIR$\..\bsp\bsp_uart.c</name>
     </file>
   </group>
   <group>
     <name>lib</name>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\common.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\common.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_adc.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_adc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_aes.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_aes.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_bkp.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_bkp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_can.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_can.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_comp.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_comp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_crc.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_crc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_crs.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_crs.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_dac.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_dac.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_dbg.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_dbg.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_div.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_div.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_dma.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_dma.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\hal_eth.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\hal_eth.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_exti.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_exti.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_flash.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_flash.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\hal_fsmc.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\hal_fsmc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_gpio.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_gpio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_i2c.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_i2c.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_iwdg.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_iwdg.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_nvic.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_nvic.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_opamp.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_opamp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_pwr.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_pwr.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_rcc.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_rcc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_rtc.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_rtc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\hal_sdio.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\hal_sdio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_spi.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_spi.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_sqrt.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_sqrt.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_tim.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_tim.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_uart.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_uart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_uid.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_uid.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\HAL_lib\HAL_wwdg.c</name>
+      <name>$PROJ_DIR$\..\lib\HAL_lib\HAL_wwdg.c</name>
     </file>
   </group>
   <group>
@@ -1230,31 +1213,31 @@
     <group>
       <name>api</name>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\api\api_lib.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\api\api_lib.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\api\api_msg.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\api\api_msg.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\api\err.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\api\err.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\api\if_api.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\api\if_api.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\api\netbuf.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\api\netbuf.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\api\netdb.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\api\netdb.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\api\netifapi.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\api\netifapi.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\api\sockets.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\api\sockets.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\api\tcpip.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\api\tcpip.c</name>
       </file>
     </group>
     <group>
@@ -1262,114 +1245,108 @@
       <group>
         <name>ipv4</name>
         <file>
-          <name>$PROJ_DIR$\..\..\lwip\src\core\ipv4\autoip.c</name>
+          <name>$PROJ_DIR$\..\lwip\src\core\ipv4\autoip.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\lwip\src\core\ipv4\dhcp.c</name>
+          <name>$PROJ_DIR$\..\lwip\src\core\ipv4\dhcp.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\lwip\src\core\ipv4\etharp.c</name>
+          <name>$PROJ_DIR$\..\lwip\src\core\ipv4\etharp.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\lwip\src\core\ipv4\icmp.c</name>
+          <name>$PROJ_DIR$\..\lwip\src\core\ipv4\icmp.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\lwip\src\core\ipv4\igmp.c</name>
+          <name>$PROJ_DIR$\..\lwip\src\core\ipv4\igmp.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\lwip\src\core\ipv4\ip4.c</name>
+          <name>$PROJ_DIR$\..\lwip\src\core\ipv4\ip4.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\lwip\src\core\ipv4\ip4_addr.c</name>
+          <name>$PROJ_DIR$\..\lwip\src\core\ipv4\ip4_addr.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\lwip\src\core\ipv4\ip4_frag.c</name>
+          <name>$PROJ_DIR$\..\lwip\src\core\ipv4\ip4_frag.c</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\def.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\def.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\dns.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\dns.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\inet_chksum.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\inet_chksum.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\init.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\init.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\ip.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\ip.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\mem.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\mem.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\memp.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\memp.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\netif.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\netif.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\pbuf.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\pbuf.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\raw.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\raw.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\stats.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\stats.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\sys.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\sys.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\tcp.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\tcp.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\tcp_in.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\tcp_in.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\tcp_out.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\tcp_out.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\timeouts.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\timeouts.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\core\udp.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\core\udp.c</name>
       </file>
     </group>
     <group>
       <name>http</name>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\apps\http\fs.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\apps\http\fs.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\apps\http\httpd.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\apps\http\httpd.c</name>
       </file>
     </group>
     <group>
       <name>netif</name>
       <file>
-        <name>$PROJ_DIR$\..\..\lwip\src\netif\ethernet.c</name>
+        <name>$PROJ_DIR$\..\lwip\src\netif\ethernet.c</name>
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$\..\..\app\eth\arch\ethernetif.c</name>
+      <name>$PROJ_DIR$\..\app\eth\arch\ethernetif.c</name>
     </file>
-  </group>
-  <group>
-    <name>MP3Lib</name>
-    <excluded>
-      <configuration>MB039</configuration>
-    </excluded>
   </group>
   <group>
     <name>system</name>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\startup\mm32_startup.c</name>
+      <name>$PROJ_DIR$\..\lib\startup\mm32_startup.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lib\startup\mm32_system.c</name>
+      <name>$PROJ_DIR$\..\lib\startup\mm32_system.c</name>
     </file>
   </group>
 </project>

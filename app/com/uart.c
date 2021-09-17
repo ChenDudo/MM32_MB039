@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// @file     UID.C
+/// @file     UART.C
 /// @author   D CHEN
 /// @version  v2.0.0
 /// @date     2019-03-13
@@ -22,23 +22,23 @@
 #define _UART_C_
 ////////////////////////////////////////////////////////////////////////////////
 #include <string.h>
-#include <stdio.h>	
+#include <stdio.h>
 #include "mm32_types.h"
 
 #include "common.h"
 #include "main.h"
-#include "uart.h"	  
+#include "uart.h"
 
 #include "hal_uart.h"
-#include "hal_gpio.h"	
+#include "hal_gpio.h"
 #include "hal_nvic.h"
 
-    
+
 ////////////////////////////////////////////////////////////////////////////////
 void initUART()
 {
     UART_InitTypeDef UART_InitStructure;
-    
+
     //Init UART1
     COMMON_EnableIpClock(emCLOCK_UART1);
     UART_InitStructure.BaudRate      = BAUDRATE;
@@ -47,7 +47,7 @@ void initUART()
     UART_InitStructure.Parity        = UART_Parity_No;
     UART_InitStructure.Mode          = UART_GCR_RX | UART_GCR_TX;
     UART_InitStructure.HWFlowControl = UART_HWFlowControl_None;
-    
+
     UART_Init(UART1, &UART_InitStructure);
     UART_ITConfig(UART1, UART_IER_RX, ENABLE);
     UART_Cmd(UART1, ENABLE);
@@ -60,11 +60,11 @@ void initUART()
     UART_InitStructure.Parity        = UART_Parity_No;
     UART_InitStructure.Mode          = UART_GCR_RX | UART_GCR_TX;
     UART_InitStructure.HWFlowControl = UART_HWFlowControl_None;
-    
+
     UART_Init(UART2, &UART_InitStructure);
     UART_ITConfig(UART2, UART_IER_RX, ENABLE);
     UART_Cmd(UART2, ENABLE);
-    
+
     //Init UART8
     COMMON_EnableIpClock(emCLOCK_UART8);
     UART_InitStructure.BaudRate      = BAUDRATE;
@@ -73,7 +73,7 @@ void initUART()
     UART_InitStructure.Parity        = UART_Parity_No;
     UART_InitStructure.Mode          = UART_GCR_RX | UART_GCR_TX;
     UART_InitStructure.HWFlowControl = UART_HWFlowControl_None;
-    
+
     UART_Init(UART8, &UART_InitStructure);
     UART_ITConfig(UART8, UART_IER_RX, ENABLE);
     UART_Cmd(UART8, ENABLE);
@@ -83,31 +83,31 @@ void initUART()
 void initGPIO_UART()
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
-    
+
     COMMON_EnableIpClock(emCLOCK_GPIOA);
     COMMON_EnableIpClock(emCLOCK_GPIOE);
-    
+
 	//UART1_TX   GPIOA.9
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
     GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_7);
-   
+
 	//UART1_RX   GPIOA.10
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
     GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_7);
-    
+
     //UART2_TX   GPIOA.2
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
     GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_7);
-   
+
 	//UART2_RX   GPIOA.3
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -121,7 +121,7 @@ void initGPIO_UART()
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_Init(GPIOE, &GPIO_InitStructure);
     GPIO_PinAFConfig(GPIOE, GPIO_PinSource1, GPIO_AF_8);
-   
+
 	//UART8_RX   GPIOE.0
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -134,28 +134,28 @@ void initGPIO_UART()
 void NVIC_UART()
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
-	
+
     //UART1 NVIC
 	NVIC_InitStructure.NVIC_IRQChannel = UART1_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);	
-    
+	NVIC_Init(&NVIC_InitStructure);
+
     //UART2 NVIC
     NVIC_InitStructure.NVIC_IRQChannel = UART2_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&NVIC_InitStructure);	
-    
+    NVIC_Init(&NVIC_InitStructure);
+
     //UART8 NVIC
-    NVIC_InitStructure.NVIC_IRQChannel = UART8_IRQn;	
+    NVIC_InitStructure.NVIC_IRQChannel = UART8_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&NVIC_InitStructure);	
-} 
+    NVIC_Init(&NVIC_InitStructure);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 void UART1_IRQHandler(void)
@@ -195,7 +195,7 @@ void UART8_IRQHandler(void)
 		rfOverCnt.uart2 = 0;
     }
 }
-    
+
 
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_UART_Configure()

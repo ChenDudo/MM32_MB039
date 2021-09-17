@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// @file     UID.H
-/// @author   PX Liu
+/// @file     SDIO.H
+/// @author   
 /// @version  v2.0.0
 /// @date     2019-03-13
 /// @brief    THIS FILE CONTAINS ALL THE FUNCTIONS PROTOTYPES FOR THE UID
@@ -19,8 +19,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // Define to prevent recursive inclusion  --------------------------------------
-#ifndef __ADC_H
-#define __ADC_H
+#ifndef __SDIO_H
+#define __SDIO_H
 
 // Files includes  -------------------------------------------------------------
 
@@ -34,42 +34,25 @@
 /// @brief UID example modules
 /// @{
 
-#if defined(__MM32_MB020)
-
-#define ADCCHx ADC_Channel_1
-#define ADCPin GPIO_Pin_1
-
-#endif
-#if defined(__MM32_MB021)
-
-#define ADCCHx ADC_Channel_5
-#define ADCPin GPIO_Pin_5
-
-#endif
+#include "hal_sdio.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup UID_Exported_Variables
 /// @{
 
-#ifdef _ADC_C_
-
+#ifdef _SDIO_C_
 #define GLOBAL
+
+GLOBAL bool cardFirst = true;
+
 #else
 #define GLOBAL extern
-
 #endif
 
-GLOBAL bool adcFlag;
-GLOBAL u16 adcValue[4], rv[4], adcCnt;
-
-
-/**/
-GLOBAL u32 ADC1Value[2];
-GLOBAL float adcTemp;
-GLOBAL float adcTmp;
-
-GLOBAL u32 adcVolt;
-GLOBAL u32 adcVol;
+GLOBAL u8 sdCardbuf[512];
+GLOBAL bool cardInitFlag;
+GLOBAL bool cardFirst;
+GLOBAL SD_Error SDErroCode;
 
 #undef GLOBAL
 
@@ -81,8 +64,9 @@ GLOBAL u32 adcVol;
 
 /// @}
 
-void adc_Tick(void);
-void BSP_ADC_Configure(void);
+void sdio_task(void);
+void sdio_tick(void);
+void initSDIO(void); 
 
 /// @}
 

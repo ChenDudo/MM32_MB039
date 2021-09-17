@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// @file     UID.C
+/// @file     HCI.C
 /// @author   D CHEN
 /// @version  v2.0.0
 /// @date     2019-03-13
@@ -72,7 +72,7 @@ void hci_tick()
 {
     static u16 ledRunCnt = 0, state = 0;
     static bool ledRunFlag = false;
-    
+
     if (ledRunCnt ++ > 200 - adcVolt * 100 / 4096){
         ledRunCnt = 0;
         ledRunFlag = true;
@@ -132,9 +132,9 @@ void ProcessLED()
 {
 	switch (ledCnt++) {
 		case 0:		LD1_on(); 	break;
-		case 1:		LD1_off(); 	break;; 
+		case 1:		LD1_off(); 	break;;
 		case 2:		LD2_on(); 	break;
-		default:	LD2_off();	
+		default:	LD2_off();
 					ledCnt = 0;		break;
 	}
 	rf.led = true;
@@ -169,8 +169,8 @@ void scanKey()
 	}
 	else if (!Key4) {
 		fKeyP4 = false;
-	}		
-//-----------------		
+	}
+//-----------------
     if (Key1 && !fKeyP1) {
 		fKeyP1 = true;
 		fKey1 = true;
@@ -178,11 +178,11 @@ void scanKey()
 	}
 	else if (!Key1) {
 		fKeyP1 = false;
-	}		
+	}
 	else {
 		fKeyCnt = 0;
 	}
-//-----------------	
+//-----------------
 	if (Key2 && !fKeyP2) {
 		fKeyP2 = true;
 		fKey2 = true;
@@ -191,7 +191,7 @@ void scanKey()
 	else if (!Key2) {
 		fKeyP2 = false;
 		Key2Cnt = 0;
-	}		
+	}
 	else {
 		fKeyCnt = 0;
 		if ((Key2Cnt < 2001) && (Key2Cnt++ >= 2000)){
@@ -199,7 +199,7 @@ void scanKey()
 			modifyKeyStatus_2();
 		}
 	}
-//-----------------	
+//-----------------
 	if (Key3 && !fKeyP3) {
 		fKeyP3 = true;
 		fKey3 = true;
@@ -252,33 +252,33 @@ void dispButton()
 	char str[8];
 	switch (menuCnt) {
 	case 0:
-		
+
 		strcpy(str, "Menu");
 		showButton(255, BuOffset + 1 * offsetH, 1, str);
-		
+
 		strcpy(str, "----");
 		showButton(255, BuOffset + 2 * offsetH, 0, str);
-		
+
 		showETH();
 		break;
 	case 1:
 	case 2:
 		strcpy(str, "Menu");
 		showButton(255, BuOffset + 1 * offsetH, 1, str);
-		
+
 		strcpy(str, "Next");
 		showButton(255, BuOffset + 2 * offsetH, 1, str);
-		
+
 		strcpy(str, "----");
 		showButton(255, BuOffset + 3 * offsetH, 0, str);
 		break;
 	default:
 		strcpy(str, "Return");
 		showButton(255, BuOffset + 1 * offsetH, 1, str);
-		
+
 		(Key2CntF) ? strcpy(str, "Last") : strcpy(str, "Next");
 		showButton(255, BuOffset + 2 * offsetH, 1, str);
-		
+
 		if (timeSel == 6) {
 			strcpy(str, "Save");
 			showButton(255, BuOffset + 3 * offsetH, 1, str);
@@ -306,20 +306,20 @@ void dispMenu(u8 sta)
 u8 eventKey(u8 key, u8* flag)
 {
 	if (!*flag) return 0;
-    
+
 	*flag = false;
-    
+
 	switch (key) {
         // menuOverTime
         case 0:
-		if (timeSel == 6) timeSel = 0; 
+		if (timeSel == 6) timeSel = 0;
 		menuCnt = 0;
 		return 2;
-        
-        // Menu	
+
+        // Menu
         case 1:
 		if (++menuCnt > 3)  menuCnt = 0;
-		
+
 		switch(menuCnt){
             case 0:
 			return 2;
@@ -328,11 +328,11 @@ u8 eventKey(u8 key, u8* flag)
 			Key3CntF = false;
 			RTC_GetTime(&gtp);
 			if (timeSel == 6) timeSel = 0;
-            default:			
+            default:
 			return 1;
 		}
-        
-        // Next & Last	
+
+        // Next & Last
         case 2:
 		switch (menuCnt) {
             case 1:
@@ -349,8 +349,8 @@ u8 eventKey(u8 key, u8* flag)
 			break;
 		}
 		return 3;
-        
-        
+
+
         case 4:
         rf.music = 1;
         if (sPlayMusic.PlayFlag){
@@ -361,7 +361,7 @@ u8 eventKey(u8 key, u8* flag)
             sPlayMusic.PlayFlag = true;
         }
         return 4;
-        
+
         case 3:										// Up & Down & Save & ETH
 		switch (menuCnt) {
             case 3:
@@ -383,6 +383,7 @@ u8 eventKey(u8 key, u8* flag)
 		}
 		return 3;
 	}
+    return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -462,7 +463,7 @@ void resetTest()
 {
     void (*fp)(void);
     fp = (void (*)(void))(* (vu32 *)(0x8000004));
-    (*fp)(); 
+    (*fp)();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
