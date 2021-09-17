@@ -43,7 +43,7 @@
 /// @brief PVD_detection_level
 typedef enum {
 #if defined(PWR_CR_PLS)
-    emPVD_1V8 = PWR_CR_PLS_1V8,		//
+    emPVD_1V8 = PWR_CR_PLS_1V8,  //
     emPVD_2V1 = PWR_CR_PLS_2V1,
     emPVD_2V4 = PWR_CR_PLS_2V4,
     emPVD_2V7 = PWR_CR_PLS_2V7,
@@ -56,17 +56,17 @@ typedef enum {
     emPVD_4V8 = PWR_CR_PLS_4V8
 #endif
 #if defined(SYSCFG_PDETCSR_PLS)
-    emPVD_1V8 = SYSCFG_PDETCSR_PLS_1V8,		//
-    emPVD_2V1 = SYSCFG_PDETCSR_PLS_2V1,
-    emPVD_2V4 = SYSCFG_PDETCSR_PLS_2V4,
-    emPVD_2V7 = SYSCFG_PDETCSR_PLS_2V7,
-    emPVD_3V0 = SYSCFG_PDETCSR_PLS_3V0,
-    emPVD_3V3 = SYSCFG_PDETCSR_PLS_3V3,
-    emPVD_3V6 = SYSCFG_PDETCSR_PLS_3V6,
-    emPVD_3V9 = SYSCFG_PDETCSR_PLS_3V9,
-    emPVD_4V2 = SYSCFG_PDETCSR_PLS_4V2,
-    emPVD_4V5 = SYSCFG_PDETCSR_PLS_4V5,
-    emPVD_4V8 = SYSCFG_PDETCSR_PLS_4V8
+        emPVD_1V8 = SYSCFG_PDETCSR_PLS_1V8,  //
+    emPVD_2V1     = SYSCFG_PDETCSR_PLS_2V1,
+    emPVD_2V4     = SYSCFG_PDETCSR_PLS_2V4,
+    emPVD_2V7     = SYSCFG_PDETCSR_PLS_2V7,
+    emPVD_3V0     = SYSCFG_PDETCSR_PLS_3V0,
+    emPVD_3V3     = SYSCFG_PDETCSR_PLS_3V3,
+    emPVD_3V6     = SYSCFG_PDETCSR_PLS_3V6,
+    emPVD_3V9     = SYSCFG_PDETCSR_PLS_3V9,
+    emPVD_4V2     = SYSCFG_PDETCSR_PLS_4V2,
+    emPVD_4V5     = SYSCFG_PDETCSR_PLS_4V5,
+    emPVD_4V8     = SYSCFG_PDETCSR_PLS_4V8
 #endif
 } EM_PVD_LEVEL;
 
@@ -85,24 +85,17 @@ typedef enum {
 } emPWR_STOP_ModeEn_Typedef;
 
 /// @brief Low Power Mode
-typedef enum {
-    LP_STOP_MODE	= 0,
-	LP_SLEEP_MODE	= 1,
-    LP_STANDBY_MODE	= 2
-} emPWR_LP_Mode_Typedef;
+typedef enum { LP_STOP_MODE = 0, LP_SLEEP_MODE = 1, LP_STANDBY_MODE = 2 } emPWR_LP_Mode_Typedef;
 
 /// @brief Wait_for_mode
-typedef enum {
-    LP_WFI,
-    LP_WFE
-} emPWR_Wait_Mode_Typedef;
+typedef enum { LP_WFI, LP_WFE } emPWR_Wait_Mode_Typedef;
 
 /// @brief PWR_Flag
 typedef enum {
 #if defined(PWR_CSR_WUF)
-    PWR_FLAG_WU   = PWR_CSR_WUF,
+    PWR_FLAG_WU = PWR_CSR_WUF,
 #endif
-    PWR_FLAG_SB   = PWR_CSR_SBF,
+    PWR_FLAG_SB = PWR_CSR_SBF,
 #if defined(PWR_CSR_PVDO)
     PWR_FLAG_PVDO = PWR_CSR_PVDO,
 #endif
@@ -113,9 +106,9 @@ typedef enum {
 } emPWR_PWR_Flag_Typedef;
 
 typedef enum {
-	Rising,           				///< EDGE rising mode
-	Falling,          				///< EDGE falling mode
-	RisingFalling    				///< EDGE rising and falling mode
+    Rising,        ///< EDGE rising mode
+    Falling,       ///< EDGE falling mode
+    RisingFalling  ///< EDGE rising and falling mode
 } emPWRedge;
 
 /// @}
@@ -140,7 +133,7 @@ typedef enum {
 
 void PWR_DeInit(void);
 
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1)|| defined(__MM0S1) || defined(__MM3U1)
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0S1) || defined(__MM3U1)
 void PWR_BackupAccessCmd(FunctionalState state);
 #endif
 

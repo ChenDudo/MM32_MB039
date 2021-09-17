@@ -84,8 +84,8 @@ typedef enum {
 /// @brief DAC_Channel
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    DAC_Channel_1,                   											///< DAC channel 1
-    DAC_Channel_2 = (u32)0x00000010  											///< DAC Channel 2
+    DAC_Channel_1,                   ///< DAC channel 1
+    DAC_Channel_2 = (u32)0x00000010  ///< DAC Channel 2
 } emDACCH_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -101,8 +101,8 @@ typedef enum {
 /// @brief DAC_Output_Buffer
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    DAC_OutputBuffer_Enable  = 0x00000000,   									///< DAC output buffer enable
-    DAC_OutputBuffer_Disable = DAC_CR_BOFF1  									///< DAC output buffer disable
+    DAC_OutputBuffer_Enable  = 0x00000000,   ///< DAC output buffer enable
+    DAC_OutputBuffer_Disable = DAC_CR_BOFF1  ///< DAC output buffer disable
 } emDACBOFF_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -120,10 +120,10 @@ typedef struct {
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup DAC_Exported_Constants
 /// @{
-#define DHR12R1_Offset 	((u32)0x00000008)
-#define DHR12R2_Offset 	((u32)0x00000014)
-#define DHR12RD_Offset 	((u32)0x00000020)
-#define DOR_Offset 		((u32)0x0000002C)
+#define DHR12R1_Offset ((u32)0x00000008)
+#define DHR12R2_Offset ((u32)0x00000014)
+#define DHR12RD_Offset ((u32)0x00000020)
+#define DOR_Offset ((u32)0x0000002C)
 
 /// @}
 
@@ -169,4 +169,3 @@ u16 DAC_GetDataOutputValue(emDACCH_TypeDef DAC_Channel);
 ////////////////////////////////////////////////////////////////////////////////
 #endif /* __HAL_DAC_H */
 ////////////////////////////////////////////////////////////////////////////////
-

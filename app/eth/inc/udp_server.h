@@ -20,7 +20,7 @@
 #ifndef __UDP_SERVER_H
 #define __UDP_SERVER_H
 
-#define UDP_SERVER_PORT                 6001
+#define UDP_SERVER_PORT 6001
 
 #ifdef _UDP_SERVER_C_
 #define GLOBAL

@@ -22,7 +22,6 @@
 #ifndef __BSP_TIM_H
 #define __BSP_TIM_H
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Board_Support_Package
 /// @{
@@ -58,20 +57,19 @@
 /// @defgroup TIM_Exported_Functions
 /// @{
 
-//common
+// common
 void BSP_TIM_CH1_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, bool inoutMode);
 void BSP_TIM_CH2_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, bool inoutMode);
 void BSP_TIM_CH3_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, bool inoutMode);
 void BSP_TIM_CH4_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, bool inoutMode);
 
-//special
-void BSP_TIM_PWM_GPIO_Configure         (TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx);
+// special
+void BSP_TIM_PWM_GPIO_Configure(TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx);
 void BSP_TIM_CapturePulse_GPIO_Configure(TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx);
-void BSP_TIM_CapturePWM_GPIO_Configure  (TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx);
-void BSP_TIM_Encoder_GPIO_Configure     (TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx);
-void BSP_TIM_OnePulse_GPIO_Configure    (TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx);
-void BSP_TIM_6Step_GPIO_Configure       (TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx);
-
+void BSP_TIM_CapturePWM_GPIO_Configure(TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx);
+void BSP_TIM_Encoder_GPIO_Configure(TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx);
+void BSP_TIM_OnePulse_GPIO_Configure(TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx);
+void BSP_TIM_6Step_GPIO_Configure(TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx);
 
 /// @}
 

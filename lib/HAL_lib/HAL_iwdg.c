@@ -68,7 +68,7 @@ void IWDG_WriteAccessCmd(u16 IWDG_WriteAccess)
 void IWDG_SetPrescaler(u8 IWDG_Prescaler)
 {
     IWDG->PR = IWDG_Prescaler;
-	PVU_CheckStatus();
+    PVU_CheckStatus();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ void IWDG_SetPrescaler(u8 IWDG_Prescaler)
 void IWDG_SetReload(u16 Reload)
 {
     IWDG->RLR = Reload;
-	RVU_CheckStatus();
+    RVU_CheckStatus();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +135,8 @@ FlagStatus IWDG_GetFlagStatus(u16 IWDG_FLAG)
 ////////////////////////////////////////////////////////////////////////////////
 void PVU_CheckStatus(void)
 {
-    while (IWDG_GetFlagStatus(IWDG_FLAG_PVU) == SET);
+    while (IWDG_GetFlagStatus(IWDG_FLAG_PVU) == SET)
+        ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -145,7 +146,8 @@ void PVU_CheckStatus(void)
 ////////////////////////////////////////////////////////////////////////////////
 void RVU_CheckStatus(void)
 {
-    while (IWDG_GetFlagStatus(IWDG_FLAG_RVU) == SET);
+    while (IWDG_GetFlagStatus(IWDG_FLAG_RVU) == SET)
+        ;
 }
 
 #if defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM0T1)

@@ -39,27 +39,25 @@
 /// @{
 
 #if defined(__MM3U1)
-void FSMC_NORSRAMDeInit(u32 FSMC_Bank)
-{
-}
+void FSMC_NORSRAMDeInit(u32 FSMC_Bank) {}
 
 ////////////////////////////////////////////////////////////////////////////////
 void FSMC_NORSRAMStructInit(FSMC_InitTypeDef* init_struct)
 {
-    init_struct->FSMC_Mode = 0;
+    init_struct->FSMC_Mode         = 0;
     init_struct->FSMC_AddrDataMode = 0;
 
     init_struct->FSMC_TimingRegSelect = 0;
-    init_struct->FSMC_MemSize = 0;
-    init_struct->FSMC_MemType = 0;
+    init_struct->FSMC_MemSize         = 0;
+    init_struct->FSMC_MemType         = 0;
 
-    init_struct->FSMC_TimingStruct->FSMC_SMReadPipe = 0;
-    init_struct->FSMC_TimingStruct->FSMC_ReadyMode = 0;
-    init_struct->FSMC_TimingStruct->FSMC_WritePeriod = 0;
+    init_struct->FSMC_TimingStruct->FSMC_SMReadPipe    = 0;
+    init_struct->FSMC_TimingStruct->FSMC_ReadyMode     = 0;
+    init_struct->FSMC_TimingStruct->FSMC_WritePeriod   = 0;
     init_struct->FSMC_TimingStruct->FSMC_WriteHoldTime = 0;
-    init_struct->FSMC_TimingStruct->FSMC_AddrSetTime = 0;
-    init_struct->FSMC_TimingStruct->FSMC_ReadPeriod = 0;
-//    init_struct->FSMC_TimingStruct->FSMC_TimingMode=0;
+    init_struct->FSMC_TimingStruct->FSMC_AddrSetTime   = 0;
+    init_struct->FSMC_TimingStruct->FSMC_ReadPeriod    = 0;
+    //    init_struct->FSMC_TimingStruct->FSMC_TimingMode=0;
 
     init_struct->FSMC_MemoryDataWidth = 0;
 }
@@ -67,9 +65,7 @@ void FSMC_NORSRAMStructInit(FSMC_InitTypeDef* init_struct)
 ////////////////////////////////////////////////////////////////////////////////
 void FSMC_NORSRAMInit(FSMC_InitTypeDef* init_struct)
 {
-
-    SYSCFG->CFGR = (u32)(init_struct->FSMC_Mode |
-                   init_struct->FSMC_AddrDataMode);
+    SYSCFG->CFGR = (u32)(init_struct->FSMC_Mode | init_struct->FSMC_AddrDataMode);
 #if 0
     FSMC->MR = (u32)(init_struct->FSMC_TimingRegSelect |
                    init_struct->FSMC_MemSize |
@@ -84,16 +80,14 @@ void FSMC_NORSRAMInit(FSMC_InitTypeDef* init_struct)
 
     FSMC->CR = (u32)((init_struct->FSMC_MemoryDataWidth << 7) | 0x00000001);
 #else
-    FSMC->SMSKR0 = (u32)init_struct->FSMC_TimingRegSelect |
-                   init_struct->FSMC_MemSize |
-                   init_struct->FSMC_MemType;
+    FSMC->SMSKR0 = (u32)init_struct->FSMC_TimingRegSelect | init_struct->FSMC_MemSize | init_struct->FSMC_MemType;
 
-    FSMC->SMTMGR_SET0 = (u32)(init_struct->FSMC_TimingStruct->FSMC_SMReadPipe << 28)    |
-                        (u32)(init_struct->FSMC_TimingStruct->FSMC_ReadyMode << 26)     |
-                        (u32)(init_struct->FSMC_TimingStruct->FSMC_WritePeriod << 10)   |
-                        (u32)(init_struct->FSMC_TimingStruct->FSMC_WriteHoldTime << 8)  |
-                        (u32)(init_struct->FSMC_TimingStruct->FSMC_AddrSetTime << 6)    |
-                        (u32)(init_struct->FSMC_TimingStruct->FSMC_ReadPeriod << 0 ) ;//   |
+    FSMC->SMTMGR_SET0 = (u32)(init_struct->FSMC_TimingStruct->FSMC_SMReadPipe << 28) |
+                        (u32)(init_struct->FSMC_TimingStruct->FSMC_ReadyMode << 26) |
+                        (u32)(init_struct->FSMC_TimingStruct->FSMC_WritePeriod << 10) |
+                        (u32)(init_struct->FSMC_TimingStruct->FSMC_WriteHoldTime << 8) |
+                        (u32)(init_struct->FSMC_TimingStruct->FSMC_AddrSetTime << 6) |
+                        (u32)(init_struct->FSMC_TimingStruct->FSMC_ReadPeriod << 0);  //   |
     // (u32)(init_struct->FSMC_TimingStruct->FSMC_TimingMode  ) ;
 
     FSMC->SMCTLR = (u32)(init_struct->FSMC_MemoryDataWidth << 7) | 0x00000001;
@@ -105,11 +99,9 @@ void FSMC_NORSRAMCmd(u32 FSMC_Bank, FunctionalState NewState)
 {
     if (NewState != DISABLE) {
         // Enable the selected NOR/SRAM Bank
-
     }
     else {
         // Disable the selected NOR/SRAM Bank
-
     }
 }
 
@@ -120,5 +112,5 @@ void FSMC_NORSRAMCmd(u32 FSMC_Bank, FunctionalState NewState)
 /// @}
 
 ////////////////////////////////////////////////////////////////////////////////
-#endif // __HAL_FSMC_C 
+#endif  // __HAL_FSMC_C
 ////////////////////////////////////////////////////////////////////////////////

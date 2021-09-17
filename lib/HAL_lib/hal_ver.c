@@ -26,27 +26,24 @@
 // Files includes
 #include "hal_ver.h"
 
-
 // MM32 Library version is V2.0.1
 
-#define __MM32_LIB_VERSION_MAIN         (0x02U)                                 //!< [31:24] main version 
-#define __MM32_LIB_VERSION_SUB1         (0x00U)                                 //!< [23:16] sub1 version
-#define __MM32_LIB_VERSION_SUB2         (0x01U)                                 //!< [15:8]  sub2 version
-#define __MM32_LIB_VERSION_RC           (0x00U)                                 //!< [7:0]  release candidate
-#define __MM32_LIB_VERSION              ((__MM32_LIB_VERSION_MAIN << 24U)\
-                                         |(__MM32_LIB_VERSION_SUB1 << 16U)\
-                                         |(__MM32_LIB_VERSION_SUB2 << 8U )\
-                                         |(__MM32_LIB_VERSION_RC))
+#define __MM32_LIB_VERSION_MAIN (0x02U)  //!< [31:24] main version
+#define __MM32_LIB_VERSION_SUB1 (0x00U)  //!< [23:16] sub1 version
+#define __MM32_LIB_VERSION_SUB2 (0x01U)  //!< [15:8]  sub2 version
+#define __MM32_LIB_VERSION_RC (0x00U)    //!< [7:0]  release candidate
+#define __MM32_LIB_VERSION                                                                                                       \
+    ((__MM32_LIB_VERSION_MAIN << 24U) | (__MM32_LIB_VERSION_SUB1 << 16U) | (__MM32_LIB_VERSION_SUB2 << 8U) |                     \
+     (__MM32_LIB_VERSION_RC))
 
 // MM32 Library release date is 2020-01-22(YYYY-MM-DD)
-#define __MM32_LIB_RELESE_YEARH         (0x20U)                                 //!< [31:24] release year high 
-#define __MM32_LIB_RELESE_YEARL         (0x20U)                                 //!< [23:16] release year low
-#define __MM32_LIB_RELESE_MONTH         (0x01U)                                 //!< [15:8]  release month
-#define __MM32_LIB_RELESE_DAY           (0x22U)                                 //!< [7:0]   release day
-#define __MM32_LIB_RELESE_DATE          ((__MM32_LIB_RELESE_YEARH << 24U)\
-                                         |(__MM32_LIB_RELESE_YEARL << 16U)\
-                                         |(__MM32_LIB_RELESE_MONTH << 8U )\
-                                         |(__MM32_LIB_RELESE_DAY))
+#define __MM32_LIB_RELESE_YEARH (0x20U)  //!< [31:24] release year high
+#define __MM32_LIB_RELESE_YEARL (0x20U)  //!< [23:16] release year low
+#define __MM32_LIB_RELESE_MONTH (0x01U)  //!< [15:8]  release month
+#define __MM32_LIB_RELESE_DAY (0x22U)    //!< [7:0]   release day
+#define __MM32_LIB_RELESE_DATE                                                                                                   \
+    ((__MM32_LIB_RELESE_YEARH << 24U) | (__MM32_LIB_RELESE_YEARL << 16U) | (__MM32_LIB_RELESE_MONTH << 8U) |                     \
+     (__MM32_LIB_RELESE_DAY))
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Hardware_Abstract_Layer
 /// @{
@@ -85,7 +82,7 @@ u32 Get_MM32LibReleaseDate(void)
 ////////////////////////////////////////////////////////////////////////////////
 u32 Get_ChipsetREVID(void)
 {
-    return((DBGMCU->IDCODE) & 0xF );
+    return ((DBGMCU->IDCODE) & 0xF);
 }
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Returns the device identifier..
@@ -94,7 +91,7 @@ u32 Get_ChipsetREVID(void)
 ////////////////////////////////////////////////////////////////////////////////
 u32 Get_ChipsetDEVID(void)
 {
-    return((DBGMCU->IDCODE) );
+    return ((DBGMCU->IDCODE));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +101,7 @@ u32 Get_ChipsetDEVID(void)
 ////////////////////////////////////////////////////////////////////////////////
 u32 Get_ChipsetUIDw0(void)
 {
-    return(READ_REG(*((u32*)UID_BASE)));
+    return (READ_REG(*((u32*)UID_BASE)));
 }
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Returns second word of the unique device identifier (UID based on 96 bits)
@@ -113,7 +110,7 @@ u32 Get_ChipsetUIDw0(void)
 ////////////////////////////////////////////////////////////////////////////////
 u32 Get_ChipsetUIDw1(void)
 {
-    return(READ_REG(*((u32*)(UID_BASE + 4U))));
+    return (READ_REG(*((u32*)(UID_BASE + 4U))));
 }
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Returns third word of the unique device identifier (UID based on 96 bits)
@@ -122,12 +119,8 @@ u32 Get_ChipsetUIDw1(void)
 ////////////////////////////////////////////////////////////////////////////////
 u32 Get_ChipsetUIDw2(void)
 {
-    return(READ_REG(*((u32*)(UID_BASE + 8U))));
+    return (READ_REG(*((u32*)(UID_BASE + 8U))));
 }
-
-
-
-
 
 /// @}
 

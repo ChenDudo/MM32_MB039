@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     DEVICE.H
-/// @author   
+/// @author
 /// @version  v1.0.0
 /// @date     2019-03-13
 /// @brief    THIS FILE CONTAINS ALL THE FUNCTIONS PROTOTYPES FOR THE UID
@@ -24,7 +24,6 @@
 
 // Files includes  -------------------------------------------------------------
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Example_Layer
 /// @{
@@ -47,14 +46,13 @@ typedef struct {
 #ifdef _DEVICE_C_
 #define GLOBAL
 
-
 #else
 #define GLOBAL extern
 #endif
 
 GLOBAL devType myDev;
-GLOBAL bool dev_Up;
-GLOBAL bool dev_Dn;
+GLOBAL bool    dev_Up;
+GLOBAL bool    dev_Dn;
 
 #undef GLOBAL
 

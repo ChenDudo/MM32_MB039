@@ -13,7 +13,7 @@
 /// CONSEQUENTIAL DAMAGES ABOUT ANY CLAIMS ARISING OUT OF THE CONTENT OF SUCH
 /// HARDWARE AND/OR THE USE OF THE CODING INFORMATION CONTAINED HEREIN IN
 /// CONNECTION WITH PRODUCTS MADE BY CUSTOMERS.
-///nnabuxugaosuzijizhem
+/// nnabuxugaosuzijizhem
 /// <H2><CENTER>&COPY; COPYRIGHT 2018-2019 MINDMOTION </CENTER></H2>
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -50,31 +50,31 @@
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_ADC_GPIO_Configure(ADC_TypeDef* ADCx, u32 chs)
 {
-	if (ADCx == ADC1) {
-	#if defined(__REGISTER)
-		COMMON_EnableIpClock(emCLOCK_GPIOA);
-		GPIOA->CRL = (GPIOA->CRL & 0xFFFF0000);                                 // GPIOA_Pin0~3-Analog
-	#else
-		COMMON_EnableIpClock(emCLOCK_GPIOA);
-		for (u8 i = 0; i < 8; i++) {
-			if (chs & 1 << i)
-				GPIO_Mode_IN_Init(GPIOA, 1 << i, GPIO_Mode_AIN ,NO_REMAP, NO_REMAP);	// PB0,PB1... be ignored
-		}
-	#endif
-	}
-	else {
-	#if defined(__REGISTER)
-		COMMON_EnableIpClock(emCLOCK_GPIOB);
-		GPIOB->CRL = (GPIOB->CRL & 0xFFFFFF00);                                 // GPIOB_Pin0~1-Analog
-	#else
-		COMMON_EnableIpClock(emCLOCK_GPIOB);
-		for (u8 i = 0; i < 8; i++) {
-			if (chs & 1 << i)
-				GPIO_Mode_IN_Init(GPIOB, 1 << i, GPIO_Mode_AIN ,NO_REMAP, NO_REMAP);	// PB0,PB1... be ignored
-		}
-	#endif
-		// Todo
-	}
+    if (ADCx == ADC1) {
+#if defined(__REGISTER)
+        COMMON_EnableIpClock(emCLOCK_GPIOA);
+        GPIOA->CRL = (GPIOA->CRL & 0xFFFF0000);  // GPIOA_Pin0~3-Analog
+#else
+        COMMON_EnableIpClock(emCLOCK_GPIOA);
+        for (u8 i = 0; i < 8; i++) {
+            if (chs & 1 << i)
+                GPIO_Mode_IN_Init(GPIOA, 1 << i, GPIO_Mode_AIN, NO_REMAP, NO_REMAP);  // PB0,PB1... be ignored
+        }
+#endif
+    }
+    else {
+#if defined(__REGISTER)
+        COMMON_EnableIpClock(emCLOCK_GPIOB);
+        GPIOB->CRL = (GPIOB->CRL & 0xFFFFFF00);  // GPIOB_Pin0~1-Analog
+#else
+        COMMON_EnableIpClock(emCLOCK_GPIOB);
+        for (u8 i = 0; i < 8; i++) {
+            if (chs & 1 << i)
+                GPIO_Mode_IN_Init(GPIOB, 1 << i, GPIO_Mode_AIN, NO_REMAP, NO_REMAP);  // PB0,PB1... be ignored
+        }
+#endif
+        // Todo
+    }
 }
 
 /// @}

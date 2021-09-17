@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     HCI.H
-/// @author   
+/// @author
 /// @version  v1.0.0
 /// @date     2021-03-13
 /// @brief    THIS FILE CONTAINS ALL THE FUNCTIONS PROTOTYPES FOR THE UID
@@ -23,7 +23,6 @@
 #define __HCI_H
 
 // Files includes  -------------------------------------------------------------
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Example_Layer
@@ -53,21 +52,20 @@ GLOBAL bool K3Flag = false;
 
 #endif
 
-GLOBAL bool K1Flag,K2Flag,K3Flag,K4Flag;
-GLOBAL u16  LDFreq[4], LDCnt[4];
+GLOBAL bool K1Flag, K2Flag, K3Flag, K4Flag;
+GLOBAL u16 LDFreq[4], LDCnt[4];
 
 /**/
-GLOBAL u8	ledCnt;
+GLOBAL u8 ledCnt;
 
-GLOBAL u8	fKey0;		// menuOverTime Flag
-GLOBAL u32	fKeyCnt;	// menuOverTime Count
+GLOBAL u8 fKey0;     // menuOverTime Flag
+GLOBAL u32 fKeyCnt;  // menuOverTime Count
 
-GLOBAL u8	fKey1,   fKey2,   fKey3,  fKey4;
-GLOBAL u8	fKeyP1,  fKeyP2,  fKeyP3, fKeyP4;
+GLOBAL u8 fKey1, fKey2, fKey3, fKey4;
+GLOBAL u8 fKeyP1, fKeyP2, fKeyP3, fKeyP4;
 
-GLOBAL u32	Key1Cnt,   Key2Cnt,   Key3Cnt, Key4Cnt;
-GLOBAL u8	Key1CntF,  Key2CntF,  Key3CntF, Key4CntF;
-
+GLOBAL u32 Key1Cnt, Key2Cnt, Key3Cnt, Key4Cnt;
+GLOBAL u8 Key1CntF, Key2CntF, Key3CntF, Key4CntF;
 
 #undef GLOBAL
 
@@ -81,7 +79,7 @@ GLOBAL u8	Key1CntF,  Key2CntF,  Key3CntF, Key4CntF;
 
 void dispButton();
 void showButton(u16 x, u16 y, u8 frame, char* str);
-u8 eventKey(u8 key, u8* flag);
+u8   eventKey(u8 key, u8* flag);
 void dispMenuButton(u8 idx);
 void scanKey();
 void dispMenu(u8 sta);

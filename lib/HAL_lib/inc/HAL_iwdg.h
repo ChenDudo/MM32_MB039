@@ -81,8 +81,8 @@ typedef enum {
 /// @brief  IWDG Overflow Configration
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    IWDG_Overflow_Reset     = 0,               //
-    IWDG_Overflow_Interrupt = IWDG_CR_IRQSEL   //
+    IWDG_Overflow_Reset     = 0,              //
+    IWDG_Overflow_Interrupt = IWDG_CR_IRQSEL  //
 } IWDGOverflowConfig_TypeDef;
 #endif
 
@@ -98,7 +98,6 @@ typedef enum {
 #define GLOBAL extern
 #endif
 
-
 #undef GLOBAL
 /// @}
 
@@ -110,7 +109,7 @@ FlagStatus IWDG_GetFlagStatus(u16 IWDG_FLAG);
 void IWDG_WriteAccessCmd(u16 IWDG_WriteAccess);
 void IWDG_SetPrescaler(u8 IWDG_Prescaler);
 void IWDG_SetReload(u16 Reload);
-u32 IWDG_GetReload(void);
+u32  IWDG_GetReload(void);
 void IWDG_ReloadCounter(void);
 void IWDG_Enable(void);
 void PVU_CheckStatus(void);

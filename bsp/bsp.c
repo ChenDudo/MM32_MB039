@@ -38,7 +38,6 @@
 /// @addtogroup BSP_Exported_Functions
 /// @{
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief	GPIO multiplexing function initialization.
 /// @param  GPIOx: where x can be (A..D) to select the GPIO peripheral.
@@ -91,12 +90,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_AF_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, GPIOMode_TypeDef mode, GPIOSpeed_TypeDef speed, s32 remap, s8 funcAF)
 {
-	exGPIO_PinAFConfig(GPIOx, GPIO_Pin, remap, funcAF);
-	GPIO_InitTypeDef 	GPIO_InitStructure;
-	GPIO_InitStructure.GPIO_Speed = speed;
-	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin;
-	GPIO_InitStructure.GPIO_Mode  = mode;
-	GPIO_Init(GPIOx, &GPIO_InitStructure);
+    exGPIO_PinAFConfig(GPIOx, GPIO_Pin, remap, funcAF);
+    GPIO_InitTypeDef GPIO_InitStructure;
+    GPIO_InitStructure.GPIO_Speed = speed;
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin;
+    GPIO_InitStructure.GPIO_Mode  = mode;
+    GPIO_Init(GPIOx, &GPIO_InitStructure);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -142,7 +141,7 @@ void GPIO_AF_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, GPIOMode_TypeDef mode, GPIO
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_AF_PP_50MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_PP, GPIO_Speed_50MHz, remap, funcAF);
+    GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_PP, GPIO_Speed_50MHz, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -188,7 +187,7 @@ void GPIO_Mode_AF_PP_50MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_AF_PP_20MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_PP, GPIO_Speed_20MHz, remap, funcAF);
+    GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_PP, GPIO_Speed_20MHz, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -234,7 +233,7 @@ void GPIO_Mode_AF_PP_20MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_AF_PP_10MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_PP, GPIO_Speed_10MHz, remap, funcAF);
+    GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_PP, GPIO_Speed_10MHz, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -280,7 +279,7 @@ void GPIO_Mode_AF_PP_10MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_AF_OD_50MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_OD, GPIO_Speed_50MHz, remap, funcAF);
+    GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_OD, GPIO_Speed_50MHz, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -326,7 +325,7 @@ void GPIO_Mode_AF_OD_50MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_AF_OD_20MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_OD, GPIO_Speed_20MHz, remap, funcAF);
+    GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_OD, GPIO_Speed_20MHz, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -372,7 +371,7 @@ void GPIO_Mode_AF_OD_20MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_AF_OD_10MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_OD, GPIO_Speed_10MHz, remap, funcAF);
+    GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_AF_OD, GPIO_Speed_10MHz, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -418,7 +417,7 @@ void GPIO_Mode_AF_OD_10MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_OUT_OD_10MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_Out_OD, GPIO_Speed_10MHz, remap, funcAF);
+    GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_Out_OD, GPIO_Speed_10MHz, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -464,7 +463,7 @@ void GPIO_Mode_OUT_OD_10MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_OUT_OD_20MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_Out_OD, GPIO_Speed_20MHz, remap, funcAF);
+    GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_Out_OD, GPIO_Speed_20MHz, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -510,31 +509,26 @@ void GPIO_Mode_OUT_OD_20MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_OUT_OD_50MHz_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_Out_OD, GPIO_Speed_50MHz, remap, funcAF);
+    GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_Out_OD, GPIO_Speed_50MHz, remap, funcAF);
 }
-
-
-
-
-
 
 void GPIO_Mode_OUT_PP_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin)
 {
-	if ((GPIOx == GPIOA) && (GPIO_Pin == 13) || (GPIOx == GPIOA) && (GPIO_Pin == 14))
-		return;
-	u32 remap = NO_REMAP;
+    if ((GPIOx == GPIOA) && (GPIO_Pin == 13) || (GPIOx == GPIOA) && (GPIO_Pin == 14))
+        return;
+    u32 remap = NO_REMAP;
 
-	GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_Out_PP, GPIO_Speed_50MHz, remap, 0);
+    GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_Out_PP, GPIO_Speed_50MHz, remap, 0);
 }
 
 void GPIO_Mode_OUT_OD_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin)
 {
-	if ((GPIOx == GPIOA) && (GPIO_Pin == 13) || (GPIOx == GPIOA) && (GPIO_Pin == 14))
-		return;
+    if ((GPIOx == GPIOA) && (GPIO_Pin == 13) || (GPIOx == GPIOA) && (GPIO_Pin == 14))
+        return;
 
-	u32 remap = NO_REMAP;
+    u32 remap = NO_REMAP;
 
-	GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_Out_OD, GPIO_Speed_50MHz, remap, 0);
+    GPIO_AF_Init(GPIOx, GPIO_Pin, GPIO_Mode_Out_OD, GPIO_Speed_50MHz, remap, 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -584,11 +578,11 @@ void GPIO_Mode_OUT_OD_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin)
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_IN_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, GPIOMode_TypeDef mode, s32 remap, s8 funcAF)
 {
-	GPIO_InitTypeDef 	GPIO_InitStructure;
-	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin;
-	GPIO_InitStructure.GPIO_Mode = mode;
-	GPIO_Init(GPIOx, &GPIO_InitStructure);
-	exGPIO_PinAFConfig(GPIOx, GPIO_Pin, remap, funcAF);
+    GPIO_InitTypeDef GPIO_InitStructure;
+    GPIO_InitStructure.GPIO_Pin  = GPIO_Pin;
+    GPIO_InitStructure.GPIO_Mode = mode;
+    GPIO_Init(GPIOx, &GPIO_InitStructure);
+    exGPIO_PinAFConfig(GPIOx, GPIO_Pin, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -632,7 +626,7 @@ void GPIO_Mode_IN_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, GPIOMode_TypeDef mode,
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_IPU_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_Mode_IN_Init(GPIOx, GPIO_Pin, GPIO_Mode_IPU, remap, funcAF);
+    GPIO_Mode_IN_Init(GPIOx, GPIO_Pin, GPIO_Mode_IPU, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -676,7 +670,7 @@ void GPIO_Mode_IPU_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_IPD_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_Mode_IN_Init(GPIOx, GPIO_Pin, GPIO_Mode_IPD, remap, funcAF);
+    GPIO_Mode_IN_Init(GPIOx, GPIO_Pin, GPIO_Mode_IPD, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -720,7 +714,7 @@ void GPIO_Mode_IPD_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_Mode_FLOATING_Init(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, s32 remap, s8 funcAF)
 {
-	GPIO_Mode_IN_Init(GPIOx, GPIO_Pin, GPIO_Mode_FLOATING, remap, funcAF);
+    GPIO_Mode_IN_Init(GPIOx, GPIO_Pin, GPIO_Mode_FLOATING, remap, funcAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -753,7 +747,10 @@ void GPIOx_ClockEnable(GPIO_TypeDef* port)
 /// @arg    0    						: PORTA
 /// @retval None.
 ////////////////////////////////////////////////////////////////////////////////
-void GPIOA_ClockEnable()	{	GPIOx_ClockEnable(GPIOA);	}
+void GPIOA_ClockEnable()
+{
+    GPIOx_ClockEnable(GPIOA);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief	GPIOB clock enable.
@@ -761,7 +758,10 @@ void GPIOA_ClockEnable()	{	GPIOx_ClockEnable(GPIOA);	}
 /// @arg    1    						: PORTB
 /// @retval None.
 ////////////////////////////////////////////////////////////////////////////////
-void GPIOB_ClockEnable()	{	GPIOx_ClockEnable(GPIOB);	}
+void GPIOB_ClockEnable()
+{
+    GPIOx_ClockEnable(GPIOB);
+}
 
 #if defined(GPIOC)
 ////////////////////////////////////////////////////////////////////////////////
@@ -770,7 +770,10 @@ void GPIOB_ClockEnable()	{	GPIOx_ClockEnable(GPIOB);	}
 /// @arg    2    						: PORTC
 /// @retval None.
 ////////////////////////////////////////////////////////////////////////////////
-void GPIOC_ClockEnable()	{	GPIOx_ClockEnable(GPIOC);	}
+void GPIOC_ClockEnable()
+{
+    GPIOx_ClockEnable(GPIOC);
+}
 #endif
 
 #if defined(GPIOD)
@@ -780,7 +783,10 @@ void GPIOC_ClockEnable()	{	GPIOx_ClockEnable(GPIOC);	}
 /// @arg    3    						: PORTD
 /// @retval None.
 ////////////////////////////////////////////////////////////////////////////////
-void GPIOD_ClockEnable()	{	GPIOx_ClockEnable(GPIOD);	}
+void GPIOD_ClockEnable()
+{
+    GPIOx_ClockEnable(GPIOD);
+}
 #endif
 
 #if defined(GPIOE)
@@ -790,9 +796,11 @@ void GPIOD_ClockEnable()	{	GPIOx_ClockEnable(GPIOD);	}
 /// @arg    4    						: PORTE
 /// @retval None.
 ////////////////////////////////////////////////////////////////////////////////
-void GPIOE_ClockEnable()	{	GPIOx_ClockEnable(GPIOE);	}
+void GPIOE_ClockEnable()
+{
+    GPIOx_ClockEnable(GPIOE);
+}
 #endif
-
 
 #if defined(GPIOF)
 ////////////////////////////////////////////////////////////////////////////////
@@ -801,7 +809,10 @@ void GPIOE_ClockEnable()	{	GPIOx_ClockEnable(GPIOE);	}
 /// @arg    5    						: PORTF
 /// @retval None.
 ////////////////////////////////////////////////////////////////////////////////
-void GPIOF_ClockEnable()	{	GPIOx_ClockEnable(GPIOF);	}
+void GPIOF_ClockEnable()
+{
+    GPIOx_ClockEnable(GPIOF);
+}
 #endif
 
 /// @}F

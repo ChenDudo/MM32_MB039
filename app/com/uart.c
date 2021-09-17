@@ -33,13 +33,12 @@
 #include "hal_gpio.h"
 #include "hal_nvic.h"
 
-
 ////////////////////////////////////////////////////////////////////////////////
 void initUART()
 {
     UART_InitTypeDef UART_InitStructure;
 
-    //Init UART1
+    // Init UART1
     COMMON_EnableIpClock(emCLOCK_UART1);
     UART_InitStructure.BaudRate      = BAUDRATE;
     UART_InitStructure.WordLength    = UART_WordLength_8b;
@@ -52,7 +51,7 @@ void initUART()
     UART_ITConfig(UART1, UART_IER_RX, ENABLE);
     UART_Cmd(UART1, ENABLE);
 
-    //Init UART2
+    // Init UART2
     COMMON_EnableIpClock(emCLOCK_UART2);
     UART_InitStructure.BaudRate      = BAUDRATE;
     UART_InitStructure.WordLength    = UART_WordLength_8b;
@@ -65,7 +64,7 @@ void initUART()
     UART_ITConfig(UART2, UART_IER_RX, ENABLE);
     UART_Cmd(UART2, ENABLE);
 
-    //Init UART8
+    // Init UART8
     COMMON_EnableIpClock(emCLOCK_UART8);
     UART_InitStructure.BaudRate      = BAUDRATE;
     UART_InitStructure.WordLength    = UART_WordLength_8b;
@@ -82,78 +81,78 @@ void initUART()
 ////////////////////////////////////////////////////////////////////////////////
 void initGPIO_UART()
 {
-	GPIO_InitTypeDef GPIO_InitStructure;
+    GPIO_InitTypeDef GPIO_InitStructure;
 
     COMMON_EnableIpClock(emCLOCK_GPIOA);
     COMMON_EnableIpClock(emCLOCK_GPIOE);
 
-	//UART1_TX   GPIOA.9
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+    // UART1_TX   GPIOA.9
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_9;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
     GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_7);
 
-	//UART1_RX   GPIOA.10
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+    // UART1_RX   GPIOA.10
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_10;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IPU;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
     GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_7);
 
-    //UART2_TX   GPIOA.2
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+    // UART2_TX   GPIOA.2
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_2;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
     GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_7);
 
-	//UART2_RX   GPIOA.3
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+    // UART2_RX   GPIOA.3
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_3;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IPU;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
     GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_7);
 
-    //UART8_TX   GPIOE.1
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_Init(GPIOE, &GPIO_InitStructure);
+    // UART8_TX   GPIOE.1
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_1;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
+    GPIO_Init(GPIOE, &GPIO_InitStructure);
     GPIO_PinAFConfig(GPIOE, GPIO_PinSource1, GPIO_AF_8);
 
-	//UART8_RX   GPIOE.0
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_Init(GPIOE, &GPIO_InitStructure);
+    // UART8_RX   GPIOE.0
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_0;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IPU;
+    GPIO_Init(GPIOE, &GPIO_InitStructure);
     GPIO_PinAFConfig(GPIOE, GPIO_PinSource0, GPIO_AF_8);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void NVIC_UART()
 {
-	NVIC_InitTypeDef NVIC_InitStructure;
+    NVIC_InitTypeDef NVIC_InitStructure;
 
-    //UART1 NVIC
-	NVIC_InitStructure.NVIC_IRQChannel = UART1_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
-
-    //UART2 NVIC
-    NVIC_InitStructure.NVIC_IRQChannel = UART2_IRQn;
+    // UART1 NVIC
+    NVIC_InitStructure.NVIC_IRQChannel                   = UART1_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 1;
+    NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 
-    //UART8 NVIC
-    NVIC_InitStructure.NVIC_IRQChannel = UART8_IRQn;
+    // UART2 NVIC
+    NVIC_InitStructure.NVIC_IRQChannel                   = UART2_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 1;
+    NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
+
+    // UART8 NVIC
+    NVIC_InitStructure.NVIC_IRQChannel                   = UART8_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 1;
+    NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
 
@@ -162,11 +161,11 @@ void UART1_IRQHandler(void)
 {
     if (UART_GetITStatus(UART1, UART_IER_RX) != RESET) {
         UART_ClearITPendingBit(UART1, UART_IER_RX);
-        //memmove(&uart1RxBuf[0], &uart1RxBuf[1], 7);
-		//uart1RxBuf[7] = UART_ReceiveData(UART1);
-		//rf.uart1 = true;
-		//error.uart1 = false;
-		//rfOverCnt.uart1 = 0;
+        // memmove(&uart1RxBuf[0], &uart1RxBuf[1], 7);
+        // uart1RxBuf[7] = UART_ReceiveData(UART1);
+        // rf.uart1 = true;
+        // error.uart1 = false;
+        // rfOverCnt.uart1 = 0;
     }
 }
 
@@ -176,10 +175,10 @@ void UART2_IRQHandler(void)
     if (UART_GetITStatus(UART2, UART_IER_RX) != RESET) {
         UART_ClearITPendingBit(UART2, UART_IER_RX);
         memmove(&uart1RxBuf[0], &uart1RxBuf[1], 7);
-		uart1RxBuf[7] = UART_ReceiveData(UART2);
-		rf.uart1 = true;
-		error.uart1 = false;
-		rfOverCnt.uart1 = 0;
+        uart1RxBuf[7]   = UART_ReceiveData(UART2);
+        rf.uart1        = true;
+        error.uart1     = false;
+        rfOverCnt.uart1 = 0;
     }
 }
 
@@ -189,13 +188,12 @@ void UART8_IRQHandler(void)
     if (UART_GetITStatus(UART8, UART_IER_RX) != RESET) {
         UART_ClearITPendingBit(UART8, UART_IER_RX);
         memmove(&uart2RxBuf[0], &uart2RxBuf[1], 7);
-		uart2RxBuf[7] = UART_ReceiveData(UART8);
-		rf.uart2 = true;
-		error.uart2 = false;
-		rfOverCnt.uart2 = 0;
+        uart2RxBuf[7]   = UART_ReceiveData(UART8);
+        rf.uart2        = true;
+        error.uart2     = false;
+        rfOverCnt.uart2 = 0;
     }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_UART_Configure()

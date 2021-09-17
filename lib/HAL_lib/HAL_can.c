@@ -36,7 +36,7 @@
 /// @addtogroup CAN_Exported_Functions
 /// @{
 
-#if defined(CAN1) 
+#if defined(CAN1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Deinitializes the CAN peripheral registers to their default reset
 /// values.
@@ -101,12 +101,12 @@ void CAN_StructInit(CAN_Basic_InitTypeDef* pInitStruct)
     // Initialize the SAM member(where can be set (SET or RESET))
     pInitStruct->SAM = RESET;
 
-	//	CDCLK, CLOSE_OPEN_CLK, RXINTEN and CBP bits are not exist in CDR register;
+    //	CDCLK, CLOSE_OPEN_CLK, RXINTEN and CBP bits are not exist in CDR register;
 
     // Initialize the external pin CLKOUT frequence
-	// pInitStruct->CDCLK = 0x0;
+    // pInitStruct->CDCLK = 0x0;
     // Initialize the external clk is open or close
-	// pInitStruct->CLOSE_OPEN_CLK = 0x0;
+    // pInitStruct->CLOSE_OPEN_CLK = 0x0;
     // Initialize the TX1 pin work as rx interrupt output
     // pInitStruct->RXINTEN = 0x0;
     // Initialize the CBP of CDR register
@@ -467,7 +467,7 @@ void CAN_Peli_TransmitRepeat(CanPeliTxMsg* PeliTxMessage)
         }
     }
 
-    (CAN1_PELI->MOD & CAN_MOD_STM) ? (CAN1->CMR =  CAN_CMR_AT) : (CAN1->CMR = CAN_CMR_TR);
+    (CAN1_PELI->MOD & CAN_MOD_STM) ? (CAN1->CMR = CAN_CMR_AT) : (CAN1->CMR = CAN_CMR_TR);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -50,7 +50,7 @@ void RCC_DeInit()
     CLEAR_BIT(RCC->CR, RCC_CR_HSEON | RCC_CR_CSSON | RCC_CR_PLLON | RCC_CR_PLLDIV | RCC_CR_PLLMUL);
 #endif
 #if defined(__MM3U1)
-    CLEAR_BIT(RCC->CR, RCC_CR_HSEON | RCC_CR_CSSON | RCC_CR_PLLON );
+    CLEAR_BIT(RCC->CR, RCC_CR_HSEON | RCC_CR_CSSON | RCC_CR_PLLON);
     CLEAR_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLMUL | RCC_PLLCFGR_PLLDIV);
 #endif
 #if defined(__MM0Q1) || defined(__MM0T1)
@@ -103,12 +103,13 @@ FlagStatus RCC_GetFlagStatus(RCC_FLAG_TypeDef flag)
 #if defined(__MM3N1) || defined(__MM3O1) || defined(__MM0S1) || defined(__MM3U1)
     return ((((flag >> 5) == CR_REG_INDEX) ? RCC->CR : (((flag >> 5) == BDCR_REG_INDEX) ? RCC->BDCR : RCC->CSR)) &
             (1 << (flag & 0x1F)))
-               ? SET : RESET;
+               ? SET
+               : RESET;
 #endif
 #if defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0T1)
-    return ((((flag >> 5) == CR_REG_INDEX) ? RCC->CR : (((flag >> 5) == BDCR_REG_INDEX) ? 0 : RCC->CSR)) &
-            (1 << (flag & 0x1F)))
-               ? SET : RESET;
+    return ((((flag >> 5) == CR_REG_INDEX) ? RCC->CR : (((flag >> 5) == BDCR_REG_INDEX) ? 0 : RCC->CSR)) & (1 << (flag & 0x1F)))
+               ? SET
+               : RESET;
 #endif
 }
 
@@ -121,7 +122,6 @@ FlagStatus RCC_GetFlagStatus(RCC_FLAG_TypeDef flag)
 ////////////////////////////////////////////////////////////////////////////////
 void RCC_AdjustHSICalibrationValue(uint8_t HSICalibrationValue)
 {
-
     RCC->CR &= RCC_CR_HSITRIM;
     RCC->CR |= (HSICalibrationValue << 3);
 }
@@ -221,7 +221,8 @@ void RCC_PLLDMDNConfig(u32 plldn, u32 plldm)
     MODIFY_REG(RCC->CR, (RCC_CR_PLLMUL | RCC_CR_PLLDIV), ((plldn << RCC_CR_PLLMUL_Pos) | (plldm << RCC_CR_PLLDIV_Pos)));
 #endif
 #if defined(__MM3U1)
-    MODIFY_REG(RCC->PLLCFGR, (RCC_PLLCFGR_PLLMUL | RCC_PLLCFGR_PLLDIV), ((plldn << RCC_PLLCFGR_PLLMUL_Pos) | (plldm << RCC_PLLCFGR_PLLDIV_Pos)));
+    MODIFY_REG(RCC->PLLCFGR, (RCC_PLLCFGR_PLLMUL | RCC_PLLCFGR_PLLDIV),
+               ((plldn << RCC_PLLCFGR_PLLMUL_Pos) | (plldm << RCC_PLLCFGR_PLLDIV_Pos)));
 #endif
 }
 
@@ -348,7 +349,8 @@ void RCC_PCLK1Config(RCC_APB1_APB2_CLK_TypeDef HCLK)
     MODIFY_REG(RCC->CFGR, RCC_CFGR_PPRE1, HCLK);
 }
 
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1)  || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) ||      \
+    defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Configures the High Speed APB clock (PCLK2).
 /// @param  HCLK: defines the APB2 clock divider. This clock is derived from
@@ -462,27 +464,28 @@ void RCC_LSICmd(FunctionalState state)
 u32 RCC_GetSysClockFreq(void)
 {
 #if defined(__MM3U1)
-        u32 result;
+    u32 result;
     u32 clock, mul, div;
     switch (RCC->CFGR & RCC_CFGR_SWS) {
         case RCC_CFGR_SWS_LSI:
-            result = 40000U;//LSI_VALUE;
+            result = 40000U;  // LSI_VALUE;
             break;
 
         case RCC_CFGR_SWS_HSE:
-            result = 8000000U;//HSE_VALUE;
+            result = 8000000U;  // HSE_VALUE;
             break;
 
         case RCC_CFGR_SWS_PLL:
-            clock = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC) ? (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLXTPRE) ? (HSE_VALUE >> 1) : 8000000U)
-                    : 8000000U;//HSI_VALUE_PLL_ON;
+            clock = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC)
+                        ? (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLXTPRE) ? (HSE_VALUE >> 1) : 8000000U)
+                        : 8000000U;  // HSI_VALUE_PLL_ON;
             mul = ((RCC->PLLCFGR & (u32)RCC_PLLCFGR_PLLMUL) >> RCC_PLLCFGR_PLLMUL_Pos) + 1;
             div = ((RCC->PLLCFGR & RCC_PLLCFGR_PLLDIV) >> RCC_PLLCFGR_PLLDIV_Pos) + 1;
 
             result = clock * mul / div;
             break;
         default:
-            result =  8000000U;//HSI_VALUE;
+            result = 8000000U;  // HSI_VALUE;
             break;
     }
     return result;
@@ -492,38 +495,34 @@ u32 RCC_GetSysClockFreq(void)
 #endif
     switch (RCC->CFGR & RCC_CFGR_SWS) {
 #if defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM0T1)
-		case RCC_CFGR_SWS_LSI:
-			return LSI_VALUE;
+        case RCC_CFGR_SWS_LSI: return LSI_VALUE;
 #endif
 
-		case RCC_CFGR_SWS_HSE:
-			return HSE_VALUE;
+        case RCC_CFGR_SWS_HSE: return HSE_VALUE;
 
 #if defined(__MM0Q1)
-		case RCC_CFGR_SWS_HSI:
-			return (RCC->CR & RCC_CR_HSI_72M) ? HSI_72MHz : HSI_48MHz;
+        case RCC_CFGR_SWS_HSI: return (RCC->CR & RCC_CR_HSI_72M) ? HSI_72MHz : HSI_48MHz;
 #endif
 #if defined(__MM0T1)
-		case RCC_CFGR_SWS_HSI:
-			return HSI_48MHz;
+        case RCC_CFGR_SWS_HSI: return HSI_48MHz;
 #endif
 
 #if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0S1)
-		case RCC_CFGR_SWS_PLL:
-			clock = READ_BIT(RCC->CFGR, RCC_CFGR_PLLSRC) ? (READ_BIT(RCC->CFGR, RCC_CFGR_PLLXTPRE) ? (HSE_VALUE >> 1) : HSE_VALUE)
-				: HSI_VALUE_PLL_ON;
-			mul = ((RCC->CR & (u32)RCC_CR_PLLMUL) >> RCC_CR_PLLMUL_Pos) + 1;
-			div = ((RCC->CR & RCC_CR_PLLDIV) >> RCC_CR_PLLDIV_Pos) + 1;
+        case RCC_CFGR_SWS_PLL:
+            clock = READ_BIT(RCC->CFGR, RCC_CFGR_PLLSRC) ? (READ_BIT(RCC->CFGR, RCC_CFGR_PLLXTPRE) ? (HSE_VALUE >> 1) : HSE_VALUE)
+                                                         : HSI_VALUE_PLL_ON;
+            mul = ((RCC->CR & (u32)RCC_CR_PLLMUL) >> RCC_CR_PLLMUL_Pos) + 1;
+            div = ((RCC->CR & RCC_CR_PLLDIV) >> RCC_CR_PLLDIV_Pos) + 1;
 
-			return  clock * mul / div;
+            return clock * mul / div;
 #endif
 
-		default:
+        default:
 #if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0S1) || defined(__MM0T1)
-			return HSI_DIV6;
+            return HSI_DIV6;
 #endif
 #if defined(__MM0Q1)
-			return (RCC->CR & RCC_CR_HSI_72M) ? HSI_72MHz_DIV6 : HSI_DIV6;
+            return (RCC->CR & RCC_CR_HSI_72M) ? HSI_72MHz_DIV6 : HSI_DIV6;
 #endif
     }
 #endif
@@ -549,7 +548,8 @@ u32 RCC_GetPCLK1Freq(void)
     return (RCC_GetHCLKFreq() >> tbPresc[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]);
 }
 
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) ||      \
+    defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Returns the PCLK2 frequency of different on chip clocks.
 /// @param  None.
@@ -574,13 +574,13 @@ void RCC_GetClocksFreq(RCC_ClocksTypeDef* clk)
     clk->SYSCLK_Frequency = RCC_GetSysClockFreq();
     clk->HCLK_Frequency   = RCC_GetHCLKFreq();
     clk->PCLK1_Frequency  = RCC_GetPCLK1Freq();
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
-    clk->PCLK2_Frequency  = RCC_GetPCLK2Freq();
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) ||      \
+    defined(__MM3U1)
+    clk->PCLK2_Frequency = RCC_GetPCLK2Freq();
 #endif
 
     clk->ADCCLK_Frequency = clk->PCLK2_Frequency / tbADCPresc[(RCC->CFGR & ADC_CFGR_PRE) >> ADC_CFGR_PRE_Pos];
 }
-
 
 #if defined(__MM3O1) || defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
@@ -602,7 +602,8 @@ void RCC_AHB3PeriphClockCmd(u32 RCC_AHB3Periph, FunctionalState state)
 }
 #endif
 
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1)  || defined(__MM0T1) || defined(__MM3U1)
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM0T1) ||      \
+    defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Enables or disables the AHB peripheral clock.
 /// @param  AHBPeriph: specifies the AHB peripheral to gates its clock.
@@ -638,7 +639,8 @@ void RCC_AHBPeriphClockCmd(u32 AHBPeriph, FunctionalState state)
 }
 #endif
 
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) ||      \
+    defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Enables or disables the High Speed APB (APB2) peripheral clock.
 /// @param  APB2Periph: specifies the APB2 peripheral to gates its
@@ -742,7 +744,7 @@ void RCC_APB1PeriphClockCmd(u32 APB1Periph, FunctionalState state)
 ////////////////////////////////////////////////////////////////////////////////
 void RCC_AHB3PeriphResetCmd(u32 AHB3Periph, FunctionalState state)
 {
-        (state) ? (RCC->AHB3RSTR |= AHB3Periph) : (RCC->AHB3RSTR &= ~AHB3Periph);
+    (state) ? (RCC->AHB3RSTR |= AHB3Periph) : (RCC->AHB3RSTR &= ~AHB3Periph);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -787,7 +789,8 @@ void RCC_AHB1PeriphResetCmd(u32 AHB1Periph, FunctionalState state)
 }
 #endif
 
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) ||      \
+    defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Forces or releases High Speed APB (APB2) peripheral reset.
 /// @param  APB2Periph: specifies the APB2 peripheral to reset.
@@ -1057,12 +1060,13 @@ void exRCC_APB1PeriphReset(u32 RCC_APB1Periph)
 void exRCC_BackupReset()
 {
 #if defined(__MM3N1) || defined(__MM3O1) || defined(__MM0S1)
-    RCC->BDCR |=   RCC_BDCR_BDRST;
-    RCC->BDCR &=  ~RCC_BDCR_BDRST;
+    RCC->BDCR |= RCC_BDCR_BDRST;
+    RCC->BDCR &= ~RCC_BDCR_BDRST;
 #endif
 }
 
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) ||      \
+    defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Forces or releases High Speed APB (APB2) peripheral reset.
 /// @param  RCC_APB2Periph: specifies the APB2 peripheral to reset.
@@ -1104,7 +1108,7 @@ void exRCC_APB2PeriphReset(u32 RCC_APB2Periph)
 ////////////////////////////////////////////////////////////////////////////////
 void exRCC_SystickDisable()
 {
-	SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
+    SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1114,38 +1118,31 @@ void exRCC_SystickDisable()
 ////////////////////////////////////////////////////////////////////////////////
 void exRCC_SystickEnable(u32 sysTickPeriod)
 {
-	SysTick_Config(RCC_GetHCLKFreq() / 1000000 * sysTickPeriod);
+    SysTick_Config(RCC_GetHCLKFreq() / 1000000 * sysTickPeriod);
 }
 
-#define RCC_LATENCY_TB		16
-#define RCC_MUL_TB			12
-#define RCC_DIV_TB			8
-#define RCC_SW_TB			4
-#define RCC_SRC_TB			0
+#define RCC_LATENCY_TB 16
+#define RCC_MUL_TB 12
+#define RCC_DIV_TB 8
+#define RCC_SW_TB 4
+#define RCC_SRC_TB 0
 
 void RCC_ADC_ClockCmd(ADC_TypeDef* peripheral, FunctionalState state)
 {
     switch (*(u32*)&peripheral) {
-
         case ADC1_BASE:
 #if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM3U1)
             (state) ? (RCC->APB2ENR |= RCC_APB2ENR_ADC1) : (RCC->APB2ENR &= ~RCC_APB2ENR_ADC1);
 #endif
             break;
 #if defined(__MM3N1) || defined(__MMT3270)
-        case ADC2_BASE:
-            (state) ? (RCC->APB2ENR |= RCC_APB2ENR_ADC2) : (RCC->APB2ENR &= ~RCC_APB2ENR_ADC2);
-            break;
+        case ADC2_BASE: (state) ? (RCC->APB2ENR |= RCC_APB2ENR_ADC2) : (RCC->APB2ENR &= ~RCC_APB2ENR_ADC2); break;
 #endif
 #if defined(__MM3U1)
-        case ADC3_BASE:
-            (state) ? (RCC->APB2ENR |= RCC_APB2ENR_ADC3) : (RCC->APB2ENR &= ~RCC_APB2ENR_ADC3);
-            break;
+        case ADC3_BASE: (state) ? (RCC->APB2ENR |= RCC_APB2ENR_ADC3) : (RCC->APB2ENR &= ~RCC_APB2ENR_ADC3); break;
 #endif
-        default:
-            break;
+        default: break;
     }
-
 }
 #if defined(__MM3U1)
 
@@ -1157,7 +1154,7 @@ void RCC_ADC_ClockCmd(ADC_TypeDef* peripheral, FunctionalState state)
 ////////////////////////////////////////////////////////////////////////////////
 void RCC_BKP_ClockCmd(BKP_TypeDef* peripheral, FunctionalState state)
 {
-    if(BKP == peripheral) {
+    if (BKP == peripheral) {
         (state) ? (RCC->APB1ENR |= RCC_APB1ENR_BKP) : (RCC->APB1ENR &= ~RCC_APB1ENR_BKP);
         (state) ? (RCC->APB1ENR |= RCC_APB1ENR_PWR) : (RCC->APB1ENR &= ~RCC_APB1ENR_PWR);
     }
@@ -1172,7 +1169,7 @@ void RCC_BKP_ClockCmd(BKP_TypeDef* peripheral, FunctionalState state)
 ////////////////////////////////////////////////////////////////////////////////
 void RCC_CAN_ClockCmd(CAN_TypeDef* peripheral, FunctionalState state)
 {
-    if(CAN1 == peripheral) {
+    if (CAN1 == peripheral) {
         (state) ? (RCC->APB1ENR |= RCC_APB1ENR_CAN) : (RCC->APB1ENR &= ~RCC_APB1ENR_CAN);
     }
 }
@@ -1186,7 +1183,7 @@ void RCC_CAN_ClockCmd(CAN_TypeDef* peripheral, FunctionalState state)
 ////////////////////////////////////////////////////////////////////////////////
 void RCC_COMP_ClockCmd(COMP_TypeDef* peripheral, FunctionalState state)
 {
-    if(COMP == peripheral) {
+    if (COMP == peripheral) {
         (state) ? (RCC->APB2ENR |= RCC_APB2ENR_COMP) : (RCC->APB2ENR &= ~RCC_APB2ENR_COMP);
     }
 }
@@ -1200,7 +1197,7 @@ void RCC_COMP_ClockCmd(COMP_TypeDef* peripheral, FunctionalState state)
 ////////////////////////////////////////////////////////////////////////////////
 void RCC_CRC_ClockCmd(CRC_TypeDef* peripheral, FunctionalState state)
 {
-    if(CRC == peripheral) {
+    if (CRC == peripheral) {
         (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_CRC) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_CRC);
     }
 }
@@ -1214,7 +1211,7 @@ void RCC_CRC_ClockCmd(CRC_TypeDef* peripheral, FunctionalState state)
 ////////////////////////////////////////////////////////////////////////////////
 void RCC_DAC_ClockCmd(DAC_TypeDef* peripheral, FunctionalState state)
 {
-    if(DAC == peripheral) {
+    if (DAC == peripheral) {
         (state) ? (RCC->APB1ENR |= RCC_APB1ENR_DAC) : (RCC->APB1ENR &= ~RCC_APB1ENR_DAC);
     }
 }
@@ -1228,11 +1225,11 @@ void RCC_DAC_ClockCmd(DAC_TypeDef* peripheral, FunctionalState state)
 ////////////////////////////////////////////////////////////////////////////////
 void RCC_DMA_ClockCmd(DMA_TypeDef* peripheral, FunctionalState state)
 {
-    if(DMA1 == peripheral) {
+    if (DMA1 == peripheral) {
         (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_DMA1) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_DMA1);
     }
 #if defined(DMA2)
-    if(DMA2 == peripheral) {
+    if (DMA2 == peripheral) {
         (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_DMA2) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_DMA2);
     }
 #endif
@@ -1248,53 +1245,29 @@ void RCC_GPIO_ClockCmd(GPIO_TypeDef* peripheral, FunctionalState state)
 {
     switch (*(u32*)&peripheral) {
 #if defined(__MM3N1)
-        case (u32)GPIOA:
-            (state) ? (RCC->APB2ENR |= RCC_APB2ENR_GPIOA) : (RCC->APB2ENR &= ~RCC_APB2ENR_GPIOA);
-            break;
-        case (u32)GPIOB:
-            (state) ? (RCC->APB2ENR |= RCC_APB2ENR_GPIOB) : (RCC->APB2ENR &= ~RCC_APB2ENR_GPIOB);
-            break;
-        case (u32)GPIOC:
-            (state) ? (RCC->APB2ENR |= RCC_APB2ENR_GPIOC) : (RCC->APB2ENR &= ~RCC_APB2ENR_GPIOC);
-            break;
-        case (u32)GPIOD:
-            (state) ? (RCC->APB2ENR |= RCC_APB2ENR_GPIOD) : (RCC->APB2ENR &= ~RCC_APB2ENR_GPIOD);
-            break;
+        case (u32)GPIOA: (state) ? (RCC->APB2ENR |= RCC_APB2ENR_GPIOA) : (RCC->APB2ENR &= ~RCC_APB2ENR_GPIOA); break;
+        case (u32)GPIOB: (state) ? (RCC->APB2ENR |= RCC_APB2ENR_GPIOB) : (RCC->APB2ENR &= ~RCC_APB2ENR_GPIOB); break;
+        case (u32)GPIOC: (state) ? (RCC->APB2ENR |= RCC_APB2ENR_GPIOC) : (RCC->APB2ENR &= ~RCC_APB2ENR_GPIOC); break;
+        case (u32)GPIOD: (state) ? (RCC->APB2ENR |= RCC_APB2ENR_GPIOD) : (RCC->APB2ENR &= ~RCC_APB2ENR_GPIOD); break;
 #endif
-#if defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM0T1) || defined(__MM3U1)
-        case (u32)GPIOA:
-            (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOA) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOA);
-            break;
-        case (u32)GPIOB:
-            (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOB) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOB);
-            break;
+#if defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM0T1) ||      \
+    defined(__MM3U1)
+        case (u32)GPIOA: (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOA) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOA); break;
+        case (u32)GPIOB: (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOB) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOB); break;
 #endif
 #if defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
-        case (u32)GPIOC:
-            (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOC) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOC);
-            break;
-        case (u32)GPIOD:
-            (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOD) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOD);
-            break;
+        case (u32)GPIOC: (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOC) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOC); break;
+        case (u32)GPIOD: (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOD) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOD); break;
 #endif
 #if defined(__MM3O1) || defined(__MM3U1)
-        case (u32)GPIOE:
-            (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOE) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOE);
-            break;
+        case (u32)GPIOE: (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOE) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOE); break;
 #endif
 #if defined(__MM3U1)
-        case (u32)GPIOF:
-            (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOF) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOF);
-            break;
-        case (u32)GPIOG:
-            (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOG) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOG);
-            break;
-        case (u32)GPIOH:
-            (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOH) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOH);
-            break;
+        case (u32)GPIOF: (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOF) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOF); break;
+        case (u32)GPIOG: (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOG) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOG); break;
+        case (u32)GPIOH: (state) ? (RCC->AHB1ENR |= RCC_AHB1ENR_GPIOH) : (RCC->AHB1ENR &= ~RCC_AHB1ENR_GPIOH); break;
 #endif
-        default:
-            break;
+        default: break;
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -1305,39 +1278,49 @@ void RCC_GPIO_ClockCmd(GPIO_TypeDef* peripheral, FunctionalState state)
 ////////////////////////////////////////////////////////////////////////////////
 void RCC_UART_ClockCmd(UART_TypeDef* peripheral, FunctionalState state)
 {
-    if(UART2 == peripheral) {
-        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART2) : (RCC->APB1ENR &= ~RCC_APB1ENR_UART2);//exRCC_APB1PeriphReset(RCC_APB1ENR_UART2);
+    if (UART2 == peripheral) {
+        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART2)
+                : (RCC->APB1ENR &= ~RCC_APB1ENR_UART2);  // exRCC_APB1PeriphReset(RCC_APB1ENR_UART2);
     }
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
-    if(UART1 == peripheral) {
-        (state) ? (RCC->APB2ENR |= RCC_APB2ENR_UART1) : (RCC->APB2ENR &= ~RCC_APB2ENR_UART1);//exRCC_APB2PeriphReset(RCC_APB2ENR_UART1);
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) ||      \
+    defined(__MM3U1)
+    if (UART1 == peripheral) {
+        (state) ? (RCC->APB2ENR |= RCC_APB2ENR_UART1)
+                : (RCC->APB2ENR &= ~RCC_APB2ENR_UART1);  // exRCC_APB2PeriphReset(RCC_APB2ENR_UART1);
     }
 #endif
 #if defined(__MM0T1)
-    if(UART1 == peripheral) {
-        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART1) : (RCC->APB1ENR &= ~RCC_APB1ENR_UART1);//exRCC_APB1PeriphReset(RCC_APB1ENR_UART1);
+    if (UART1 == peripheral) {
+        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART1)
+                : (RCC->APB1ENR &= ~RCC_APB1ENR_UART1);  // exRCC_APB1PeriphReset(RCC_APB1ENR_UART1);
     }
 #endif
-#if defined(__MM3N1) || defined(__MM3O1)||defined(__MM3U1)
-    if(UART3 == peripheral) {
-        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART3) : (RCC->APB1ENR &= ~RCC_APB1ENR_UART3);//exRCC_APB1PeriphReset(RCC_APB1ENR_UART3);
+#if defined(__MM3N1) || defined(__MM3O1) || defined(__MM3U1)
+    if (UART3 == peripheral) {
+        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART3)
+                : (RCC->APB1ENR &= ~RCC_APB1ENR_UART3);  // exRCC_APB1PeriphReset(RCC_APB1ENR_UART3);
     }
 #endif
-#if defined(__MM3O1)||defined(__MM3U1)
-    if(UART4 == peripheral) {
-        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART4) : (RCC->APB1ENR &= ~RCC_APB1ENR_UART4);//exRCC_APB1PeriphReset(RCC_APB1ENR_UART4);
+#if defined(__MM3O1) || defined(__MM3U1)
+    if (UART4 == peripheral) {
+        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART4)
+                : (RCC->APB1ENR &= ~RCC_APB1ENR_UART4);  // exRCC_APB1PeriphReset(RCC_APB1ENR_UART4);
     }
-    if(UART5 == peripheral) {
-        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART5) : (RCC->APB1ENR &= ~RCC_APB1ENR_UART5);//exRCC_APB1PeriphReset(RCC_APB1ENR_UART5);
+    if (UART5 == peripheral) {
+        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART5)
+                : (RCC->APB1ENR &= ~RCC_APB1ENR_UART5);  // exRCC_APB1PeriphReset(RCC_APB1ENR_UART5);
     }
-    if(UART6 == peripheral) {
-        (state) ? (RCC->APB2ENR |= RCC_APB2ENR_UART6) : (RCC->APB2ENR &= ~RCC_APB2ENR_UART6);//exRCC_APB2PeriphReset(RCC_APB2ENR_UART6);
+    if (UART6 == peripheral) {
+        (state) ? (RCC->APB2ENR |= RCC_APB2ENR_UART6)
+                : (RCC->APB2ENR &= ~RCC_APB2ENR_UART6);  // exRCC_APB2PeriphReset(RCC_APB2ENR_UART6);
     }
-    if(UART7 == peripheral) {
-        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART7) : (RCC->APB1ENR &= ~RCC_APB1ENR_UART7);//exRCC_APB1PeriphReset(RCC_APB1ENR_UART7);
+    if (UART7 == peripheral) {
+        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART7)
+                : (RCC->APB1ENR &= ~RCC_APB1ENR_UART7);  // exRCC_APB1PeriphReset(RCC_APB1ENR_UART7);
     }
-    if(UART8 == peripheral) {
-        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART8) : (RCC->APB1ENR &= ~RCC_APB1ENR_UART8);//exRCC_APB1PeriphReset(RCC_APB1ENR_UART8);
+    if (UART8 == peripheral) {
+        (state) ? (RCC->APB1ENR |= RCC_APB1ENR_UART8)
+                : (RCC->APB1ENR &= ~RCC_APB1ENR_UART8);  // exRCC_APB1PeriphReset(RCC_APB1ENR_UART8);
     }
 #endif
 }
@@ -1353,83 +1336,91 @@ ErrorStatus exRCC_Init(RCCInitStruct_TypeDef* para)
     RCC_DeInit();
 
     // Protection
-    if ((((int)((para->RCC_SystemClock & 0xF0000) >> RCC_LATENCY_TB) < 0x0) || \
-			((int)((para->RCC_SystemClock & 0xF0000) >> RCC_LATENCY_TB) > 3)) != 0) {
-        para->RCC_SystemClock = SYSCLK_HSI_6d;									// default clock
-		RCC->CR |= RCC_CR_HSION;
-		if (!RCC_WaitForFlagStartUp(RCC_FLAG_HSIRDY))  return ERROR;
-	}
-	else {
-		// Flash
-		FLASH->ACR |= FLASH_ACR_PRFTBE;
-		FLASH->ACR &= ~FLASH_ACR_LATENCY;
+    if ((((int)((para->RCC_SystemClock & 0xF0000) >> RCC_LATENCY_TB) < 0x0) ||
+         ((int)((para->RCC_SystemClock & 0xF0000) >> RCC_LATENCY_TB) > 3)) != 0) {
+        para->RCC_SystemClock = SYSCLK_HSI_6d;  // default clock
+        RCC->CR |= RCC_CR_HSION;
+        if (!RCC_WaitForFlagStartUp(RCC_FLAG_HSIRDY))
+            return ERROR;
+    }
+    else {
+        // Flash
+        FLASH->ACR |= FLASH_ACR_PRFTBE;
+        FLASH->ACR &= ~FLASH_ACR_LATENCY;
         FLASH->ACR |= (para->RCC_SystemClock & 0xF0000) >> RCC_LATENCY_TB;
 
 //------------------------------------------------------------------------------
 #if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0S1)
-		// Set PLL
+        // Set PLL
         if (((para->RCC_SystemClock & 0x000F0) >> RCC_SW_TB) == 2) {
-			RCC->CR |= RCC_CR_PLLON;
-			if (!RCC_WaitForFlagStartUp(RCC_FLAG_PLLRDY)) return ERROR;
-		}
-        RCC->CR |= (((para->RCC_SystemClock & 0x0F000) >> RCC_MUL_TB) << RCC_CR_PLLMUL_Pos) & RCC_CR_PLLMUL;  	// RCC_CR_PLLMUL
-		RCC->CR |= (((para->RCC_SystemClock & 0x00F00) >> RCC_DIV_TB) << RCC_CR_PLLDIV_Pos) & RCC_CR_PLLDIV;  	// RCC_CR_PLLDIV
+            RCC->CR |= RCC_CR_PLLON;
+            if (!RCC_WaitForFlagStartUp(RCC_FLAG_PLLRDY))
+                return ERROR;
+        }
+        RCC->CR |= (((para->RCC_SystemClock & 0x0F000) >> RCC_MUL_TB) << RCC_CR_PLLMUL_Pos) & RCC_CR_PLLMUL;  // RCC_CR_PLLMUL
+        RCC->CR |= (((para->RCC_SystemClock & 0x00F00) >> RCC_DIV_TB) << RCC_CR_PLLDIV_Pos) & RCC_CR_PLLDIV;  // RCC_CR_PLLDIV
 #endif
 
 #if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0S1)
-		RCC->CFGR |= (para->RCC_PrescaleUSB << RCC_CFGR_USBPRE_Pos) & RCC_CFGR_USBPRE;                               					// RCC_CR_USB
+        RCC->CFGR |= (para->RCC_PrescaleUSB << RCC_CFGR_USBPRE_Pos) & RCC_CFGR_USBPRE;  // RCC_CR_USB
 #endif
 
 #if defined(__MM0Q1)
-    // Null
+        // Null
 #endif
 
 //------------------------------------------------------------------------------
 #if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0S1)
-		// Set Oscillator
+        // Set Oscillator
         if (((para->RCC_SystemClock & 0x0000F) >> RCC_SRC_TB) == 0) {
-			RCC->CR |= RCC_CR_HSION;
-			if (!RCC_WaitForFlagStartUp(RCC_FLAG_HSIRDY)) return ERROR;
-			RCC->CFGR &= ~RCC_CFGR_PLLSRC;
-		}
-		else {
-			RCC->CR |= RCC_CR_HSEON;
-			if (!RCC_WaitForFlagStartUp(RCC_FLAG_HSERDY)) return ERROR;
-			RCC->CFGR |= RCC_CFGR_PLLSRC;
-		}
+            RCC->CR |= RCC_CR_HSION;
+            if (!RCC_WaitForFlagStartUp(RCC_FLAG_HSIRDY))
+                return ERROR;
+            RCC->CFGR &= ~RCC_CFGR_PLLSRC;
+        }
+        else {
+            RCC->CR |= RCC_CR_HSEON;
+            if (!RCC_WaitForFlagStartUp(RCC_FLAG_HSERDY))
+                return ERROR;
+            RCC->CFGR |= RCC_CFGR_PLLSRC;
+        }
 #endif
 
 #if defined(__MM0Q1) || defined(__MM0T1)
- 		if (((para->RCC_SystemClock & 0x0000F) >> RCC_SRC_TB) == 1) {
-			RCC->CR |= RCC_CR_HSEON;
-			if (!RCC_WaitForFlagStartUp(RCC_FLAG_HSERDY)) return ERROR;
-		}
+        if (((para->RCC_SystemClock & 0x0000F) >> RCC_SRC_TB) == 1) {
+            RCC->CR |= RCC_CR_HSEON;
+            if (!RCC_WaitForFlagStartUp(RCC_FLAG_HSERDY))
+                return ERROR;
+        }
         else if (((para->RCC_SystemClock & 0x0000F) >> RCC_SRC_TB) == 2) {
-			RCC->CSR |= RCC_CSR_LSION;
-			if (!RCC_WaitForFlagStartUp(RCC_FLAG_LSIRDY)) return ERROR;
-		}
-		else {
+            RCC->CSR |= RCC_CSR_LSION;
+            if (!RCC_WaitForFlagStartUp(RCC_FLAG_LSIRDY))
+                return ERROR;
+        }
+        else {
 #if defined(__MM0Q1)
-            ((para->RCC_SystemClock & 0xF0000) >> RCC_LATENCY_TB == 1) ?
-				(RCC->CR &= ~RCC_CR_HSI_72M) : (RCC->CR |=  RCC_CR_HSI_72M);
+            ((para->RCC_SystemClock & 0xF0000) >> RCC_LATENCY_TB == 1) ? (RCC->CR &= ~RCC_CR_HSI_72M)
+                                                                       : (RCC->CR |= RCC_CR_HSI_72M);
 #endif
-			RCC->CR |= RCC_CR_HSION;
-			if (!RCC_WaitForFlagStartUp(RCC_FLAG_HSIRDY)) return ERROR;
-		}
+            RCC->CR |= RCC_CR_HSION;
+            if (!RCC_WaitForFlagStartUp(RCC_FLAG_HSIRDY))
+                return ERROR;
+        }
 #endif
-	}
+    }
     //------------------------------------------------------------------------------
     // AHB, APB1, APB2
-    RCC->CFGR |= (para->RCC_PrescaleAHB  << RCC_CFGR_HPRE_Pos)  & RCC_CFGR_HPRE;
+    RCC->CFGR |= (para->RCC_PrescaleAHB << RCC_CFGR_HPRE_Pos) & RCC_CFGR_HPRE;
     RCC->CFGR |= (para->RCC_PrescaleAPB1 << RCC_CFGR_PPRE1_Pos) & RCC_CFGR_PPRE1;
 #if defined(__MM3N1) || defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1)
     RCC->CFGR |= (para->RCC_PrescaleAPB2 << RCC_CFGR_PPRE2_Pos) & RCC_CFGR_PPRE2;
 #endif
 
     // Clock Switch to
-      RCC->CFGR |= (((para->RCC_SystemClock & 0x000F0) >> RCC_SW_TB) << RCC_CFGR_SW_Pos) & RCC_CFGR_SW;
+    RCC->CFGR |= (((para->RCC_SystemClock & 0x000F0) >> RCC_SW_TB) << RCC_CFGR_SW_Pos) & RCC_CFGR_SW;
 
-    while (((RCC->CFGR & RCC_CFGR_SWS) >> 2) != ((para->RCC_SystemClock & 0x000F0) >> RCC_SW_TB));
+    while (((RCC->CFGR & RCC_CFGR_SWS) >> 2) != ((para->RCC_SystemClock & 0x000F0) >> RCC_SW_TB))
+        ;
 
     if (para->SysTickEN == ENABLE)
         SysTick_Config(RCC_GetHCLKFreq() / 1000000 * para->SysTickPeriod);
@@ -1450,9 +1441,8 @@ ErrorStatus exRCC_Init(RCCInitStruct_TypeDef* para)
 ////////////////////////////////////////////////////////////////////////////////
 void exRCC_Set_OSC_ITRIM_Config(u32 val)
 {
-
-  RCC->CONFIG &= ~RCC_CONFIG_ITRIM;
-  RCC->CONFIG |= val;
+    RCC->CONFIG &= ~RCC_CONFIG_ITRIM;
+    RCC->CONFIG |= val;
 }
 #endif
 

@@ -22,7 +22,6 @@
 #ifndef __BSP_COMP_H
 #define __BSP_COMP_H
 
-
 #include "mm32_types.h"
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Board_Support_Package
@@ -33,13 +32,11 @@
 /// @brief COMP BSP modules
 /// @{
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup COMP_Exported_Types
 /// @{
 
 /// @}
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup COMP_Exported_Variables
@@ -62,7 +59,6 @@
 void BSP_COMP_GPIO_Configure(u32 COMPx, u8 inp, u8 inm, u8 out);
 void BSP_COMP_Configure(u32 COMPx, u32 NonInvert, u32 Invert, u32 Output);
 /// @}
-
 
 /// @}
 

@@ -61,18 +61,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 uint8_t FATFS_LinkDriverEx(const Diskio_drvTypeDef* drv, char* path, uint8_t lun)
 {
-    uint8_t ret = 1;
+    uint8_t ret     = 1;
     uint8_t DiskNum = 0;
-    if(disk.nbr < FF_VOLUMES) {
+    if (disk.nbr < FF_VOLUMES) {
         disk.is_initialized[disk.nbr] = 0;
-        disk.drv[disk.nbr] = drv;
-        disk.lun[disk.nbr] = lun;
-        DiskNum = disk.nbr++;
-        path[0] = DiskNum + '0';
-        path[1] = ':';
-        path[2] = '/';
-        path[3] = 0;
-        ret = 0;
+        disk.drv[disk.nbr]            = drv;
+        disk.lun[disk.nbr]            = lun;
+        DiskNum                       = disk.nbr++;
+        path[0]                       = DiskNum + '0';
+        path[1]                       = ':';
+        path[2]                       = '/';
+        path[3]                       = 0;
+        ret                           = 0;
     }
     return ret;
 }
@@ -100,10 +100,10 @@ uint8_t FATFS_LinkDriver(const Diskio_drvTypeDef* drv, char* path)
 uint8_t FATFS_UnLinkDriverEx(char* path, uint8_t lun)
 {
     uint8_t DiskNum = 0;
-    uint8_t ret = 1;
-    if(disk.nbr >= 1) {
+    uint8_t ret     = 1;
+    if (disk.nbr >= 1) {
         DiskNum = path[0] - '0';
-        if(disk.drv[DiskNum] != 0) {
+        if (disk.drv[DiskNum] != 0) {
             disk.drv[DiskNum] = 0;
             disk.lun[DiskNum] = 0;
             disk.nbr--;
@@ -134,15 +134,6 @@ uint8_t FATFS_GetAttachedDriversNbr(void)
     return disk.nbr;
 }
 
-
-
-
-
-
-
-
-
-
 #include "bsp_sdio.h"
 ////////////////////////////////////////////////////////////////////////////////
 #if defined(SDMMC_DATATIMEOUT)
@@ -155,34 +146,30 @@ uint8_t FATFS_GetAttachedDriversNbr(void)
 
 #define SD_DEFAULT_BLOCK_SIZE 512
 
-
 static volatile DSTATUS Stat = STA_NOINIT;
 
-DSTATUS SD_initialize (BYTE);
-DSTATUS SD_status (BYTE);
-DRESULT SD_read (BYTE, BYTE*, DWORD, UINT);
+DSTATUS SD_initialize(BYTE);
+DSTATUS SD_status(BYTE);
+DRESULT SD_read(BYTE, BYTE*, DWORD, UINT);
 #if _USE_WRITE == 1
-DRESULT SD_write (BYTE, const BYTE*, DWORD, UINT);
+DRESULT SD_write(BYTE, const BYTE*, DWORD, UINT);
 #endif
 #if _USE_IOCTL == 1
-DRESULT SD_ioctl (BYTE, BYTE, void*);
+DRESULT SD_ioctl(BYTE, BYTE, void*);
 #endif
 
-const Diskio_drvTypeDef  SD_Driver = {
-    SD_initialize,
-    SD_status,
-    SD_read,
-#if  _USE_WRITE == 1
+const Diskio_drvTypeDef SD_Driver = {
+    SD_initialize, SD_status, SD_read,
+#if _USE_WRITE == 1
     SD_write,
 #endif
 
-#if  _USE_IOCTL == 1
+#if _USE_IOCTL == 1
     SD_ioctl,
 #endif
 };
 
-
-//static DSTATUS SD_CheckStatus(BYTE lun)
+// static DSTATUS SD_CheckStatus(BYTE lun)
 //{
 //  Stat = STA_NOINIT;
 
@@ -205,8 +192,10 @@ DSTATUS SD_initialize(BYTE lun)
 
     Stat = SD_Init();
 
-    if(Stat)return  STA_NOINIT;
-    else return 0;
+    if (Stat)
+        return STA_NOINIT;
+    else
+        return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -218,7 +207,6 @@ DSTATUS SD_status(BYTE lun)
 {
     return 0;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Reads Sector(s)
@@ -233,17 +221,19 @@ DRESULT SD_read(BYTE lun, BYTE* buff, DWORD sector, UINT count)
 {
     DRESULT res = RES_ERROR;
 
-    if (!count)return RES_PARERR;
+    if (!count)
+        return RES_PARERR;
     res = (DRESULT)SD_ReadDisk(buff, sector, count);
-    while(res) {
+    while (res) {
         SD_Init();
         res = (DRESULT)SD_ReadDisk(buff, sector, count);
-        //printf("sd rd error:%d\r\n",res);
+        // printf("sd rd error:%d\r\n",res);
     }
-    if(res == 0x00)return RES_OK;
-    else return RES_ERROR;
+    if (res == 0x00)
+        return RES_OK;
+    else
+        return RES_ERROR;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Writes Sector(s)
@@ -258,18 +248,20 @@ DRESULT SD_read(BYTE lun, BYTE* buff, DWORD sector, UINT count)
 DRESULT SD_write(BYTE lun, const BYTE* buff, DWORD sector, UINT count)
 {
     DRESULT res = RES_ERROR;
-    if (!count)return RES_PARERR;
+    if (!count)
+        return RES_PARERR;
     res = (DRESULT)SD_WriteDisk((u8*)buff, sector, count);
-    while(res) {
+    while (res) {
         SD_Init();
         res = (DRESULT)SD_WriteDisk((u8*)buff, sector, count);
-        //printf("sd wr error:%d\r\n",res);
+        // printf("sd wr error:%d\r\n",res);
     }
-    if(res == 0x00)return RES_OK;
-    else return RES_ERROR;
+    if (res == 0x00)
+        return RES_OK;
+    else
+        return RES_ERROR;
 }
 #endif
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  I/O control operation
@@ -282,48 +274,25 @@ DRESULT SD_write(BYTE lun, const BYTE* buff, DWORD sector, UINT count)
 DRESULT SD_ioctl(BYTE lun, BYTE cmd, void* buff)
 {
     DRESULT res = RES_ERROR;
-    switch(cmd) {
-        case CTRL_SYNC:
-            res = RES_OK;
-            break;
+    switch (cmd) {
+        case CTRL_SYNC: res = RES_OK; break;
         case GET_SECTOR_SIZE:
             *(DWORD*)buff = 512;
-            res = RES_OK;
+            res           = RES_OK;
             break;
         case GET_BLOCK_SIZE:
             *(WORD*)buff = SDCardInfo.CardBlockSize;
-            res = RES_OK;
+            res          = RES_OK;
             break;
         case GET_SECTOR_COUNT:
             *(DWORD*)buff = SDCardInfo.CardCapacity / 512;
-            res = RES_OK;
+            res           = RES_OK;
             break;
-        default:
-            res = RES_PARERR;
-            break;
+        default: res = RES_PARERR; break;
     }
     return res;
 }
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 DWORD get_fattime(void)

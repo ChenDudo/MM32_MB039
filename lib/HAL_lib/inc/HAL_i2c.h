@@ -43,7 +43,7 @@
 /// @defgroup DRV_Exported_Constants
 /// @{
 
-#define I2C_OWN_ADDRESS  0x20
+#define I2C_OWN_ADDRESS 0x20
 
 /// @}
 
@@ -52,11 +52,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct {
     u16 Mode;        ///< Specifies the I2C mode. This parameter can be a value of
-                         ///< I2C_mode.
+                     ///< I2C_mode.
     u16 Speed;       ///< Specifies the I2C speed. This parameter can be a value
-                         ///< of I2C_speed.
+                     ///< of I2C_speed.
     u16 OwnAddress;  ///< Specifies the first device own address. This
-                         ///< parameter can be a 7-bit or 10-bit address.
+                     ///< parameter can be a 7-bit or 10-bit address.
     u32 ClockSpeed;  ///< Specifies the clock speed.
 } I2C_InitTypeDef;
 /// @}
@@ -64,7 +64,6 @@ typedef struct {
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup I2C_Exported_Constants
 /// @{
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief I2C DMA Direction
@@ -93,81 +92,81 @@ typedef enum {
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup I2C_Private_Defines
 /// @{
-#define INTR_MASK           ((u16)0xC000)
-#define FLAG_Mask           ((u32)0x00793FFF)
-#define IC_TAR_ENDUAL_Set   ((u16)0x1000)
+#define INTR_MASK ((u16)0xC000)
+#define FLAG_Mask ((u32)0x00793FFF)
+#define IC_TAR_ENDUAL_Set ((u16)0x1000)
 #define IC_TAR_ENDUAL_Reset ((u16)0xEFFF)
 /// @}
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup I2C_modes
 /// @{
-#define TX_EMPTY_CTRL       I2C_CR_EMPINT
-#define IC_SLAVE_DISABLE    I2C_CR_SLAVEDIS
-#define IC_RESTART_EN       I2C_CR_REPEN
+#define TX_EMPTY_CTRL I2C_CR_EMPINT
+#define IC_SLAVE_DISABLE I2C_CR_SLAVEDIS
+#define IC_RESTART_EN I2C_CR_REPEN
 /// @}
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup I2C_interrupts_definition
 /// @{
-#define I2C_IT_RX_UNDER     ((u16)0x0001)
-#define I2C_IT_RX_OVER      ((u16)0x0002)
-#define I2C_IT_RX_FULL      ((u16)0x0004)
-#define I2C_IT_TX_OVER      ((u16)0x0008)
-#define I2C_IT_TX_EMPTY     ((u16)0x0010)
-#define I2C_IT_RD_REQ       ((u16)0x0020)
-#define I2C_IT_TX_ABRT      ((u16)0x0040)
-#define I2C_IT_RX_DONE      ((u16)0x0080)
-#define I2C_IT_ACTIVITY     ((u16)0x0100)
-#define I2C_IT_STOP_DET     ((u16)0x0200)
-#define I2C_IT_START_DET    ((u16)0x0400)
-#define I2C_IT_GEN_CALL     ((u16)0x0800)
+#define I2C_IT_RX_UNDER ((u16)0x0001)
+#define I2C_IT_RX_OVER ((u16)0x0002)
+#define I2C_IT_RX_FULL ((u16)0x0004)
+#define I2C_IT_TX_OVER ((u16)0x0008)
+#define I2C_IT_TX_EMPTY ((u16)0x0010)
+#define I2C_IT_RD_REQ ((u16)0x0020)
+#define I2C_IT_TX_ABRT ((u16)0x0040)
+#define I2C_IT_RX_DONE ((u16)0x0080)
+#define I2C_IT_ACTIVITY ((u16)0x0100)
+#define I2C_IT_STOP_DET ((u16)0x0200)
+#define I2C_IT_START_DET ((u16)0x0400)
+#define I2C_IT_GEN_CALL ((u16)0x0800)
 /// @}
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup I2C_flags_definition
 /// @{
-#define I2C_FLAG_RX_UNDER     ((u16)0x0001)
-#define I2C_FLAG_RX_OVER      ((u16)0x0002)
-#define I2C_FLAG_RX_FULL      ((u16)0x0004)
-#define I2C_FLAG_TX_OVER      ((u16)0x0008)
-#define I2C_FLAG_TX_EMPTY     ((u16)0x0010)
-#define I2C_FLAG_RD_REQ       ((u16)0x0020)
-#define I2C_FLAG_TX_ABRT      ((u16)0x0040)
-#define I2C_FLAG_RX_DONE      ((u16)0x0080)
-#define I2C_FLAG_ACTIVITY     ((u16)0x0100)
-#define I2C_FLAG_STOP_DET     ((u16)0x0200)
-#define I2C_FLAG_START_DET    ((u16)0x0400)
-#define I2C_FLAG_GEN_CALL     ((u16)0x0800)
+#define I2C_FLAG_RX_UNDER ((u16)0x0001)
+#define I2C_FLAG_RX_OVER ((u16)0x0002)
+#define I2C_FLAG_RX_FULL ((u16)0x0004)
+#define I2C_FLAG_TX_OVER ((u16)0x0008)
+#define I2C_FLAG_TX_EMPTY ((u16)0x0010)
+#define I2C_FLAG_RD_REQ ((u16)0x0020)
+#define I2C_FLAG_TX_ABRT ((u16)0x0040)
+#define I2C_FLAG_RX_DONE ((u16)0x0080)
+#define I2C_FLAG_ACTIVITY ((u16)0x0100)
+#define I2C_FLAG_STOP_DET ((u16)0x0200)
+#define I2C_FLAG_START_DET ((u16)0x0400)
+#define I2C_FLAG_GEN_CALL ((u16)0x0800)
 /// @}
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup I2C_Events
 /// @{
-#define I2C_EVENT_RX_UNDER     ((u16)0x0001)
-#define I2C_EVENT_RX_OVER      ((u16)0x0002)
-#define I2C_EVENT_RX_FULL      ((u16)0x0004)
-#define I2C_EVENT_TX_OVER      ((u16)0x0008)
-#define I2C_EVENT_TX_EMPTY     ((u16)0x0010)
-#define I2C_EVENT_RD_REQ       ((u16)0x0020)
-#define I2C_EVENT_TX_ABRT      ((u16)0x0040)
-#define I2C_EVENT_RX_DONE      ((u16)0x0080)
-#define I2C_EVENT_ACTIVITY     ((u16)0x0100)
-#define I2C_EVENT_STOP_DET     ((u16)0x0200)
-#define I2C_EVENT_START_DET    ((u16)0x0400)
-#define I2C_EVENT_GEN_CALL     ((u16)0x0800)
+#define I2C_EVENT_RX_UNDER ((u16)0x0001)
+#define I2C_EVENT_RX_OVER ((u16)0x0002)
+#define I2C_EVENT_RX_FULL ((u16)0x0004)
+#define I2C_EVENT_TX_OVER ((u16)0x0008)
+#define I2C_EVENT_TX_EMPTY ((u16)0x0010)
+#define I2C_EVENT_RD_REQ ((u16)0x0020)
+#define I2C_EVENT_TX_ABRT ((u16)0x0040)
+#define I2C_EVENT_RX_DONE ((u16)0x0080)
+#define I2C_EVENT_ACTIVITY ((u16)0x0100)
+#define I2C_EVENT_STOP_DET ((u16)0x0200)
+#define I2C_EVENT_START_DET ((u16)0x0400)
+#define I2C_EVENT_GEN_CALL ((u16)0x0800)
 /// @}
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup I2C_Statusflags_definition
 /// @{
-#define I2C_STATUS_FLAG_ACTIVITY    ((u16)0x8001)
-#define I2C_STATUS_FLAG_TFNF        ((u16)0x8002)
-#define I2C_STATUS_FLAG_TFE         ((u16)0x8004)
-#define I2C_STATUS_FLAG_RFNE        ((u16)0x8008)
-#define I2C_STATUS_FLAG_RFF         ((u16)0x8010)
-#define I2C_STATUS_FLAG_M_ACTIVITY  ((u16)0x8020)
-#define I2C_STATUS_FLAG_S_ACTIVITY  ((u16)0x8040)
+#define I2C_STATUS_FLAG_ACTIVITY ((u16)0x8001)
+#define I2C_STATUS_FLAG_TFNF ((u16)0x8002)
+#define I2C_STATUS_FLAG_TFE ((u16)0x8004)
+#define I2C_STATUS_FLAG_RFNE ((u16)0x8008)
+#define I2C_STATUS_FLAG_RFF ((u16)0x8010)
+#define I2C_STATUS_FLAG_M_ACTIVITY ((u16)0x8020)
+#define I2C_STATUS_FLAG_S_ACTIVITY ((u16)0x8040)
 /// @}
 
 /// @}
@@ -223,7 +222,6 @@ ITStatus    I2C_GetITStatus(I2C_TypeDef* I2Cn, u32 it);
 void I2C_SendSlaveAddress(I2C_TypeDef* I2Cn, u8 addr);
 void I2C_SlaveConfigure(I2C_TypeDef* I2Cn, FunctionalState state);
 void I2C_DMAConfigure(I2C_TypeDef* I2Cn, u8 dir);
-
 
 /// @}
 

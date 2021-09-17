@@ -39,7 +39,8 @@
 /// @defgroup DMA_Exported_Types
 /// @{
 
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) ||      \
+    defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief DMA data transfer direction Enumerate definition
 /// @anchor DMA_data_transfer_direction
@@ -83,8 +84,8 @@ typedef enum {
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
     DMA_MemoryDataSize_Byte     = 0U,
-    DMA_MemoryDataSize_HalfWord = DMA_CCR_MSIZE_HALFWORD,  						// 0x00000400U
-    DMA_MemoryDataSize_Word     = DMA_CCR_MSIZE_WORD       						// 0x00000800U
+    DMA_MemoryDataSize_HalfWord = DMA_CCR_MSIZE_HALFWORD,  // 0x00000400U
+    DMA_MemoryDataSize_Word     = DMA_CCR_MSIZE_WORD       // 0x00000800U
 } DMA_memory_data_size_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +94,7 @@ typedef enum {
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
     DMA_Mode_Normal   = 0U,
-    DMA_Mode_Circular = DMA_CCR_CIRC  											// 0x00000020U
+    DMA_Mode_Circular = DMA_CCR_CIRC  // 0x00000020U
 } DMA_circular_normal_mode_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -102,9 +103,9 @@ typedef enum {
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
     DMA_Priority_Low      = 0U,
-    DMA_Priority_Medium   = DMA_CCR_PL_Medium,   								// 0x00001000U
-    DMA_Priority_High     = DMA_CCR_PL_High,     								// 0x00002000U
-    DMA_Priority_VeryHigh = DMA_CCR_PL_VeryHigh  								// 0x00003000U
+    DMA_Priority_Medium   = DMA_CCR_PL_Medium,   // 0x00001000U
+    DMA_Priority_High     = DMA_CCR_PL_High,     // 0x00002000U
+    DMA_Priority_VeryHigh = DMA_CCR_PL_VeryHigh  // 0x00003000U
 } DMA_priority_level_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -113,7 +114,7 @@ typedef enum {
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
     DMA_M2M_Disable = 0U,
-    DMA_M2M_Enable  = DMA_CCR_M2M  												// 0x00004000U
+    DMA_M2M_Enable  = DMA_CCR_M2M  // 0x00004000U
 } DMA_memory_to_memory_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -132,58 +133,58 @@ typedef enum {
 /// @anchor DMA_Flags
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    DMAx_IT_GLy               = (0x00000001UL),
-    DMAx_IT_TCy               = (0x00000002UL),
-    DMAx_IT_HTy               = (0x00000004UL),
-    DMAx_IT_TEy               = (0x00000008UL),
-    DMA1_IT_GL1               = (0x00000001UL),
-    DMA1_IT_TC1               = (0x00000002UL),
-    DMA1_IT_HT1               = (0x00000004UL),
-    DMA1_IT_TE1               = (0x00000008UL),
-    DMA1_IT_GL2               = (0x00000010UL),
-    DMA1_IT_TC2               = (0x00000020UL),
-    DMA1_IT_HT2               = (0x00000040UL),
-    DMA1_IT_TE2               = (0x00000080UL),
-    DMA1_IT_GL3               = (0x00000100UL),
-    DMA1_IT_TC3               = (0x00000200UL),
-    DMA1_IT_HT3               = (0x00000400UL),
-    DMA1_IT_TE3               = (0x00000800UL),
-    DMA1_IT_GL4               = (0x00001000UL),
-    DMA1_IT_TC4               = (0x00002000UL),
-    DMA1_IT_HT4               = (0x00004000UL),
-    DMA1_IT_TE4               = (0x00008000UL),
-    DMA1_IT_GL5               = (0x00010000UL),
-    DMA1_IT_TC5               = (0x00020000UL),
-    DMA1_IT_HT5               = (0x00040000UL),
-    DMA1_IT_TE5               = (0x00080000UL),
-    DMA1_IT_GL6               = (0x00100000UL),
-    DMA1_IT_TC6               = (0x00200000UL),
-    DMA1_IT_HT6               = (0x00400000UL),
-    DMA1_IT_TE6               = (0x00800000UL),
-    DMA1_IT_GL7               = (0x01000000UL),
-    DMA1_IT_TC7               = (0x02000000UL),
-    DMA1_IT_HT7               = (0x04000000UL),
-    DMA1_IT_TE7               = (0x08000000UL),
-    DMA2_IT_GL1               = (0x10000001UL),
-    DMA2_IT_TC1               = (0x10000002UL),
-    DMA2_IT_HT1               = (0x10000004UL),
-    DMA2_IT_TE1               = (0x10000008UL),
-    DMA2_IT_GL2               = (0x10000010UL),
-    DMA2_IT_TC2               = (0x10000020UL),
-    DMA2_IT_HT2               = (0x10000040UL),
-    DMA2_IT_TE2               = (0x10000080UL),
-    DMA2_IT_GL3               = (0x10000100UL),
-    DMA2_IT_TC3               = (0x10000200UL),
-    DMA2_IT_HT3               = (0x10000400UL),
-    DMA2_IT_TE3               = (0x10000800UL),
-    DMA2_IT_GL4               = (0x10001000UL),
-    DMA2_IT_TC4               = (0x10002000UL),
-    DMA2_IT_HT4               = (0x10004000UL),
-    DMA2_IT_TE4               = (0x10008000UL),
-    DMA2_IT_GL5               = (0x10010000UL),
-    DMA2_IT_TC5               = (0x10020000UL),
-    DMA2_IT_HT5               = (0x10040000UL),
-    DMA2_IT_TE5               = (0x10080000UL),
+    DMAx_IT_GLy = (0x00000001UL),
+    DMAx_IT_TCy = (0x00000002UL),
+    DMAx_IT_HTy = (0x00000004UL),
+    DMAx_IT_TEy = (0x00000008UL),
+    DMA1_IT_GL1 = (0x00000001UL),
+    DMA1_IT_TC1 = (0x00000002UL),
+    DMA1_IT_HT1 = (0x00000004UL),
+    DMA1_IT_TE1 = (0x00000008UL),
+    DMA1_IT_GL2 = (0x00000010UL),
+    DMA1_IT_TC2 = (0x00000020UL),
+    DMA1_IT_HT2 = (0x00000040UL),
+    DMA1_IT_TE2 = (0x00000080UL),
+    DMA1_IT_GL3 = (0x00000100UL),
+    DMA1_IT_TC3 = (0x00000200UL),
+    DMA1_IT_HT3 = (0x00000400UL),
+    DMA1_IT_TE3 = (0x00000800UL),
+    DMA1_IT_GL4 = (0x00001000UL),
+    DMA1_IT_TC4 = (0x00002000UL),
+    DMA1_IT_HT4 = (0x00004000UL),
+    DMA1_IT_TE4 = (0x00008000UL),
+    DMA1_IT_GL5 = (0x00010000UL),
+    DMA1_IT_TC5 = (0x00020000UL),
+    DMA1_IT_HT5 = (0x00040000UL),
+    DMA1_IT_TE5 = (0x00080000UL),
+    DMA1_IT_GL6 = (0x00100000UL),
+    DMA1_IT_TC6 = (0x00200000UL),
+    DMA1_IT_HT6 = (0x00400000UL),
+    DMA1_IT_TE6 = (0x00800000UL),
+    DMA1_IT_GL7 = (0x01000000UL),
+    DMA1_IT_TC7 = (0x02000000UL),
+    DMA1_IT_HT7 = (0x04000000UL),
+    DMA1_IT_TE7 = (0x08000000UL),
+    DMA2_IT_GL1 = (0x10000001UL),
+    DMA2_IT_TC1 = (0x10000002UL),
+    DMA2_IT_HT1 = (0x10000004UL),
+    DMA2_IT_TE1 = (0x10000008UL),
+    DMA2_IT_GL2 = (0x10000010UL),
+    DMA2_IT_TC2 = (0x10000020UL),
+    DMA2_IT_HT2 = (0x10000040UL),
+    DMA2_IT_TE2 = (0x10000080UL),
+    DMA2_IT_GL3 = (0x10000100UL),
+    DMA2_IT_TC3 = (0x10000200UL),
+    DMA2_IT_HT3 = (0x10000400UL),
+    DMA2_IT_TE3 = (0x10000800UL),
+    DMA2_IT_GL4 = (0x10001000UL),
+    DMA2_IT_TC4 = (0x10002000UL),
+    DMA2_IT_HT4 = (0x10004000UL),
+    DMA2_IT_TE4 = (0x10008000UL),
+    DMA2_IT_GL5 = (0x10010000UL),
+    DMA2_IT_TC5 = (0x10020000UL),
+    DMA2_IT_HT5 = (0x10040000UL),
+    DMA2_IT_TE5 = (0x10080000UL),
 } DMA_Interrupts_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -226,9 +227,9 @@ typedef struct {
                                                             ///< memory-to-memory transfer. This parameter can be a value
                                                             ///< of @ref DMA_memory_to_memory
 #if defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
-    DMA_auto_reload_TypeDef AutoReload;  					///< Specifies if the DMA Channeln will auto reload the
-                                             				///< CNDTR register. This parameter can be a value of
-                                             				///< @ref DMA_auto_reload
+    DMA_auto_reload_TypeDef AutoReload;  ///< Specifies if the DMA Channeln will auto reload the
+                                         ///< CNDTR register. This parameter can be a value of
+                                         ///< @ref DMA_auto_reload
 #endif
 } DMA_InitTypeDef;
 

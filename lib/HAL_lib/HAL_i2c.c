@@ -86,29 +86,22 @@ void I2C_Init(I2C_TypeDef* I2Cn, I2C_InitTypeDef* pInitStruct)
     i2cPeriod   = 1000000000 / pInitStruct->ClockSpeed;
 
     if (pInitStruct->ClockSpeed <= 100000) {
-        minSclLowTime        = 4700;
-        I2Cn->SSLR = minSclLowTime / pclk1Period;
-        I2Cn->SSHR = (i2cPeriod - pclk1Period * I2Cn->SSLR) / pclk1Period;
+        minSclLowTime = 4700;
+        I2Cn->SSLR    = minSclLowTime / pclk1Period;
+        I2Cn->SSHR    = (i2cPeriod - pclk1Period * I2Cn->SSLR) / pclk1Period;
     }
     else {
-//      minSclLowTime        = 1300;
-		minSclLowTime        = 1100;
-        I2Cn->FSLR = minSclLowTime / pclk1Period;
-        I2Cn->FSHR = (i2cPeriod - pclk1Period * I2Cn->FSLR) / pclk1Period;
+        //      minSclLowTime        = 1300;
+        minSclLowTime = 1100;
+        I2Cn->FSLR    = minSclLowTime / pclk1Period;
+        I2Cn->FSHR    = (i2cPeriod - pclk1Period * I2Cn->FSLR) / pclk1Period;
     }
 
-    I2Cn->CR &= ~(I2C_CR_EMPINT |
-				I2C_CR_SLAVEDIS |
-				I2C_CR_REPEN 	|
-				I2C_CR_MASTER10 |
-                I2C_CR_SLAVE10 	|
-				I2C_CR_FAST    	|
-				I2C_CR_MASTER);
+    I2Cn->CR &=
+        ~(I2C_CR_EMPINT | I2C_CR_SLAVEDIS | I2C_CR_REPEN | I2C_CR_MASTER10 | I2C_CR_SLAVE10 | I2C_CR_FAST | I2C_CR_MASTER);
 
-    I2Cn->CR = 	I2C_CR_EMPINT 	|
-				I2C_CR_REPEN 	|
-				((pInitStruct->Speed) ? I2C_CR_FAST : I2C_CR_STD) |
-				((pInitStruct->Mode)  ? I2C_CR_MASTER : 0x00);
+    I2Cn->CR = I2C_CR_EMPINT | I2C_CR_REPEN | ((pInitStruct->Speed) ? I2C_CR_FAST : I2C_CR_STD) |
+               ((pInitStruct->Mode) ? I2C_CR_MASTER : 0x00);
 
     I2Cn->IMR &= INTR_MASK;
 
@@ -352,8 +345,8 @@ u32 I2C_GetLastEvent(I2C_TypeDef* I2Cn)
 ErrorStatus I2C_CheckEvent(I2C_TypeDef* I2Cn, u32 event)
 {
     if ((event == I2C_EVENT_RX_FULL) && (I2C_CMD_DIR == 0)) {
-        I2Cn->DR = I2C_DR_CMD;
-        I2C_CMD_DIR       = 1;
+        I2Cn->DR    = I2C_DR_CMD;
+        I2C_CMD_DIR = 1;
     }
 
     return (ErrorStatus)((I2Cn->RAWISR & event) == event);
@@ -384,8 +377,8 @@ FlagStatus I2C_GetFlagStatus(I2C_TypeDef* I2Cn, u32 flag)
         return ((I2Cn->SR & flag) ? SET : RESET);
 
     if ((flag == I2C_FLAG_RX_FULL) && (I2C_CMD_DIR == 0)) {
-        I2Cn->DR = I2C_DR_CMD;
-        I2C_CMD_DIR       = 1;
+        I2Cn->DR    = I2C_DR_CMD;
+        I2C_CMD_DIR = 1;
     }
     return (((I2Cn->RAWISR & flag)) ? SET : RESET);
 }

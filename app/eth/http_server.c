@@ -67,7 +67,7 @@ char indexHtml[] = "\
                                                                 </html>\
                                                                     ";
 
-                                                                        char mainJs[] = "\
+char mainJs[] = "\
                                                                             let t1 = document.getElementById('t1');\
                                                                                 function addAction() {\
                                                                                     t1.innerHTML += '<div>test!!!!</div>';\
@@ -76,91 +76,94 @@ char indexHtml[] = "\
                                                                                         t1.innerHTML = '';\
                                                                                     }";
 
-                                                                                        /// @}
+/// @}
 
-                                                                                        ////////////////////////////////////////////////////////////////////////////////
-                                                                                        /// @addtogroup Http_Server_Functions
-                                                                                        /// @{
+////////////////////////////////////////////////////////////////////////////////
+/// @addtogroup Http_Server_Functions
+/// @{
 
-                                                                                        ////////////////////////////////////////////////////////////////////////////////
-                                                                                        /// @brief  Http server task processing function.
-                                                                                        /// @param  arg: Task parameters.
-                                                                                        /// @retval None.
-                                                                                        ////////////////////////////////////////////////////////////////////////////////
-                                                                                        static void http_server_process(struct netconn* conn)
-                                                                                        {
-                                                                                            struct netbuf *inbuf;
-                                                                                            char* buf;
-                                                                                            u16_t buflen;
+////////////////////////////////////////////////////////////////////////////////
+/// @brief  Http server task processing function.
+/// @param  arg: Task parameters.
+/// @retval None.
+////////////////////////////////////////////////////////////////////////////////
+static void http_server_process(struct netconn* conn)
+{
+    struct netbuf* inbuf;
+    char*          buf;
+    u16_t          buflen;
 
-                                                                                            if (netconn_recv(conn, &inbuf) == ERR_OK) {                                 // Receive connection data.
+    if (netconn_recv(conn, &inbuf) == ERR_OK) {  // Receive connection data.
 
-                                                                                                if (netconn_err(conn) == ERR_OK) {                                      // Get and reset pending error on the connection.
+        if (netconn_err(conn) == ERR_OK) {  // Get and reset pending error on the connection.
 
-                                                                                                    netbuf_data(inbuf, (void**)&buf, &buflen);                          // Get data and data length.
+            netbuf_data(inbuf, (void**)&buf, &buflen);  // Get data and data length.
 
-                                                                                                    if ((buflen >= 5) && (strncmp(buf, "GET /", 5) == 0)) {             // Check whether the data is the request header(Begin with "GET /").
-                                                                                                        if (strncmp(buf + 5, "main.js", 7) == 0) {
-                                                                                                            netconn_write(conn, mainJs, sizeof(mainJs) - 1, NETCONN_NOCOPY);
-                                                                                                        } else if (strncmp(buf + 5, " ", 1) == 0) {
-                                                                                                            netconn_write(conn, indexHtml, sizeof(indexHtml) - 1, NETCONN_NOCOPY);
-                                                                                                        } else {
-                                                                                                            netconn_write(conn, " ", 1, NETCONN_NOCOPY);
-                                                                                                        }
-                                                                                                    }
-                                                                                                }
-                                                                                            }
+            if ((buflen >= 5) &&
+                (strncmp(buf, "GET /", 5) == 0)) {  // Check whether the data is the request header(Begin with "GET /").
+                if (strncmp(buf + 5, "main.js", 7) == 0) {
+                    netconn_write(conn, mainJs, sizeof(mainJs) - 1, NETCONN_NOCOPY);
+                }
+                else if (strncmp(buf + 5, " ", 1) == 0) {
+                    netconn_write(conn, indexHtml, sizeof(indexHtml) - 1, NETCONN_NOCOPY);
+                }
+                else {
+                    netconn_write(conn, " ", 1, NETCONN_NOCOPY);
+                }
+            }
+        }
+    }
 
-                                                                                            // Close the connection (server closes in HTTP)
-                                                                                            netconn_close(conn);
+    // Close the connection (server closes in HTTP)
+    netconn_close(conn);
 
-                                                                                            // Delete the buffer (netconn_recv gives us ownership,
-                                                                                            // so we have to make sure to deallocate the buffer)
-                                                                                            netbuf_delete(inbuf);
-                                                                                        }
+    // Delete the buffer (netconn_recv gives us ownership,
+    // so we have to make sure to deallocate the buffer)
+    netbuf_delete(inbuf);
+}
 
-                                                                                        ////////////////////////////////////////////////////////////////////////////////
-                                                                                        /// @brief  Http server thread function.
-                                                                                        /// @param  arg: Task parameters.
-                                                                                        /// @retval None.
-                                                                                        ////////////////////////////////////////////////////////////////////////////////
-                                                                                        static void http_server_thread(void* arg)
-                                                                                        {
-                                                                                            struct netconn *conn, *newconn;
+////////////////////////////////////////////////////////////////////////////////
+/// @brief  Http server thread function.
+/// @param  arg: Task parameters.
+/// @retval None.
+////////////////////////////////////////////////////////////////////////////////
+static void http_server_thread(void* arg)
+{
+    struct netconn *conn, *newconn;
 
-                                                                                            LWIP_UNUSED_ARG(arg);
+    LWIP_UNUSED_ARG(arg);
 
-                                                                                            conn = netconn_new(NETCONN_TCP);                                            // Create a new TCP connection handle.
+    conn = netconn_new(NETCONN_TCP);  // Create a new TCP connection handle.
 
-                                                                                            if (conn!= NULL) {
-                                                                                                if (netconn_bind(conn, NULL, HTTP_SERVER_PORT) == ERR_OK) {             // Bind to port 80 (HTTP) with default IP address
+    if (conn != NULL) {
+        if (netconn_bind(conn, NULL, HTTP_SERVER_PORT) == ERR_OK) {  // Bind to port 80 (HTTP) with default IP address
 
-                                                                                                    netconn_listen(conn);                                               // Start listening port.
+            netconn_listen(conn);  // Start listening port.
 
-                                                                                                    while(1) {
-                                                                                                        if(netconn_accept(conn, &newconn) == ERR_OK) {                  // Accept a new connection on a TCP listening connection.
-                                                                                                            http_server_process(newconn);                               // Processing connection
-                                                                                                            netconn_delete(newconn);                                    // Close the connection
-                                                                                                        }
-                                                                                                    }
-                                                                                                }
-                                                                                            }
-                                                                                        }
+            while (1) {
+                if (netconn_accept(conn, &newconn) == ERR_OK) {  // Accept a new connection on a TCP listening connection.
+                    http_server_process(newconn);                // Processing connection
+                    netconn_delete(newconn);                     // Close the connection
+                }
+            }
+        }
+    }
+}
 
-                                                                                        ////////////////////////////////////////////////////////////////////////////////
-                                                                                        /// @brief  Http server task creation function.
-                                                                                        /// @param  None.
-                                                                                        /// @retval None.
-                                                                                        ////////////////////////////////////////////////////////////////////////////////
-                                                                                        void http_server_init(void)
-                                                                                        {
-                                                                                            sys_thread_new("HTTP", http_server_thread, NULL, 500, 2);
-                                                                                        }
+////////////////////////////////////////////////////////////////////////////////
+/// @brief  Http server task creation function.
+/// @param  None.
+/// @retval None.
+////////////////////////////////////////////////////////////////////////////////
+void http_server_init(void)
+{
+    sys_thread_new("HTTP", http_server_thread, NULL, 500, 2);
+}
 
 #endif
 
-                                                                                        /// @}
+/// @}
 
-                                                                                        /// @}
+/// @}
 
-                                                                                        /// @}
+/// @}

@@ -3,12 +3,11 @@
 #define __LCD_H_
 ////////////////////////////////////////////////////////////////////////////////
 
-
 #if defined(__MDM2803) || defined(__MDM2803_N)
 
-#define  DMAX 	80
+#define DMAX 80
 
-#define offsetH		35
+#define offsetH 35
 
 ////////////////////////////////////////////////////////////////////////////////
 #ifdef _LCD_C_
@@ -32,9 +31,9 @@ GLOBAL u16 lcdCnt;
 #undef GLOBAL
 ////////////////////////////////////////////////////////////////////////////////
 
-u16 getColor(u8 c);
+u16  getColor(u8 c);
 void randRefresh();
-void refreshLCD(u8 sele,  u16* flag);
+void refreshLCD(u8 sele, u16* flag);
 void clearLeftScreen();
 void clearButtomScreen();
 void clearAllScreen();
@@ -52,7 +51,6 @@ void drawMM(u16 x, u16 y, u16 w);
 void initLcdDemo();
 void BSP_LCD_Configure();
 void lcd_tick();
-
 
 void dispADC(u8 sta);
 void dispTEMP(u8 sta);

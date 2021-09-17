@@ -34,7 +34,6 @@
 /// @addtogroup UID_Exported_Functions
 /// @{
 
-
 /// @}
 
 /// @}

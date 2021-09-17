@@ -51,25 +51,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 static void low_level_init(struct netif* netif)
 {
-    //BSP_ETH_Configure();
-    
+    // BSP_ETH_Configure();
+
     if (EthStatus & ETH_LINK_FLAG) {
-        netif->flags |= NETIF_FLAG_LINK_UP;                                     // Set netif link flag
+        netif->flags |= NETIF_FLAG_LINK_UP;  // Set netif link flag
     }
 
-    ETH_DMATxDescChainInit(DMATxDscrTab, &Tx_Buff[0][0], ETH_TX_BUF_NUM);       // Initialize Tx Descriptors list: Chain Mode
-    ETH_DMARxDescChainInit(DMARxDscrTab, &Rx_Buff[0][0], ETH_RX_BUF_NUM);       // Initialize Rx Descriptors list: Chain Mode
+    ETH_DMATxDescChainInit(DMATxDscrTab, &Tx_Buff[0][0], ETH_TX_BUF_NUM);  // Initialize Tx Descriptors list: Chain Mode
+    ETH_DMARxDescChainInit(DMARxDscrTab, &Rx_Buff[0][0], ETH_RX_BUF_NUM);  // Initialize Rx Descriptors list: Chain Mode
 
-    netif->hwaddr_len = ETH_HWADDR_LEN;                                         // Set MAC hardware address length
+    netif->hwaddr_len = ETH_HWADDR_LEN;  // Set MAC hardware address length
 
-    memcpy(netif->hwaddr, gMac, 6);                                             // Set MAC hardware address
+    memcpy(netif->hwaddr, gMac, 6);  // Set MAC hardware address
 
-    ETH_MACAddressConfig(ETH_MAC_Address0, netif->hwaddr);                      // Initialize MAC address in ethernet MAC
+    ETH_MACAddressConfig(ETH_MAC_Address0, netif->hwaddr);  // Initialize MAC address in ethernet MAC
 
-    netif->mtu = NETIF_MTU;                                                     // Network interface maximum transfer unit
+    netif->mtu = NETIF_MTU;  // Network interface maximum transfer unit
 
     netif->flags |= NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP;
-    
+
     ETH_NVIC_Config();
 
     ETH_Start();
@@ -83,43 +83,41 @@ static void low_level_init(struct netif* netif)
 ////////////////////////////////////////////////////////////////////////////////
 static err_t low_level_output(struct netif* netif, struct pbuf* p)
 {
-    err_t errval;
+    err_t        errval;
     struct pbuf* q;
 
     uint8_t* buffer = (uint8_t*)(DMATxDescToSet->BUF1ADDR);
 
     __IO ETH_DMADESCTypeDef* DmaTxDesc;
-    uint32_t framelength = 0;
-    uint32_t bufferoffset = 0;
-    uint32_t byteslefttocopy = 0;
-    uint32_t payloadoffset = 0;
-    DmaTxDesc = DMATxDescToSet;
-    bufferoffset = 0;
+    uint32_t                 framelength     = 0;
+    uint32_t                 bufferoffset    = 0;
+    uint32_t                 byteslefttocopy = 0;
+    uint32_t                 payloadoffset   = 0;
+    DmaTxDesc                                = DMATxDescToSet;
+    bufferoffset                             = 0;
 
     // copy frame from pbufs to driver buffers
-    for(q = p; q != NULL; q = q->next) {
-
-        if((DmaTxDesc->CS & ETH_DMA_TDES_OWN)) {
+    for (q = p; q != NULL; q = q->next) {
+        if ((DmaTxDesc->CS & ETH_DMA_TDES_OWN)) {
             errval = ERR_USE;
             goto error;
         }
 
         // Get bytes in current lwIP buffer
         byteslefttocopy = q->len;
-        payloadoffset = 0;
+        payloadoffset   = 0;
 
         // Check if the length of data to copy is bigger than Tx buffer size
-        while( (byteslefttocopy + bufferoffset) > ETH_TX_BUF_SIZE ) {
+        while ((byteslefttocopy + bufferoffset) > ETH_TX_BUF_SIZE) {
             // Copy data to Tx buffer
-            memcpy( (uint8_t*)((uint8_t*)buffer + bufferoffset),
-                    (uint8_t*)((uint8_t*)q->payload + payloadoffset),
-                    (ETH_TX_BUF_SIZE - bufferoffset));
+            memcpy((uint8_t*)((uint8_t*)buffer + bufferoffset), (uint8_t*)((uint8_t*)q->payload + payloadoffset),
+                   (ETH_TX_BUF_SIZE - bufferoffset));
 
             // Point to next descriptor
             DmaTxDesc = (ETH_DMADESCTypeDef*)(DmaTxDesc->BUF2NDADDR);
 
             // Check if the buffer is available
-            if((DmaTxDesc->CS & ETH_DMA_TDES_OWN)) {
+            if ((DmaTxDesc->CS & ETH_DMA_TDES_OWN)) {
                 errval = ERR_USE;
                 goto error;
             }
@@ -127,17 +125,15 @@ static err_t low_level_output(struct netif* netif, struct pbuf* p)
             buffer = (uint8_t*)(DmaTxDesc->BUF1ADDR);
 
             byteslefttocopy = byteslefttocopy - (ETH_TX_BUF_SIZE - bufferoffset);
-            payloadoffset = payloadoffset + (ETH_TX_BUF_SIZE - bufferoffset);
-            framelength = framelength + (ETH_TX_BUF_SIZE - bufferoffset);
-            bufferoffset = 0;
+            payloadoffset   = payloadoffset + (ETH_TX_BUF_SIZE - bufferoffset);
+            framelength     = framelength + (ETH_TX_BUF_SIZE - bufferoffset);
+            bufferoffset    = 0;
         }
 
         // Copy the remaining bytes
-        memcpy( (uint8_t*)((uint8_t*)buffer + bufferoffset),
-                (uint8_t*)((uint8_t*)q->payload + payloadoffset),
-                byteslefttocopy);
+        memcpy((uint8_t*)((uint8_t*)buffer + bufferoffset), (uint8_t*)((uint8_t*)q->payload + payloadoffset), byteslefttocopy);
         bufferoffset = bufferoffset + byteslefttocopy;
-        framelength = framelength + byteslefttocopy;
+        framelength  = framelength + byteslefttocopy;
     }
 
     // Prepare transmit descriptors to give to DMA
@@ -163,16 +159,16 @@ error:
 ////////////////////////////////////////////////////////////////////////////////
 static struct pbuf* low_level_input(struct netif* netif)
 {
-    struct pbuf* p = NULL;
-    struct pbuf* q = NULL;
-    uint16_t len = 0;
+    struct pbuf* p   = NULL;
+    struct pbuf* q   = NULL;
+    uint16_t     len = 0;
     FrameTypeDef frame;
-    uint8_t* buffer;
+    uint8_t*     buffer;
     __IO ETH_DMADESCTypeDef* dmarxdesc;
-    uint32_t bufferoffset = 0;
-    uint32_t payloadoffset = 0;
-    uint32_t byteslefttocopy = 0;
-    uint32_t i = 0;
+    uint32_t                 bufferoffset    = 0;
+    uint32_t                 payloadoffset   = 0;
+    uint32_t                 byteslefttocopy = 0;
+    uint32_t                 i               = 0;
 
     if (!ETH_CheckFrameReceived())
         return p;
@@ -181,7 +177,7 @@ static struct pbuf* low_level_input(struct netif* netif)
     frame = ETH_Get_Received_Frame();
 
     // Obtain the size of the packet and put it into the "len" variable.
-    len = frame.len;
+    len    = frame.len;
     buffer = (u8*)frame.buf;
 
     // PRINT_INFO("receive frame %d len buffer : %s\n", len, buffer);
@@ -191,35 +187,34 @@ static struct pbuf* low_level_input(struct netif* netif)
     }
 
     if (p != NULL) {
-        dmarxdesc = frame.ptrDesc;
+        dmarxdesc    = frame.ptrDesc;
         bufferoffset = 0;
 
-        for(q = p; q != NULL; q = q->next) {
+        for (q = p; q != NULL; q = q->next) {
             byteslefttocopy = q->len;
-            payloadoffset = 0;
+            payloadoffset   = 0;
 
-            while( (byteslefttocopy + bufferoffset) > ETH_RX_BUF_SIZE ) {
+            while ((byteslefttocopy + bufferoffset) > ETH_RX_BUF_SIZE) {
                 // Copy data to pbuf
-                memcpy( (uint8_t*)((uint8_t*)q->payload + payloadoffset),
-                        (uint8_t*)((uint8_t*)buffer + bufferoffset),
-                        (ETH_RX_BUF_SIZE - bufferoffset));
+                memcpy((uint8_t*)((uint8_t*)q->payload + payloadoffset), (uint8_t*)((uint8_t*)buffer + bufferoffset),
+                       (ETH_RX_BUF_SIZE - bufferoffset));
 
                 // Point to next descriptor
                 dmarxdesc = (ETH_DMADESCTypeDef*)(dmarxdesc->BUF2NDADDR);
-                buffer = (uint8_t*)(dmarxdesc->BUF1ADDR);
+                buffer    = (uint8_t*)(dmarxdesc->BUF1ADDR);
 
                 byteslefttocopy = byteslefttocopy - (ETH_RX_BUF_SIZE - bufferoffset);
-                payloadoffset = payloadoffset + (ETH_RX_BUF_SIZE - bufferoffset);
-                bufferoffset = 0;
+                payloadoffset   = payloadoffset + (ETH_RX_BUF_SIZE - bufferoffset);
+                bufferoffset    = 0;
             }
 
             // Copy remaining data in pbuf
-            memcpy( (uint8_t*)((uint8_t*)q->payload + payloadoffset),
-                    (uint8_t*)((uint8_t*)buffer + bufferoffset),
-                    byteslefttocopy);
+            memcpy((uint8_t*)((uint8_t*)q->payload + payloadoffset), (uint8_t*)((uint8_t*)buffer + bufferoffset),
+                   byteslefttocopy);
             bufferoffset = bufferoffset + byteslefttocopy;
         }
-    } else {
+    }
+    else {
         return NULL;
     }
 
@@ -252,10 +247,10 @@ static struct pbuf* low_level_input(struct netif* netif)
 /// @param  pParams: Some parameters.
 /// @retval None.
 ////////////////////////////////////////////////////////////////////////////////
-void ethernetif_input(struct netif *netif)
+void ethernetif_input(struct netif* netif)
 {
-    err_t err = ERR_OK;
-    struct pbuf *p = NULL;
+    err_t        err = ERR_OK;
+    struct pbuf* p   = NULL;
 
     do {
         // move received packet into a new pbuf
@@ -274,7 +269,7 @@ void ethernetif_input(struct netif *netif)
             pbuf_free(p);
             p = NULL;
         }
-    } while(err == ERR_OK);
+    } while (err == ERR_OK);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -287,8 +282,8 @@ err_t ethernetif_init(struct netif* netif)
     LWIP_ASSERT("netif != NULL", (netif != NULL));
 
 #if LWIP_NETIF_HOSTNAME
-    netif->hostname = "lwip";                                                   // Initialize interface hostname
-#endif // LWIP_NETIF_HOSTNAME
+    netif->hostname = "lwip";  // Initialize interface hostname
+#endif                         // LWIP_NETIF_HOSTNAME
 
     netif->name[0] = IFNAME0;
     netif->name[1] = IFNAME1;
@@ -297,7 +292,7 @@ err_t ethernetif_init(struct netif* netif)
 
     netif->linkoutput = low_level_output;
 
-    low_level_init(netif);                                                      // Initialize the hardware
+    low_level_init(netif);  // Initialize the hardware
 
     return ERR_OK;
 }

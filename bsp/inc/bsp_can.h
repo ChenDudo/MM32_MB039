@@ -32,7 +32,6 @@
 /// @{
 ///
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup CAN_Exported_Types
 /// @{
@@ -63,7 +62,6 @@
 void BSP_CAN_GPIO_Configure(CAN_Peli_TypeDef* CANx, bool remapEn, u8 remapIdx);
 
 /// @}
-
 
 /// @}
 #endif

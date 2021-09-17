@@ -43,9 +43,8 @@
 /// @defgroup LED_Exported_Constants
 /// @{
 
-//SD_ReadDisk/SD_WriteDisk Function buffer. When the address of the data cache of these two functions is not 4-byte aligned,
+// SD_ReadDisk/SD_WriteDisk Function buffer. When the address of the data cache of these two functions is not 4-byte aligned,
 // This array is needed to ensure that the address of the data cache is 4-byte aligned.
-
 
 /// @}
 
@@ -56,15 +55,13 @@
 #ifdef _BSP_SDIO_C_
 #define GLOBAL
 
-GLOBAL u8 CardType = SDIO_STD_CAPACITY_SD_CARD_V1_1;
-GLOBAL u32 RCA = 0;
-GLOBAL u8 DeviceMode = SD_DMA_MODE;
+GLOBAL u8 CardType      = SDIO_STD_CAPACITY_SD_CARD_V1_1;
+GLOBAL u32 RCA          = 0;
+GLOBAL u8 DeviceMode    = SD_DMA_MODE;
 GLOBAL u8 StopCondition = 0;
-GLOBAL u16 ob_cnt;
-volatile GLOBAL u8 TransferEnd = 0;
+GLOBAL u16      ob_cnt;
+volatile GLOBAL u8 TransferEnd         = 0;
 volatile GLOBAL SD_Error TransferError = SD_OK;
-
-
 
 #else
 #define GLOBAL extern
@@ -74,14 +71,12 @@ GLOBAL u8 CardType;
 GLOBAL SD_CardInfo SDCardInfo;
 GLOBAL u32 CSD_Tab[4];
 GLOBAL u32 CID_Tab[4];
-GLOBAL u32 RCA; //relative address (RCA) data
+GLOBAL u32 RCA;  // relative address (RCA) data
 ////////////////////////////////////////////////////////////////
 
-
-#if defined ( __CC_ARM )
-__align(4)
-GLOBAL u8 SDIO_DATA_BUFFER[512];
-#elif defined ( __ICCARM__ )
+#if defined(__CC_ARM)
+__align(4) GLOBAL u8 SDIO_DATA_BUFFER[512];
+#elif defined(__ICCARM__)
 GLOBAL u8 SDIO_DATA_BUFFER[512];
 #endif
 
@@ -96,31 +91,28 @@ GLOBAL u8 SDIO_DATA_BUFFER[512];
 void BSP_SDIO_Configure();
 void SDIO_ConfigInit(void);
 
-SD_Error SD_EnableWideBusOperation(u32 wmode);
-SD_Error SDEnWideBus(u8 enx);
-SD_Error SD_Init(void);
-SD_Error SD_PowerON(void);
-SD_Error SD_InitializeCards(void);
-SD_Error SD_GetCardInfo(SD_CardInfo* cardinfo);
-SD_Error SD_SelectDeselect(u32 addr);
-SD_Error SD_SendStatus(u32* pcardstatus);
-SD_Error SD_ReadOneBlockPolling(u8* buf, long long  addr, u16 blksize);
-SD_Error SD_WriteOneBlockPolling(u8* buf, long long addr, u16 blksize);
-SD_Error SD_ReadBlocks(u8* buf, long long  addr, u16 blksize, u32 nblks);
-SD_Error SD_WriteBlocks(u8* buf, long long addr, u16 blksize);
-SD_Error SD_ReadMulBlocks(u8* buf, long long addr, u16 blksize, u32 nblks);
-SD_Error SD_WriteMulBlocks(u8* buf, long long addr, u16 blksize, u32 nblks);
-SD_Error SD_ProcessIRQSrc(void);
-SD_Error IsCardProgramming(u8* pstatus);
+SD_Error    SD_EnableWideBusOperation(u32 wmode);
+SD_Error    SDEnWideBus(u8 enx);
+SD_Error    SD_Init(void);
+SD_Error    SD_PowerON(void);
+SD_Error    SD_InitializeCards(void);
+SD_Error    SD_GetCardInfo(SD_CardInfo* cardinfo);
+SD_Error    SD_SelectDeselect(u32 addr);
+SD_Error    SD_SendStatus(u32* pcardstatus);
+SD_Error    SD_ReadOneBlockPolling(u8* buf, long long addr, u16 blksize);
+SD_Error    SD_WriteOneBlockPolling(u8* buf, long long addr, u16 blksize);
+SD_Error    SD_ReadBlocks(u8* buf, long long addr, u16 blksize, u32 nblks);
+SD_Error    SD_WriteBlocks(u8* buf, long long addr, u16 blksize);
+SD_Error    SD_ReadMulBlocks(u8* buf, long long addr, u16 blksize, u32 nblks);
+SD_Error    SD_WriteMulBlocks(u8* buf, long long addr, u16 blksize, u32 nblks);
+SD_Error    SD_ProcessIRQSrc(void);
+SD_Error    IsCardProgramming(u8* pstatus);
 SDCardState SD_GetState(void);
-void SD_DMA_Config(u32* mbuf, u32 bufsize, u8 dir);
-u8 SD_ReadDisk(u8* buf, u32 sector, u32 cnt);
-u8 SD_WriteDisk(u8* buf, u32 sector, u32 cnt);
-
+void        SD_DMA_Config(u32* mbuf, u32 bufsize, u8 dir);
+u8          SD_ReadDisk(u8* buf, u32 sector, u32 cnt);
+u8          SD_WriteDisk(u8* buf, u32 sector, u32 cnt);
 
 /// @}
-
-
 
 /// @}
 

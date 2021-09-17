@@ -158,7 +158,7 @@ void BKP_ClearITPendingBit(void)
 }
 #endif
 
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1)|| defined(__MM0S1) || defined(__MM3U1)
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0S1) || defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Writes user data to the specified Data Backup Register.
 /// @param  BKP_DR: specifies the Data Backup Register.
@@ -193,15 +193,15 @@ u16 BKP_ReadBackupRegister(BKPDR_Typedef BKP_DR)
 void exBKP_Init(void)
 {
 #if defined(__MM3N1) || defined(__MM3O1) || defined(__MM3U1)
-	RCC_APB1PeriphClockCmd(RCC_APB1ENR_PWR, ENABLE);
-    //COMMON_EnableIpClock(emCLOCK_PWR);
+    RCC_APB1PeriphClockCmd(RCC_APB1ENR_PWR, ENABLE);
+    // COMMON_EnableIpClock(emCLOCK_PWR);
     RCC_APB1PeriphClockCmd(RCC_APB1ENR_BKP, ENABLE);
-    //COMMON_EnableIpClock(emCLOCK_BKP);
+    // COMMON_EnableIpClock(emCLOCK_BKP);
 #endif
 
 #if defined(__MM0N1) || defined(__MM0P1) || defined(__MM0S1)
-	RCC_APB1PeriphClockCmd(RCC_APB1ENR_PWR, ENABLE);
-    //COMMON_EnableIpClock(emCLOCK_PWR);
+    RCC_APB1PeriphClockCmd(RCC_APB1ENR_PWR, ENABLE);
+    // COMMON_EnableIpClock(emCLOCK_PWR);
 #endif
 
 #if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0S1)

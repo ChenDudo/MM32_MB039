@@ -32,7 +32,6 @@
 
 #include "common.h"
 
-
 #if defined(__MM0N1) || defined(__MM3O1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Board_Support_Package
@@ -54,11 +53,11 @@
 void BSP_CRS_GPIO_Configure(void)
 {
 #if defined CRS_GPIO_PA8
-	COMMON_EnableIpClock(emCLOCK_GPIOA);
+    COMMON_EnableIpClock(emCLOCK_GPIOA);
     GPIO_Mode_AF_PP_50MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_4);
 #endif
 #if defined CRS_GPIO_PD0
-	COMMON_EnableIpClock(emCLOCK_GPIOD);
+    COMMON_EnableIpClock(emCLOCK_GPIOD);
     GPIO_Mode_AF_PP_50MHz_Init(GPIOD, GPIO_Pin_0, NO_REMAP, GPIO_AF_0);
 #endif
 }
@@ -70,12 +69,11 @@ void BSP_CRS_GPIO_Configure(void)
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_CRS_USB_Configure(void)
 {
-	COMMON_EnableIpClock(emCLOCK_GPIOA);
-	COMMON_EnableIpClock(emCLOCK_USB);
+    COMMON_EnableIpClock(emCLOCK_GPIOA);
+    COMMON_EnableIpClock(emCLOCK_USB);
 
-    GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_11, GPIO_Mode_AIN ,NO_REMAP, NO_FUNCAF);
-    GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_12, GPIO_Mode_AIN ,NO_REMAP, NO_FUNCAF);
-
+    GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_11, GPIO_Mode_AIN, NO_REMAP, NO_FUNCAF);
+    GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_12, GPIO_Mode_AIN, NO_REMAP, NO_FUNCAF);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -85,8 +83,8 @@ void BSP_CRS_USB_Configure(void)
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_CRS_GPIO_MCO()
 {
-	COMMON_EnableIpClock(emCLOCK_GPIOA);
-	COMMON_EnableIpClock(emCLOCK_EXTI);
+    COMMON_EnableIpClock(emCLOCK_GPIOA);
+    COMMON_EnableIpClock(emCLOCK_EXTI);
 
 #if defined CRS_MCO_PA8
     GPIO_Mode_AF_PP_50MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_0);
@@ -96,8 +94,6 @@ void BSP_CRS_GPIO_MCO()
 #endif
     RCC_MCOConfig(RCC_MCO_HSI);
 }
-
-
 
 /// @}
 

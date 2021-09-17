@@ -81,21 +81,19 @@ extern "C" {
  * request being ignored.
  *
  */
-typedef const char *(*tCGIHandler)(int iIndex, int iNumParams, char *pcParam[],
-                             char *pcValue[]);
+typedef const char* (*tCGIHandler)(int iIndex, int iNumParams, char* pcParam[], char* pcValue[]);
 
 /**
  * @ingroup httpd
  * Structure defining the base filename (URL) of a CGI and the associated
  * function which is to be called when that URL is requested.
  */
-typedef struct
-{
-    const char *pcCGIName;
+typedef struct {
+    const char* pcCGIName;
     tCGIHandler pfnCGIHandler;
 } tCGI;
 
-void http_set_cgi_handlers(const tCGI *pCGIs, int iNumHandlers);
+void http_set_cgi_handlers(const tCGI* pCGIs, int iNumHandlers);
 
 #endif /* LWIP_HTTPD_CGI */
 
@@ -111,12 +109,16 @@ struct fs_file;
  * is allocated to file->state via fs_state_init() from fs_open() or fs_open_custom().
  * Content creation via SSI or complete dynamic files can retrieve the CGI params from there.
  */
-extern void httpd_cgi_handler(struct fs_file *file, const char* uri, int iNumParams,
-                              char **pcParam, char **pcValue
+extern void httpd_cgi_handler(struct fs_file* file,
+                              const char*     uri,
+                              int             iNumParams,
+                              char**          pcParam,
+                              char**          pcValue
 #if defined(LWIP_HTTPD_FILE_STATE) && LWIP_HTTPD_FILE_STATE
-                                     , void *connection_state
+                              ,
+                              void* connection_state
 #endif /* LWIP_HTTPD_FILE_STATE */
-                                     );
+);
 #endif /* LWIP_HTTPD_CGI_SSI */
 
 #endif /* LWIP_HTTPD_CGI || LWIP_HTTPD_CGI_SSI */
@@ -155,24 +157,27 @@ extern void httpd_cgi_handler(struct fs_file *file, const char* uri, int iNumPar
  */
 typedef u16_t (*tSSIHandler)(
 #if LWIP_HTTPD_SSI_RAW
-                             const char* ssi_tag_name,
-#else /* LWIP_HTTPD_SSI_RAW */
-                             int iIndex,
+    const char* ssi_tag_name,
+#else  /* LWIP_HTTPD_SSI_RAW */
+    int iIndex,
 #endif /* LWIP_HTTPD_SSI_RAW */
-                             char *pcInsert, int iInsertLen
+    char* pcInsert,
+    int   iInsertLen
 #if LWIP_HTTPD_SSI_MULTIPART
-                             , u16_t current_tag_part, u16_t *next_tag_part
+    ,
+    u16_t  current_tag_part,
+    u16_t* next_tag_part
 #endif /* LWIP_HTTPD_SSI_MULTIPART */
 #if defined(LWIP_HTTPD_FILE_STATE) && LWIP_HTTPD_FILE_STATE
-                             , void *connection_state
+    ,
+    void* connection_state
 #endif /* LWIP_HTTPD_FILE_STATE */
-                             );
+);
 
 /** Set the SSI handler function
  * (if LWIP_HTTPD_SSI_RAW==1, only the first argument is used)
  */
-void http_set_ssi_handler(tSSIHandler pfnSSIHandler,
-                          const char **ppcTags, int iNumTags);
+void http_set_ssi_handler(tSSIHandler pfnSSIHandler, const char** ppcTags, int iNumTags);
 
 /** For LWIP_HTTPD_SSI_RAW==1, return this to indicate the tag is unknown.
  * In this case, the webserver writes a warning into the page.
@@ -206,9 +211,14 @@ void http_set_ssi_handler(tSSIHandler pfnSSIHandler,
  * @return ERR_OK: Accept the POST request, data may be passed in
  *         another err_t: Deny the POST request, send back 'bad request'.
  */
-err_t httpd_post_begin(void *connection, const char *uri, const char *http_request,
-                       u16_t http_request_len, int content_len, char *response_uri,
-                       u16_t response_uri_len, u8_t *post_auto_wnd);
+err_t httpd_post_begin(void*       connection,
+                       const char* uri,
+                       const char* http_request,
+                       u16_t       http_request_len,
+                       int         content_len,
+                       char*       response_uri,
+                       u16_t       response_uri_len,
+                       u8_t*       post_auto_wnd);
 
 /**
  * @ingroup httpd
@@ -220,7 +230,7 @@ err_t httpd_post_begin(void *connection, const char *uri, const char *http_reque
  * @return ERR_OK: Data accepted.
  *         another err_t: Data denied, http_post_get_response_uri will be called.
  */
-err_t httpd_post_receive_data(void *connection, struct pbuf *p);
+err_t httpd_post_receive_data(void* connection, struct pbuf* p);
 
 /**
  * @ingroup httpd
@@ -233,10 +243,10 @@ err_t httpd_post_receive_data(void *connection, struct pbuf *p);
  * @param response_uri Filename of response file, to be filled when denying the request
  * @param response_uri_len Size of the 'response_uri' buffer.
  */
-void httpd_post_finished(void *connection, char *response_uri, u16_t response_uri_len);
+void httpd_post_finished(void* connection, char* response_uri, u16_t response_uri_len);
 
 #if LWIP_HTTPD_POST_MANUAL_WND
-void httpd_post_data_recved(void *connection, u16_t recved_len);
+void httpd_post_data_recved(void* connection, u16_t recved_len);
 #endif /* LWIP_HTTPD_POST_MANUAL_WND */
 
 #endif /* LWIP_HTTPD_SUPPORT_POST */
@@ -245,7 +255,7 @@ void httpd_init(void);
 
 #if HTTPD_ENABLE_HTTPS
 struct altcp_tls_config;
-void httpd_inits(struct altcp_tls_config *conf);
+void httpd_inits(struct altcp_tls_config* conf);
 #endif
 
 #ifdef __cplusplus

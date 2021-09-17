@@ -21,7 +21,6 @@
 #ifndef __TCP_SERVER_H
 #define __TCP_SERVER_H
 
-
 #ifdef _TCP_SERVER_C_
 #define GLOBAL
 

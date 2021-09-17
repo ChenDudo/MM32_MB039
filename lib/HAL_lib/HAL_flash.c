@@ -250,15 +250,15 @@ FLASH_Status FLASH_ProgramOptionHalfWord(u32 address, u16 data)
 ////////////////////////////////////////////////////////////////////////////////
 FLASH_Status FLASH_ProgramProtect(u32 address, u16 data)
 {
-	return FLASH_ProgramOptionHalfWord(address, data);
+    return FLASH_ProgramOptionHalfWord(address, data);
 
-//    FLASH_Status ret;
-//	ret = FLASH_ProgramOptionHalfWord(address, 0x7F80);
-//
-//	if (ret == FLASH_COMPLETE) {
-//		ret = FLASH_ProgramOptionHalfWord(address + 2, 0xFF00);
-//    }
-//    return ret;
+    //    FLASH_Status ret;
+    //	ret = FLASH_ProgramOptionHalfWord(address, 0x7F80);
+    //
+    //	if (ret == FLASH_COMPLETE) {
+    //		ret = FLASH_ProgramOptionHalfWord(address + 2, 0xFF00);
+    //    }
+    //    return ret;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -417,7 +417,7 @@ FLASH_Status FLASH_WaitForLastOperation(u32 timeout)
     u32          i;
     FLASH_Status ret;
     do {
-		ret = FLASH_GetStatus();
+        ret = FLASH_GetStatus();
         timeout--;
         for (i = 0xFF; i != 0; i--)
             ;

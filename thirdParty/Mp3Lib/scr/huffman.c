@@ -44,20 +44,23 @@
 #include "coder.h"
 
 /* helper macros - see comments in hufftabs.c about the format of the huffman tables */
-#define GetMaxbits(x)   ((int)( (((unsigned short)(x)) >>  0) & 0x000f))
-#define GetHLen(x)      ((int)( (((unsigned short)(x)) >> 12) & 0x000f))
-#define GetCWY(x)       ((int)( (((unsigned short)(x)) >>  8) & 0x000f))
-#define GetCWX(x)       ((int)( (((unsigned short)(x)) >>  4) & 0x000f))
-#define GetSignBits(x)  ((int)( (((unsigned short)(x)) >>  0) & 0x000f))
+#define GetMaxbits(x) ((int)((((unsigned short)(x)) >> 0) & 0x000f))
+#define GetHLen(x) ((int)((((unsigned short)(x)) >> 12) & 0x000f))
+#define GetCWY(x) ((int)((((unsigned short)(x)) >> 8) & 0x000f))
+#define GetCWX(x) ((int)((((unsigned short)(x)) >> 4) & 0x000f))
+#define GetSignBits(x) ((int)((((unsigned short)(x)) >> 0) & 0x000f))
 
-#define GetHLenQ(x)     ((int)( (((unsigned char)(x)) >> 4) & 0x0f))
-#define GetCWVQ(x)      ((int)( (((unsigned char)(x)) >> 3) & 0x01))
-#define GetCWWQ(x)      ((int)( (((unsigned char)(x)) >> 2) & 0x01))
-#define GetCWXQ(x)      ((int)( (((unsigned char)(x)) >> 1) & 0x01))
-#define GetCWYQ(x)      ((int)( (((unsigned char)(x)) >> 0) & 0x01))
+#define GetHLenQ(x) ((int)((((unsigned char)(x)) >> 4) & 0x0f))
+#define GetCWVQ(x) ((int)((((unsigned char)(x)) >> 3) & 0x01))
+#define GetCWWQ(x) ((int)((((unsigned char)(x)) >> 2) & 0x01))
+#define GetCWXQ(x) ((int)((((unsigned char)(x)) >> 1) & 0x01))
+#define GetCWYQ(x) ((int)((((unsigned char)(x)) >> 0) & 0x01))
 
 /* apply sign of s to the positive number x (save in MSB, will do two's complement in dequant) */
-#define ApplySign(x, s) { (x) |= ((s) & 0x80000000); }
+#define ApplySign(x, s)                                                                                                          \
+    {                                                                                                                            \
+        (x) |= ((s)&0x80000000);                                                                                                 \
+    }
 
 /**************************************************************************************
  * Function:    DecodeHuffmanPairs
@@ -81,20 +84,20 @@
  **************************************************************************************/
 static int DecodeHuffmanPairs(int* xy, int nVals, int tabIdx, int bitsLeft, unsigned char* buf, int bitOffset)
 {
-    int i, x, y;
-    int cachedBits, padBits, len, startBits, linBits, maxBits, minBits;
-    HuffTabType tabType;
+    int            i, x, y;
+    int            cachedBits, padBits, len, startBits, linBits, maxBits, minBits;
+    HuffTabType    tabType;
     unsigned short cw, *tBase, *tCurr;
-    unsigned int cache;
+    unsigned int   cache;
 
-    if(nVals <= 0)
+    if (nVals <= 0)
         return 0;
 
     if (bitsLeft < 0)
         return -1;
     startBits = bitsLeft;
 
-    tBase = (unsigned short*)(huffTable + huffTabOffset[tabIdx]);
+    tBase   = (unsigned short*)(huffTable + huffTabOffset[tabIdx]);
     linBits = huffTabLookup[tabIdx].linBits;
     tabType = huffTabLookup[tabIdx].tabType;
 
@@ -104,7 +107,7 @@ static int DecodeHuffmanPairs(int* xy, int nVals, int tabIdx, int bitsLeft, unsi
     ASSERT(tabType != invalidTab);
 
     /* initially fill cache with any partial byte */
-    cache = 0;
+    cache      = 0;
     cachedBits = (8 - bitOffset) & 0x07;
     if (cachedBits)
         cache = (unsigned int)(*buf++) << (32 - cachedBits);
@@ -134,32 +137,35 @@ static int DecodeHuffmanPairs(int* xy, int nVals, int tabIdx, int bitsLeft, unsi
             }
             else {
                 /* last time through, pad cache with zeros and drain cache */
-                if (cachedBits + bitsLeft <= 0) return -1;
-                if (bitsLeft > 0)   cache |= (unsigned int)(*buf++) << (24 - cachedBits);
-                if (bitsLeft > 8)   cache |= (unsigned int)(*buf++) << (16 - cachedBits);
+                if (cachedBits + bitsLeft <= 0)
+                    return -1;
+                if (bitsLeft > 0)
+                    cache |= (unsigned int)(*buf++) << (24 - cachedBits);
+                if (bitsLeft > 8)
+                    cache |= (unsigned int)(*buf++) << (16 - cachedBits);
                 cachedBits += bitsLeft;
                 bitsLeft = 0;
 
                 cache &= (signed int)0x80000000 >> (cachedBits - 1);
                 padBits = 11;
-                cachedBits += padBits;  /* okay if this is > 32 (0's automatically shifted in from right) */
+                cachedBits += padBits; /* okay if this is > 32 (0's automatically shifted in from right) */
             }
 
             /* largest maxBits = 9, plus 2 for sign bits, so make sure cache has at least 11 bits */
-            while (nVals > 0 && cachedBits >= 11 ) {
-                cw = tBase[cache >> (32 - maxBits)];
+            while (nVals > 0 && cachedBits >= 11) {
+                cw  = tBase[cache >> (32 - maxBits)];
                 len = GetHLen(cw);
                 cachedBits -= len;
                 cache <<= len;
 
                 x = GetCWX(cw);
-                if (x)  {
+                if (x) {
                     ApplySign(x, cache);
                     cache <<= 1;
                     cachedBits--;
                 }
                 y = GetCWY(cw);
-                if (y)  {
+                if (y) {
                     ApplySign(y, cache);
                     cache <<= 1;
                     cachedBits--;
@@ -178,7 +184,7 @@ static int DecodeHuffmanPairs(int* xy, int nVals, int tabIdx, int bitsLeft, unsi
         return (startBits - bitsLeft);
     }
     else if (tabType == loopLinbits || tabType == loopNoLinbits) {
-        tCurr = tBase;
+        tCurr   = tBase;
         padBits = 0;
         while (nVals > 0) {
             /* refill cache - assumes cachedBits <= 16 */
@@ -191,22 +197,25 @@ static int DecodeHuffmanPairs(int* xy, int nVals, int tabIdx, int bitsLeft, unsi
             }
             else {
                 /* last time through, pad cache with zeros and drain cache */
-                if (cachedBits + bitsLeft <= 0) return -1;
-                if (bitsLeft > 0)   cache |= (unsigned int)(*buf++) << (24 - cachedBits);
-                if (bitsLeft > 8)   cache |= (unsigned int)(*buf++) << (16 - cachedBits);
+                if (cachedBits + bitsLeft <= 0)
+                    return -1;
+                if (bitsLeft > 0)
+                    cache |= (unsigned int)(*buf++) << (24 - cachedBits);
+                if (bitsLeft > 8)
+                    cache |= (unsigned int)(*buf++) << (16 - cachedBits);
                 cachedBits += bitsLeft;
                 bitsLeft = 0;
 
                 cache &= (signed int)0x80000000 >> (cachedBits - 1);
                 padBits = 11;
-                cachedBits += padBits;  /* okay if this is > 32 (0's automatically shifted in from right) */
+                cachedBits += padBits; /* okay if this is > 32 (0's automatically shifted in from right) */
             }
 
             /* largest maxBits = 9, plus 2 for sign bits, so make sure cache has at least 11 bits */
-            while (nVals > 0 && cachedBits >= 11 ) {
+            while (nVals > 0 && cachedBits >= 11) {
                 maxBits = GetMaxbits(tCurr[0]);
-                cw = tCurr[(cache >> (32 - maxBits)) + 1];
-                len = GetHLen(cw);
+                cw      = tCurr[(cache >> (32 - maxBits)) + 1];
+                len     = GetHLen(cw);
                 if (!len) {
                     cachedBits -= maxBits;
                     cache <<= maxBits;
@@ -237,7 +246,7 @@ static int DecodeHuffmanPairs(int* xy, int nVals, int tabIdx, int bitsLeft, unsi
                     cachedBits -= linBits;
                     cache <<= linBits;
                 }
-                if (x)  {
+                if (x) {
                     ApplySign(x, cache);
                     cache <<= 1;
                     cachedBits--;
@@ -261,7 +270,7 @@ static int DecodeHuffmanPairs(int* xy, int nVals, int tabIdx, int bitsLeft, unsi
                     cachedBits -= linBits;
                     cache <<= linBits;
                 }
-                if (y)  {
+                if (y) {
                     ApplySign(y, cache);
                     cache <<= 1;
                     cachedBits--;
@@ -306,19 +315,19 @@ static int DecodeHuffmanPairs(int* xy, int nVals, int tabIdx, int bitsLeft, unsi
  **************************************************************************************/
 static int DecodeHuffmanQuads(int* vwxy, int nVals, int tabIdx, int bitsLeft, unsigned char* buf, int bitOffset)
 {
-    int i, v, w, x, y;
-    int len, maxBits, cachedBits, padBits;
-    unsigned int cache;
+    int           i, v, w, x, y;
+    int           len, maxBits, cachedBits, padBits;
+    unsigned int  cache;
     unsigned char cw, *tBase;
 
     if (bitsLeft <= 0)
         return 0;
 
-    tBase = (unsigned char*)quadTable + quadTabOffset[tabIdx];
+    tBase   = (unsigned char*)quadTable + quadTabOffset[tabIdx];
     maxBits = quadTabMaxBits[tabIdx];
 
     /* initially fill cache with any partial byte */
-    cache = 0;
+    cache      = 0;
     cachedBits = (8 - bitOffset) & 0x07;
     if (cachedBits)
         cache = (unsigned int)(*buf++) << (32 - cachedBits);
@@ -336,44 +345,47 @@ static int DecodeHuffmanQuads(int* vwxy, int nVals, int tabIdx, int bitsLeft, un
         }
         else {
             /* last time through, pad cache with zeros and drain cache */
-            if (cachedBits + bitsLeft <= 0) return i;
-            if (bitsLeft > 0)   cache |= (unsigned int)(*buf++) << (24 - cachedBits);
-            if (bitsLeft > 8)   cache |= (unsigned int)(*buf++) << (16 - cachedBits);
+            if (cachedBits + bitsLeft <= 0)
+                return i;
+            if (bitsLeft > 0)
+                cache |= (unsigned int)(*buf++) << (24 - cachedBits);
+            if (bitsLeft > 8)
+                cache |= (unsigned int)(*buf++) << (16 - cachedBits);
             cachedBits += bitsLeft;
             bitsLeft = 0;
 
             cache &= (signed int)0x80000000 >> (cachedBits - 1);
             padBits = 10;
-            cachedBits += padBits;  /* okay if this is > 32 (0's automatically shifted in from right) */
+            cachedBits += padBits; /* okay if this is > 32 (0's automatically shifted in from right) */
         }
 
         /* largest maxBits = 6, plus 4 for sign bits, so make sure cache has at least 10 bits */
-        while (i < (nVals - 3) && cachedBits >= 10 ) {
-            cw = tBase[cache >> (32 - maxBits)];
+        while (i < (nVals - 3) && cachedBits >= 10) {
+            cw  = tBase[cache >> (32 - maxBits)];
             len = GetHLenQ(cw);
             cachedBits -= len;
             cache <<= len;
 
             v = GetCWVQ(cw);
-            if(v) {
+            if (v) {
                 ApplySign(v, cache);
                 cache <<= 1;
                 cachedBits--;
             }
             w = GetCWWQ(cw);
-            if(w) {
+            if (w) {
                 ApplySign(w, cache);
                 cache <<= 1;
                 cachedBits--;
             }
             x = GetCWXQ(cw);
-            if(x) {
+            if (x) {
                 ApplySign(x, cache);
                 cache <<= 1;
                 cachedBits--;
             }
             y = GetCWYQ(cw);
-            if(y) {
+            if (y) {
                 ApplySign(y, cache);
                 cache <<= 1;
                 cachedBits--;
@@ -419,24 +431,25 @@ static int DecodeHuffmanQuads(int* vwxy, int nVals, int tabIdx, int bitsLeft, un
  **************************************************************************************/
 int DecodeHuffman(MP3DecInfo* mp3DecInfo, unsigned char* buf, int* bitOffset, int huffBlockBits, int gr, int ch)
 {
-    int r1Start, r2Start, rEnd[4];  /* region boundaries */
-    int i, w, bitsUsed, bitsLeft;
+    int            r1Start, r2Start, rEnd[4]; /* region boundaries */
+    int            i, w, bitsUsed, bitsLeft;
     unsigned char* startBuf = buf;
 
     FrameHeader* fh;
-    SideInfo* si;
+    SideInfo*    si;
     SideInfoSub* sis;
-    //ScaleFactorInfo *sfi;
+    // ScaleFactorInfo *sfi;
     HuffmanInfo* hi;
 
     /* validate pointers */
-    if (!mp3DecInfo || !mp3DecInfo->FrameHeaderPS || !mp3DecInfo->SideInfoPS || !mp3DecInfo->ScaleFactorInfoPS || !mp3DecInfo->HuffmanInfoPS)
+    if (!mp3DecInfo || !mp3DecInfo->FrameHeaderPS || !mp3DecInfo->SideInfoPS || !mp3DecInfo->ScaleFactorInfoPS ||
+        !mp3DecInfo->HuffmanInfoPS)
         return -1;
 
-    fh = ((FrameHeader*)(mp3DecInfo->FrameHeaderPS));
-    si = ((SideInfo*)(mp3DecInfo->SideInfoPS));
+    fh  = ((FrameHeader*)(mp3DecInfo->FrameHeaderPS));
+    si  = ((SideInfo*)(mp3DecInfo->SideInfoPS));
     sis = &si->sis[gr][ch];
-    //sfi = ((ScaleFactorInfo *)(mp3DecInfo->ScaleFactorInfoPS));
+    // sfi = ((ScaleFactorInfo *)(mp3DecInfo->ScaleFactorInfoPS));
     hi = (HuffmanInfo*)(mp3DecInfo->HuffmanInfoPS);
 
     if (huffBlockBits < 0)
@@ -453,11 +466,11 @@ int DecodeHuffman(MP3DecInfo* mp3DecInfo, unsigned char* buf, int* bitOffset, in
             }
             else {
                 /* see MPEG2 spec for explanation */
-                w = fh->sfBand->s[4] - fh->sfBand->s[3];
+                w       = fh->sfBand->s[4] - fh->sfBand->s[3];
                 r1Start = fh->sfBand->l[6] + 2 * w;
             }
         }
-        r2Start = MAX_NSAMP;    /* short blocks don't have region 2 */
+        r2Start = MAX_NSAMP; /* short blocks don't have region 2 */
     }
     else {
         r1Start = fh->sfBand->l[sis->region0Count + 1];
@@ -476,8 +489,9 @@ int DecodeHuffman(MP3DecInfo* mp3DecInfo, unsigned char* buf, int* bitOffset, in
     /* decode Huffman pairs (rEnd[i] are always even numbers) */
     bitsLeft = huffBlockBits;
     for (i = 0; i < 3; i++) {
-        bitsUsed = DecodeHuffmanPairs(hi->huffDecBuf[ch] + rEnd[i], rEnd[i + 1] - rEnd[i], sis->tableSelect[i], bitsLeft, buf, *bitOffset);
-        if (bitsUsed < 0 || bitsUsed > bitsLeft)    /* error - overran end of bitstream */
+        bitsUsed = DecodeHuffmanPairs(hi->huffDecBuf[ch] + rEnd[i], rEnd[i + 1] - rEnd[i], sis->tableSelect[i], bitsLeft, buf,
+                                      *bitOffset);
+        if (bitsUsed < 0 || bitsUsed > bitsLeft) /* error - overran end of bitstream */
             return -1;
 
         /* update bitstream position */
@@ -487,7 +501,8 @@ int DecodeHuffman(MP3DecInfo* mp3DecInfo, unsigned char* buf, int* bitOffset, in
     }
 
     /* decode Huffman quads (if any) */
-    hi->nonZeroBound[ch] += DecodeHuffmanQuads(hi->huffDecBuf[ch] + rEnd[3], MAX_NSAMP - rEnd[3], sis->count1TableSelect, bitsLeft, buf, *bitOffset);
+    hi->nonZeroBound[ch] +=
+        DecodeHuffmanQuads(hi->huffDecBuf[ch] + rEnd[3], MAX_NSAMP - rEnd[3], sis->count1TableSelect, bitsLeft, buf, *bitOffset);
 
     ASSERT(hi->nonZeroBound[ch] <= MAX_NSAMP);
     for (i = hi->nonZeroBound[ch]; i < MAX_NSAMP; i++)
@@ -501,4 +516,3 @@ int DecodeHuffman(MP3DecInfo* mp3DecInfo, unsigned char* buf, int* bitOffset, in
 
     return (buf - startBuf);
 }
-

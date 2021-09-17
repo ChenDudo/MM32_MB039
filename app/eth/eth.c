@@ -77,11 +77,13 @@ void ETH_IRQHandler(void)
     if (ETH_GetDMAITStatus(ETH_DMA_IT_R)) {
         ETH_RxCpltCallback();
         ETH_DMAClearITPendingBit(ETH_DMA_IT_R);
-        error.eth = false;
-		rfOverCnt.eth = 0;
-    } else if (ETH_GetDMAITStatus(ETH_DMA_IT_T)) {
+        error.eth     = false;
+        rfOverCnt.eth = 0;
+    }
+    else if (ETH_GetDMAITStatus(ETH_DMA_IT_T)) {
         ETH_DMAClearITPendingBit(ETH_DMA_IT_T);
-    } else if (ETH_GetDMAITStatus(ETH_DMA_IT_TBU)) {
+    }
+    else if (ETH_GetDMAITStatus(ETH_DMA_IT_TBU)) {
         ETH_DMAClearITPendingBit(ETH_DMA_IT_TBU);
     }
 
@@ -91,7 +93,6 @@ void ETH_IRQHandler(void)
         ETH_DMAClearITPendingBit(ETH_DMA_FLAG_AIS);
     }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Ethernet init function.
@@ -129,7 +130,8 @@ void InitEthernet(InitEthernet_Typedef config)
     if (netif_is_link_up(&gnetif)) {
         netif_set_up(&gnetif);  // When the netif is fully configured this
         // function must be called
-    } else {
+    }
+    else {
         netif_set_down(&gnetif);  // When the netif link is down this function
         // must be called
     }
@@ -141,7 +143,7 @@ uint32_t getIpAddress(void)
     return gnetif.ip_addr.addr;
 }
 
-void getMacAddress(uint8_t * mac)
+void getMacAddress(uint8_t* mac)
 {
     memcpy(mac, gnetif.hwaddr, sizeof(uint8_t) * 6);
 }
@@ -157,23 +159,21 @@ void BSP_HTTP_Configure(void)
     rf.eth = true;
 
     // Set random seed by Device ID.
-    srand(*(unsigned int *)(0x1FFFF7E8));
+    srand(*(unsigned int*)(0x1FFFF7E8));
 
     // Initialization Ethernet.
     InitEthernet_Typedef ethConfig = {
-        .ip     = { 192,  168,    1,     1},
-        .gw     = { 192,  168,    1,     1},
-        .mask   = { 255,  255,  255,     0},
-        .mac    = {(uint16_t)rand(), (uint16_t)rand(), (uint16_t)rand(),
-        (uint16_t)rand(), (uint16_t)rand(), (uint16_t)rand()}
-    };
+        .ip   = {192, 168, 1, 1},
+        .gw   = {192, 168, 1, 1},
+        .mask = {255, 255, 255, 0},
+        .mac  = {(uint16_t)rand(), (uint16_t)rand(), (uint16_t)rand(), (uint16_t)rand(), (uint16_t)rand(), (uint16_t)rand()}};
 
     // Mac multicast bit must be 0.
     ethConfig.mac[0] &= 0xFE;
 
     BSP_ETH_Configure();
 
-    if(EthErr < 0)
+    if (EthErr < 0)
         return;
 
     InitEthernet(ethConfig);
@@ -190,7 +190,6 @@ void BSP_HTTP_Configure(void)
 
     enableOK = true;
 }
-
 
 /// @}
 

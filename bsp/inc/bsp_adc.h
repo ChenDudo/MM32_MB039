@@ -31,7 +31,6 @@
 /// @brief ADC BSP modules
 /// @{
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup ADC_Exported_Types
 /// @{
@@ -47,9 +46,7 @@
 #else
 #define GLOBAL extern
 
-
 #endif
-
 
 #undef GLOBAL
 /// @}
@@ -62,11 +59,9 @@ void BSP_ADC_GPIO_Configure(ADC_TypeDef* ADCx, u32 chs);
 
 /// @}
 
-
 /// @}
 
 /// @}
-
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif /*__BSP_ADC_H */

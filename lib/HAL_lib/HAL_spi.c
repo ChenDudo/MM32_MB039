@@ -50,11 +50,11 @@ void SPI_DeInit(SPI_TypeDef* SPIx)
 #if defined(SPI1)
         case (u32)SPI1:  // SPI1_BASE:
 #if defined(RCC_APB1ENR_SPI1)
-        RCC_APB1PeriphResetCmd(RCC_APB1ENR_SPI1, ENABLE);
-        RCC_APB1PeriphResetCmd(RCC_APB1ENR_SPI1, DISABLE);
+            RCC_APB1PeriphResetCmd(RCC_APB1ENR_SPI1, ENABLE);
+            RCC_APB1PeriphResetCmd(RCC_APB1ENR_SPI1, DISABLE);
 #else
-        RCC_APB2PeriphResetCmd(RCC_APB2ENR_SPI1, ENABLE);
-        RCC_APB2PeriphResetCmd(RCC_APB2ENR_SPI1, DISABLE);
+            RCC_APB2PeriphResetCmd(RCC_APB2ENR_SPI1, ENABLE);
+            RCC_APB2PeriphResetCmd(RCC_APB2ENR_SPI1, DISABLE);
 #endif
             break;
 #endif
@@ -88,22 +88,21 @@ void SPI_Init(SPI_TypeDef* SPIx, SPI_InitTypeDef* pInitStruct)
         SET_BIT(SPIx->GCR, SPI_GCR_DWSEL);
         MODIFY_REG(SPIx->GCR, SPI_GCR_NSS, pInitStruct->SPI_NSS);
         MODIFY_REG(SPIx->GCR, SPI_GCR_MODE, pInitStruct->SPI_Mode);
-//        MODIFY_REG(SPIx->GCR, GCR_Mask, (SPI_GCR_DWSEL | (u16)pInitStruct->SPI_NSS | (u16)pInitStruct->SPI_Mode));
+        //        MODIFY_REG(SPIx->GCR, GCR_Mask, (SPI_GCR_DWSEL | (u16)pInitStruct->SPI_NSS | (u16)pInitStruct->SPI_Mode));
     }
     else {
         MODIFY_REG(SPIx->GCR, SPI_GCR_NSS, pInitStruct->SPI_NSS);
         MODIFY_REG(SPIx->GCR, SPI_GCR_MODE, pInitStruct->SPI_Mode);
 
-//        MODIFY_REG(SPIx->GCR, GCR_Mask, ((u16)pInitStruct->SPI_NSS | (u16)pInitStruct->SPI_Mode));
+        //        MODIFY_REG(SPIx->GCR, GCR_Mask, ((u16)pInitStruct->SPI_NSS | (u16)pInitStruct->SPI_Mode));
     }
     MODIFY_REG(SPIx->CCR, SPI_CCR_LSBFE, pInitStruct->SPI_FirstBit);
     MODIFY_REG(SPIx->CCR, SPI_CCR_CPOL, pInitStruct->SPI_CPOL);
     MODIFY_REG(SPIx->CCR, SPI_CCR_CPHA, pInitStruct->SPI_CPHA);
     SET_BIT(SPIx->CCR, SPI_CCR_SPILEN);
 
-
-//    MODIFY_REG(SPIx->CCR, CCR_Mask,
-//               ((u16)pInitStruct->SPI_FirstBit | (u16)pInitStruct->SPI_CPOL | (u16)pInitStruct->SPI_CPHA | SPI_CCR_SPILEN));
+    //    MODIFY_REG(SPIx->CCR, CCR_Mask,
+    //               ((u16)pInitStruct->SPI_FirstBit | (u16)pInitStruct->SPI_CPOL | (u16)pInitStruct->SPI_CPHA | SPI_CCR_SPILEN));
 
     //	if ((pInitStruct->SPI_DataWidth)!=SPI_DataWidth_8b)
     //		MODIFY_REG(SPIx->CCR,0x000C,((u16)SPI_FirstBit_LSB |
@@ -177,8 +176,7 @@ void SPI_ITConfig(SPI_TypeDef* SPIx, u8 interrupt, FunctionalState newState)
     }
 }
 
-
-#if defined(DMA1) || defined(DMA2) 
+#if defined(DMA1) || defined(DMA2)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Enables or disables the SPI DMA interface.
 /// @param SPIx: Select the SPI peripheral.
@@ -227,14 +225,14 @@ void SPI_SendData(SPI_TypeDef* SPIx, u32 data)
     WRITE_REG(SPIx->TDR, data);
 
     u8 temp = READ_REG(SPIx->ECR);
-	if (temp  != 32) {
-    if (temp > 0x08)
-        WRITE_REG(SPIx->TDR, data >> 8);
-    if (temp > 0x10)
-        WRITE_REG(SPIx->TDR, data >> 16);
-    if (temp > 0x18)
-        WRITE_REG(SPIx->TDR, data >> 24);
-	}
+    if (temp != 32) {
+        if (temp > 0x08)
+            WRITE_REG(SPIx->TDR, data >> 8);
+        if (temp > 0x10)
+            WRITE_REG(SPIx->TDR, data >> 16);
+        if (temp > 0x18)
+            WRITE_REG(SPIx->TDR, data >> 24);
+    }
     __asm volatile("cpsie i");
 }
 
@@ -256,14 +254,14 @@ u32 SPI_ReceiveData(SPI_TypeDef* SPIx)
     //== 0)  temp |=(u32)(READ_REG(SPIx->RDR) << 16); 	if (SPIx->ECR > 24
     //|| SPIx->ECR == 0)	temp |=(u32)(READ_REG(SPIx->RDR) << 24);
 
-	if (temp  != 32) {
-    if (SPIx->ECR > 8)
-        temp |= (u32)(READ_REG(SPIx->RDR) << 8);
-    if (SPIx->ECR > 16)
-        temp |= (u32)(READ_REG(SPIx->RDR) << 16);
-    if (SPIx->ECR > 24)
-        temp |= (u32)(READ_REG(SPIx->RDR) << 24);
-		}
+    if (temp != 32) {
+        if (SPIx->ECR > 8)
+            temp |= (u32)(READ_REG(SPIx->RDR) << 8);
+        if (SPIx->ECR > 16)
+            temp |= (u32)(READ_REG(SPIx->RDR) << 16);
+        if (SPIx->ECR > 24)
+            temp |= (u32)(READ_REG(SPIx->RDR) << 24);
+    }
     __asm volatile("cpsie i");
 
     return temp;
@@ -369,21 +367,21 @@ void SPI_BiDirectionalLineConfig(SPI_TypeDef* SPIx, SPI_Direction_TypeDef direct
 ////////////////////////////////////////////////////////////////////////////////
 FlagStatus SPI_GetFlagStatus(SPI_TypeDef* SPIx, SPI_FLAG_TypeDef flag)
 {
-//    u8 number;
+    //    u8 number;
     return (SPIx->SR & flag) ? SET : RESET;
-//	if (SPIx->ECR == 8 || SPIx->ECR == 0)
-//		return (SPIx->SR & SPI_FLAG) ? SET : RESET;
-//	else {
-//		if ((SPIx->ECR > 0) && (SPIx->ECR <= 8))
-//			number = 1;
-//		else if ((SPIx->ECR) <= 16)
-//			number = 2;
-//		else if ((SPIx->ECR) <= 24)
-//			number = 3;
-//		else if (((SPIx->ECR) <= 31) || (SPIx->ECR == 0))
-//			number = 4;
-//		return (((SPIx->SR & 0xf00) >> 8) >= number) ? SET : RESET;
-//	}
+    //	if (SPIx->ECR == 8 || SPIx->ECR == 0)
+    //		return (SPIx->SR & SPI_FLAG) ? SET : RESET;
+    //	else {
+    //		if ((SPIx->ECR > 0) && (SPIx->ECR <= 8))
+    //			number = 1;
+    //		else if ((SPIx->ECR) <= 16)
+    //			number = 2;
+    //		else if ((SPIx->ECR) <= 24)
+    //			number = 3;
+    //		else if (((SPIx->ECR) <= 31) || (SPIx->ECR == 0))
+    //			number = 4;
+    //		return (((SPIx->SR & 0xf00) >> 8) >= number) ? SET : RESET;
+    //	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -499,7 +497,7 @@ void exSPI_ITConfig(SPI_TypeDef* SPIx, SPI_IT_TypeDef interrupt, FunctionalState
     (newState) ? SET_BIT(SPIx->IER, (u32)interrupt) : CLEAR_BIT(SPIx->IER, (u32)interrupt);
 }
 
-#if defined(DMA1) || defined(DMA2) 
+#if defined(DMA1) || defined(DMA2)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Enables or disables the SPI DMA request.
 /// @param SPIx: Select the SPI peripheral.
@@ -552,23 +550,6 @@ void SPI_DataEdgeAdjust(SPI_TypeDef* SPIx, SPI_DataEdgeAdjust_TypeDef adjustValu
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Set or reset i2s
 /// @param  spi: Select the SPI peripheral.
@@ -594,11 +575,11 @@ void I2S_Cmd(SPI_TypeDef* spi, FunctionalState state)
 ////////////////////////////////////////////////////////////////////////////////
 void I2S_Init(SPI_TypeDef* spi, I2S_InitTypeDef* I2S_InitStruct)
 {
-    u32 i2sdiv = 2;
-    u32 tmpreg = 0;
-    u32 packetlength = 1;
-    u32 result = 0, yushu = 0;
-    u32 sourceclock = 0;
+    u32               i2sdiv       = 2;
+    u32               tmpreg       = 0;
+    u32               packetlength = 1;
+    u32               result = 0, yushu = 0;
+    u32               sourceclock = 0;
     RCC_ClocksTypeDef RCC_Clocks;
 
     if (I2S_InitStruct->I2S_AudioFreq == I2S_AudioFreq_Default) {
@@ -607,16 +588,16 @@ void I2S_Init(SPI_TypeDef* spi, I2S_InitTypeDef* I2S_InitStruct)
     else {
         packetlength = (I2S_InitStruct->I2S_DataFormat == I2S_DataFormat_16b) ? 1 : 2;
         RCC_GetClocksFreq(&RCC_Clocks);
-        if ((SPI2 == spi) || (SPI3 == spi))  {
+        if ((SPI2 == spi) || (SPI3 == spi)) {
             sourceclock = RCC_Clocks.PCLK1_Frequency;
         }
         else {
             sourceclock = RCC_Clocks.PCLK2_Frequency;
         }
-        if(I2S_InitStruct->I2S_MCLKOutput == I2S_MCLKOutput_Enable) {
+        if (I2S_InitStruct->I2S_MCLKOutput == I2S_MCLKOutput_Enable) {
             result = (sourceclock) / (256 * (I2S_InitStruct->I2S_AudioFreq));
-            yushu = (sourceclock) % (256 * (I2S_InitStruct->I2S_AudioFreq));
-            if(yushu > (128 * (I2S_InitStruct->I2S_AudioFreq))) {
+            yushu  = (sourceclock) % (256 * (I2S_InitStruct->I2S_AudioFreq));
+            if (yushu > (128 * (I2S_InitStruct->I2S_AudioFreq))) {
                 result = result + 1;
             }
             i2sdiv = result;
@@ -626,8 +607,8 @@ void I2S_Init(SPI_TypeDef* spi, I2S_InitTypeDef* I2S_InitStruct)
         }
         else {
             result = (sourceclock) / (16 * 2 * packetlength * (I2S_InitStruct->I2S_AudioFreq));
-            yushu = (sourceclock) % (16 * 2 * packetlength * (I2S_InitStruct->I2S_AudioFreq));
-            if(yushu > ((16 * packetlength * (I2S_InitStruct->I2S_AudioFreq)))) {
+            yushu  = (sourceclock) % (16 * 2 * packetlength * (I2S_InitStruct->I2S_AudioFreq));
+            if (yushu > ((16 * packetlength * (I2S_InitStruct->I2S_AudioFreq)))) {
                 result = result + 1;
             }
             if ((i2sdiv < 1) || (i2sdiv > 0x1FF)) {
@@ -635,7 +616,7 @@ void I2S_Init(SPI_TypeDef* spi, I2S_InitTypeDef* I2S_InitStruct)
             }
         }
     }
-    if(I2S_CPOL_High  == I2S_InitStruct->I2S_CPOL) {
+    if (I2S_CPOL_High == I2S_InitStruct->I2S_CPOL) {
         spi->CCR |= SPI_CCR_CPOL;
     }
     else {
@@ -644,13 +625,13 @@ void I2S_Init(SPI_TypeDef* spi, I2S_InitTypeDef* I2S_InitStruct)
 
     spi->CFGR = 0x2 << I2S_CFGR_I2SDIV_Pos;
 
-    if((I2S_InitStruct->I2S_Mode == I2S_Mode_MasterTx) || (I2S_InitStruct->I2S_Mode == I2S_Mode_MasterRx)) {
+    if ((I2S_InitStruct->I2S_Mode == I2S_Mode_MasterTx) || (I2S_InitStruct->I2S_Mode == I2S_Mode_MasterRx)) {
         spi->GCR |= SPI_GCR_MODE;
     }
     else {
         spi->GCR &= ~SPI_GCR_MODE;
     }
-    if((I2S_InitStruct->I2S_Mode == I2S_Mode_MasterTx) || (I2S_InitStruct->I2S_Mode == I2S_Mode_SlaveTx)) {
+    if ((I2S_InitStruct->I2S_Mode == I2S_Mode_MasterTx) || (I2S_InitStruct->I2S_Mode == I2S_Mode_SlaveTx)) {
         spi->GCR |= SPI_GCR_TXEN;
         spi->GCR &= ~SPI_GCR_RXEN;
     }
@@ -659,11 +640,8 @@ void I2S_Init(SPI_TypeDef* spi, I2S_InitTypeDef* I2S_InitStruct)
         spi->GCR |= SPI_GCR_RXEN;
     }
     tmpreg = 0;
-    tmpreg |= (i2sdiv << I2S_CFGR_I2SDIV_Pos) | \
-              (I2S_InitStruct->I2S_MCLKOutput) | \
-              (I2S_CFGR_SPI_I2S) | \
-              (I2S_InitStruct->I2S_Standard) | \
-              (I2S_InitStruct->I2S_DataFormat);
+    tmpreg |= (i2sdiv << I2S_CFGR_I2SDIV_Pos) | (I2S_InitStruct->I2S_MCLKOutput) | (I2S_CFGR_SPI_I2S) |
+              (I2S_InitStruct->I2S_Standard) | (I2S_InitStruct->I2S_DataFormat);
     spi->CFGR &= ~I2S_CFGR_I2SDIV;
     spi->CFGR |= tmpreg;
 }

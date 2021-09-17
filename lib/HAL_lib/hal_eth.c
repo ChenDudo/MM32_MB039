@@ -34,131 +34,127 @@ void ETH_DeInit(void)
 ////////////////////////////////////////////////////////////////////////////////
 void ETH_StructInit(ETH_InitTypeDef* ptr)
 {
-    ptr->ETH_AutoNegotiation         = ETH_AutoNegotiation_Enable;              ///< PHY Auto-negotiation enabled
-    ptr->ETH_Watchdog                = ETH_Watchdog_Enable;                     ///< MAC watchdog enabled: cuts off long frame
-    ptr->ETH_Jabber                  = ETH_Jabber_Enable;                       ///< MAC Jabber enabled in Half-duplex mode
-    ptr->ETH_InterFrameGap           = ETH_InterFrameGap_96Bit;                 ///< Ethernet interframe gap set to 96 bits
-    ptr->ETH_CarrierSense            = ETH_CarrierSense_Enable;                 ///< Carrier Sense Enabled in Half-Duplex mode
-    ptr->ETH_Speed                   = ETH_Speed_100M;                          ///< PHY speed configured to 100Mbit/s
-    ptr->ETH_ReceiveOwn              = ETH_ReceiveOwn_Enable;                   ///< Receive own Frames in Half-Duplex mode enabled
-    ptr->ETH_LoopbackMode            = ETH_LoopbackMode_Disable;                ///< MAC MII loopback disabled
-    ptr->ETH_Mode                    = ETH_Mode_FullDuplex;                     ///< Full-Duplex mode selected
-    ptr->ETH_ChecksumOffload         = ETH_ChecksumOffload_Disable;             ///< IPv4 and TCP/UDP/ICMP frame Checksum Offload disabled
-    ptr->ETH_RetryTransmission       = ETH_RetryTransmission_Enable;            ///< Retry Transmission enabled for half-duplex mode
-    ptr->ETH_AutomaticPadCRCStrip    = ETH_AutomaticPadCRCStrip_Disable;        ///< Automatic PAD/CRC strip disable
-    ptr->ETH_BackOffLimit            = ETH_BackOffLimit_10;                     ///< half-duplex mode retransmission Backoff time_limit = 10 slot time
-    ptr->ETH_DeferralCheck           = ETH_DeferralCheck_Disable;               ///< half-duplex mode Deferral check disabled
-    ptr->ETH_ReceiveAll              = ETH_ReceiveAll_Disable;                  ///< Receive all frames disabled
-    ptr->ETH_SourceAddrFilter        = ETH_SourceAddrFilter_Disable;            ///< Source address filtering (on the optional MAC addresses) disabled
-    ptr->ETH_PassControlFrames       = ETH_PassControlFrames_BlockAll;          ///< Do not forward control frames that do not pass the address filtering
-    ptr->ETH_BroadcastFramesReception = ETH_BroadcastFramesReception_Disable;   ///< Disable reception of Broadcast frames
-    ptr->ETH_DestinationAddrFilter   = ETH_DestinationAddrFilter_Normal;        ///< Normal Destination address filtering (not reverse addressing)
-    ptr->ETH_PromiscuousMode         = ETH_PromiscuousMode_Disable;             ///< Promiscuous address filtering mode disabled
-    ptr->ETH_MulticastFramesFilter   = ETH_MulticastFramesFilter_Perfect;       ///< Perfect address filtering for multicast addresses
-    ptr->ETH_UnicastFramesFilter     = ETH_UnicastFramesFilter_Perfect;         ///< Perfect address filtering for unicast addresses
-    ptr->ETH_HashTableHigh           = 0x0;                                     ///< Initialize hash table high and low regs
+    ptr->ETH_AutoNegotiation      = ETH_AutoNegotiation_Enable;        ///< PHY Auto-negotiation enabled
+    ptr->ETH_Watchdog             = ETH_Watchdog_Enable;               ///< MAC watchdog enabled: cuts off long frame
+    ptr->ETH_Jabber               = ETH_Jabber_Enable;                 ///< MAC Jabber enabled in Half-duplex mode
+    ptr->ETH_InterFrameGap        = ETH_InterFrameGap_96Bit;           ///< Ethernet interframe gap set to 96 bits
+    ptr->ETH_CarrierSense         = ETH_CarrierSense_Enable;           ///< Carrier Sense Enabled in Half-Duplex mode
+    ptr->ETH_Speed                = ETH_Speed_100M;                    ///< PHY speed configured to 100Mbit/s
+    ptr->ETH_ReceiveOwn           = ETH_ReceiveOwn_Enable;             ///< Receive own Frames in Half-Duplex mode enabled
+    ptr->ETH_LoopbackMode         = ETH_LoopbackMode_Disable;          ///< MAC MII loopback disabled
+    ptr->ETH_Mode                 = ETH_Mode_FullDuplex;               ///< Full-Duplex mode selected
+    ptr->ETH_ChecksumOffload      = ETH_ChecksumOffload_Disable;       ///< IPv4 and TCP/UDP/ICMP frame Checksum Offload disabled
+    ptr->ETH_RetryTransmission    = ETH_RetryTransmission_Enable;      ///< Retry Transmission enabled for half-duplex mode
+    ptr->ETH_AutomaticPadCRCStrip = ETH_AutomaticPadCRCStrip_Disable;  ///< Automatic PAD/CRC strip disable
+    ptr->ETH_BackOffLimit         = ETH_BackOffLimit_10;  ///< half-duplex mode retransmission Backoff time_limit = 10 slot time
+    ptr->ETH_DeferralCheck        = ETH_DeferralCheck_Disable;  ///< half-duplex mode Deferral check disabled
+    ptr->ETH_ReceiveAll           = ETH_ReceiveAll_Disable;     ///< Receive all frames disabled
+    ptr->ETH_SourceAddrFilter =
+        ETH_SourceAddrFilter_Disable;  ///< Source address filtering (on the optional MAC addresses) disabled
+    ptr->ETH_PassControlFrames =
+        ETH_PassControlFrames_BlockAll;  ///< Do not forward control frames that do not pass the address filtering
+    ptr->ETH_BroadcastFramesReception = ETH_BroadcastFramesReception_Disable;  ///< Disable reception of Broadcast frames
+    ptr->ETH_DestinationAddrFilter =
+        ETH_DestinationAddrFilter_Normal;  ///< Normal Destination address filtering (not reverse addressing)
+    ptr->ETH_PromiscuousMode         = ETH_PromiscuousMode_Disable;        ///< Promiscuous address filtering mode disabled
+    ptr->ETH_MulticastFramesFilter   = ETH_MulticastFramesFilter_Perfect;  ///< Perfect address filtering for multicast addresses
+    ptr->ETH_UnicastFramesFilter     = ETH_UnicastFramesFilter_Perfect;    ///< Perfect address filtering for unicast addresses
+    ptr->ETH_HashTableHigh           = 0x0;                                ///< Initialize hash table high and low regs
     ptr->ETH_HashTableLow            = 0x0;
-    ptr->ETH_PauseTime               = 0x0;                                     ///< Flow control config (flow control disabled)
+    ptr->ETH_PauseTime               = 0x0;  ///< Flow control config (flow control disabled)
     ptr->ETH_ZeroQuantaPause         = ETH_ZeroQuantaPause_Disable;
     ptr->ETH_PauseLowThreshold       = ETH_PauseLowThreshold_Minus4;
     ptr->ETH_UnicastPauseFrameDetect = ETH_UnicastPauseFrameDetect_Disable;
     ptr->ETH_ReceiveFlowControl      = ETH_ReceiveFlowControl_Disable;
     ptr->ETH_TransmitFlowControl     = ETH_TransmitFlowControl_Disable;
-    ptr->ETH_VLANTagComparison       = ETH_VLANTagComparison_16Bit;             ///< VLANtag config (VLAN field not checked)
+    ptr->ETH_VLANTagComparison       = ETH_VLANTagComparison_16Bit;  ///< VLANtag config (VLAN field not checked)
     ptr->ETH_VLANTagIdentifier       = 0x0;
-    
-    ptr->ETH_DropTCPIPChecksumErrorFrame = ETH_DropTCPIPChecksumErrorFrame_Disable; ///< Drops frames with with TCP/IP checksum errors
-    ptr->ETH_ReceiveStoreForward     = ETH_ReceiveStoreForward_Enable;          ///< Store and forward mode enabled for receive
-    ptr->ETH_FlushReceivedFrame      = ETH_FlushReceivedFrame_Enable;           ///< Flush received frame that created FIFO overflow
-    ptr->ETH_TransmitStoreForward    = ETH_TransmitStoreForward_Enable;         ///< Store and forward mode enabled for transmit
-    ptr->ETH_TransmitThresholdControl = ETH_TransmitThresholdControl_64Bytes;    ///< Threshold TXFIFO level set to 64 bytes (used when threshold mode is enabled)
-    ptr->ETH_ForwardErrorFrames      = ETH_ForwardErrorFrames_Disable;          ///< Disable forwarding frames with errors (short frames, CRC,...)
-    ptr->ETH_ForwardUndersizedGoodFrames = ETH_ForwardUndersizedGoodFrames_Disable; ///< Disable undersized good frames
-    ptr->ETH_ReceiveThresholdControl = ETH_ReceiveThresholdControl_64Bytes;     ///< Threshold RXFIFO level set to 64 bytes (used when Cut through mode is enabled)
-    ptr->ETH_SecondFrameOperate      = ETH_SecondFrameOperate_Disable;          ///< Disable Operate on second frame (transmit a second frame to FIFO without waiting status of previous frame
-    ptr->ETH_AddressAlignedBeats     = ETH_AddressAlignedBeats_Enable;          ///< DMA works on 32-bit aligned start source and destinations addresses
-    ptr->ETH_FixedBurst              = ETH_FixedBurst_Enable;                   ///< Enabled Fixed Burst Mode (mix of INC4, INC8, INC16 and SINGLE DMA transactions
-    ptr->ETH_RxDMABurstLength        = ETH_RxDMABurstLength_32Beat;             ///< DMA transfer max burst length = 32 beats = 32 x 32bits
-    ptr->ETH_TxDMABurstLength        = ETH_TxDMABurstLength_32Beat;
-    ptr->ETH_DescriptorSkipLength    = 0x0;                                     ///< DMA Ring mode skip length = 0
-    ptr->ETH_DMAArbitration          = ETH_DMAArbitration_RoundRobin_RxTx_1_1;  ///< Equal priority (round-robin) between transmit and receive DMA engines
+
+    ptr->ETH_DropTCPIPChecksumErrorFrame =
+        ETH_DropTCPIPChecksumErrorFrame_Disable;                      ///< Drops frames with with TCP/IP checksum errors
+    ptr->ETH_ReceiveStoreForward  = ETH_ReceiveStoreForward_Enable;   ///< Store and forward mode enabled for receive
+    ptr->ETH_FlushReceivedFrame   = ETH_FlushReceivedFrame_Enable;    ///< Flush received frame that created FIFO overflow
+    ptr->ETH_TransmitStoreForward = ETH_TransmitStoreForward_Enable;  ///< Store and forward mode enabled for transmit
+    ptr->ETH_TransmitThresholdControl =
+        ETH_TransmitThresholdControl_64Bytes;  ///< Threshold TXFIFO level set to 64 bytes (used when threshold mode is enabled)
+    ptr->ETH_ForwardErrorFrames =
+        ETH_ForwardErrorFrames_Disable;  ///< Disable forwarding frames with errors (short frames, CRC,...)
+    ptr->ETH_ForwardUndersizedGoodFrames = ETH_ForwardUndersizedGoodFrames_Disable;  ///< Disable undersized good frames
+    ptr->ETH_ReceiveThresholdControl =
+        ETH_ReceiveThresholdControl_64Bytes;  ///< Threshold RXFIFO level set to 64 bytes (used when Cut through mode is enabled)
+    ptr->ETH_SecondFrameOperate = ETH_SecondFrameOperate_Disable;  ///< Disable Operate on second frame (transmit a second frame
+                                                                   ///< to FIFO without waiting status of previous frame
+    ptr->ETH_AddressAlignedBeats =
+        ETH_AddressAlignedBeats_Enable;  ///< DMA works on 32-bit aligned start source and destinations addresses
+    ptr->ETH_FixedBurst =
+        ETH_FixedBurst_Enable;  ///< Enabled Fixed Burst Mode (mix of INC4, INC8, INC16 and SINGLE DMA transactions
+    ptr->ETH_RxDMABurstLength     = ETH_RxDMABurstLength_32Beat;  ///< DMA transfer max burst length = 32 beats = 32 x 32bits
+    ptr->ETH_TxDMABurstLength     = ETH_TxDMABurstLength_32Beat;
+    ptr->ETH_DescriptorSkipLength = 0x0;  ///< DMA Ring mode skip length = 0
+    ptr->ETH_DMAArbitration =
+        ETH_DMAArbitration_RoundRobin_RxTx_1_1;  ///< Equal priority (round-robin) between transmit and receive DMA engines
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void exETH_MDCClock()
 {
-    u32 hclk = RCC_GetHCLKFreq();
-    uint32_t reg = ETH->MACMIIAR & MACMIIAR_CR_MASK;
-    
+    u32      hclk = RCC_GetHCLKFreq();
+    uint32_t reg  = ETH->MACMIIAR & MACMIIAR_CR_MASK;
+
     if (hclk >= 20000000 && hclk < 35000000) {
-        reg |= ETH_MACMIIAR_CR_Div16;                                           ///< HCLK 20 ~ 35 MHz, /16
-    } else if (hclk >= 35000000 && hclk < 60000000) {
-        reg |= ETH_MACMIIAR_CR_Div26;                                           ///< HCLK 35 ~ 60 MHz, /26
-    } else if (hclk >= 60000000 && hclk < 100000000) {
-        reg |= ETH_MACMIIAR_CR_Div42;                                           ///< HCLK 60 ~ 100 MHz, /42
-    } else if (hclk >= 100000000 && hclk < 150000000) {
-        reg |= ETH_MACMIIAR_CR_Div62;                                           ///< HCLK 100 ~ 150 MHz, /62
-    } else {
-        reg |= ETH_MACMIIAR_CR_Div102;                                          ///< HCLK 150 ~ 168 MHz, /102
+        reg |= ETH_MACMIIAR_CR_Div16;  ///< HCLK 20 ~ 35 MHz, /16
     }
-    
-    //reg |= ETH_MACMIIAR_CR_Div62;
+    else if (hclk >= 35000000 && hclk < 60000000) {
+        reg |= ETH_MACMIIAR_CR_Div26;  ///< HCLK 35 ~ 60 MHz, /26
+    }
+    else if (hclk >= 60000000 && hclk < 100000000) {
+        reg |= ETH_MACMIIAR_CR_Div42;  ///< HCLK 60 ~ 100 MHz, /42
+    }
+    else if (hclk >= 100000000 && hclk < 150000000) {
+        reg |= ETH_MACMIIAR_CR_Div62;  ///< HCLK 100 ~ 150 MHz, /62
+    }
+    else {
+        reg |= ETH_MACMIIAR_CR_Div102;  ///< HCLK 150 ~ 168 MHz, /102
+    }
+
+    // reg |= ETH_MACMIIAR_CR_Div62;
     ETH->MACMIIAR = reg;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 uint32_t ETH_Init(ETH_InitTypeDef* ptr)
 {
-    ETH->MACCR = ETH->MACCR & MACCR_CLEAR_MASK |   (ptr->ETH_Watchdog |
-                                                    ptr->ETH_Jabber |
-                                                    ptr->ETH_InterFrameGap |
-                                                    ptr->ETH_CarrierSense |
-                                                    ptr->ETH_Speed |
-                                                    ptr->ETH_ReceiveOwn |
-                                                    ptr->ETH_LoopbackMode |
-                                                    ptr->ETH_Mode |
-                                                    ptr->ETH_ChecksumOffload |
-                                                    ptr->ETH_RetryTransmission |
-                                                    ptr->ETH_AutomaticPadCRCStrip |
-                                                    ptr->ETH_DeferralCheck);
-    ETH->MACFFR =   ptr->ETH_ReceiveAll |
-                    ptr->ETH_SourceAddrFilter |
-                    ptr->ETH_PassControlFrames |
-                    ptr->ETH_BroadcastFramesReception |
-                    ptr->ETH_DestinationAddrFilter |
-                    ptr->ETH_PromiscuousMode |
-                    ptr->ETH_MulticastFramesFilter |
-                    ptr->ETH_UnicastFramesFilter;
+    ETH->MACCR = ETH->MACCR & MACCR_CLEAR_MASK |
+                 (ptr->ETH_Watchdog | ptr->ETH_Jabber | ptr->ETH_InterFrameGap | ptr->ETH_CarrierSense | ptr->ETH_Speed |
+                  ptr->ETH_ReceiveOwn | ptr->ETH_LoopbackMode | ptr->ETH_Mode | ptr->ETH_ChecksumOffload |
+                  ptr->ETH_RetryTransmission | ptr->ETH_AutomaticPadCRCStrip | ptr->ETH_DeferralCheck);
+    ETH->MACFFR = ptr->ETH_ReceiveAll | ptr->ETH_SourceAddrFilter | ptr->ETH_PassControlFrames |
+                  ptr->ETH_BroadcastFramesReception | ptr->ETH_DestinationAddrFilter | ptr->ETH_PromiscuousMode |
+                  ptr->ETH_MulticastFramesFilter | ptr->ETH_UnicastFramesFilter;
 
     ETH->MACHTHR = ptr->ETH_HashTableHigh;
     ETH->MACHTLR = ptr->ETH_HashTableLow;
-    ETH->MACFCR = ETH->MACFCR & MACFCR_CLEAR_MASK | ((ptr->ETH_PauseTime << ETH_MACFCR_PT_Pos) |
-                                                    ptr->ETH_ZeroQuantaPause |
-                                                    ptr->ETH_PauseLowThreshold |
-                                                    ptr->ETH_UnicastPauseFrameDetect |
-                                                    ptr->ETH_ReceiveFlowControl |
-                                                    ptr->ETH_TransmitFlowControl);
+    ETH->MACFCR  = ETH->MACFCR & MACFCR_CLEAR_MASK |
+                  ((ptr->ETH_PauseTime << ETH_MACFCR_PT_Pos) | ptr->ETH_ZeroQuantaPause | ptr->ETH_PauseLowThreshold |
+                   ptr->ETH_UnicastPauseFrameDetect | ptr->ETH_ReceiveFlowControl | ptr->ETH_TransmitFlowControl);
     ETH->MACVLANTR = ptr->ETH_VLANTagComparison | ptr->ETH_VLANTagIdentifier;
 
     ////////////////////////////////////////////////////////////////////////////
-//    ETH->DMAOMR = ETH->DMAOMR & DMAOMR_CLEAR_MASK | (ptr->ETH_DropTCPIPChecksumErrorFrame |
-//                                                    ptr->ETH_ReceiveStoreForward |
-//                                                    ptr->ETH_FlushReceivedFrame |
-//                                                    ptr->ETH_TransmitStoreForward |
-//                                                    ptr->ETH_TransmitThresholdControl |
-//                                                    ptr->ETH_ForwardErrorFrames |
-//                                                    ptr->ETH_ForwardUndersizedGoodFrames |
-//                                                    ptr->ETH_ReceiveThresholdControl |
-//                                                    ptr->ETH_SecondFrameOperate);
+    //    ETH->DMAOMR = ETH->DMAOMR & DMAOMR_CLEAR_MASK | (ptr->ETH_DropTCPIPChecksumErrorFrame |
+    //                                                    ptr->ETH_ReceiveStoreForward |
+    //                                                    ptr->ETH_FlushReceivedFrame |
+    //                                                    ptr->ETH_TransmitStoreForward |
+    //                                                    ptr->ETH_TransmitThresholdControl |
+    //                                                    ptr->ETH_ForwardErrorFrames |
+    //                                                    ptr->ETH_ForwardUndersizedGoodFrames |
+    //                                                    ptr->ETH_ReceiveThresholdControl |
+    //                                                    ptr->ETH_SecondFrameOperate);
     ETH->DMAOMR = 0x00200004;
     ETH->DMAIER = 0x0001A040;
-    ETH->DMABMR = ( ptr->ETH_AddressAlignedBeats |
-                    ptr->ETH_FixedBurst |
-                    ptr->ETH_RxDMABurstLength |                                 // !! if 4xPBL is selected for Tx or Rx it is applied for the other
-                    ptr->ETH_TxDMABurstLength |
-                    ptr->ETH_DescriptorSkipLength << 2 |
-                    ptr->ETH_DMAArbitration);// |
-//                    ETH_DMABMR_USP);                                            // Enable use of separate PBL for Rx and Tx
+    ETH->DMABMR = (ptr->ETH_AddressAlignedBeats | ptr->ETH_FixedBurst |
+                   ptr->ETH_RxDMABurstLength |  // !! if 4xPBL is selected for Tx or Rx it is applied for the other
+                   ptr->ETH_TxDMABurstLength | ptr->ETH_DescriptorSkipLength << 2 | ptr->ETH_DMAArbitration);  // |
+    //                    ETH_DMABMR_USP);                                            // Enable use of separate PBL for Rx and Tx
     return ETH_SUCCESS;
 }
 
@@ -215,12 +211,10 @@ void ETH_BackPressureActivationCmd(FunctionalState sta)
 ////////////////////////////////////////////////////////////////////////////////
 void ETH_MACAddressConfig(uint32_t reg_addr, uint8_t* mac_addr)
 {
-    *(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr) =\
-        (uint32_t)mac_addr[5] << 8 | (uint32_t)mac_addr[4];
-    
-    *(__IO uint32_t*)(ETH_MAC_ADDR_LBASE + reg_addr) =\
-        (uint32_t)mac_addr[3] << 24 | (uint32_t)mac_addr[2] << 16 |\
-            (uint32_t)mac_addr[1] << 8 | (uint32_t)mac_addr[0];
+    *(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr) = (uint32_t)mac_addr[5] << 8 | (uint32_t)mac_addr[4];
+
+    *(__IO uint32_t*)(ETH_MAC_ADDR_LBASE + reg_addr) =
+        (uint32_t)mac_addr[3] << 24 | (uint32_t)mac_addr[2] << 16 | (uint32_t)mac_addr[1] << 8 | (uint32_t)mac_addr[0];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -237,22 +231,22 @@ void ETH_GetMACAddress(uint32_t reg_addr, uint8_t* mac_addr)
 ////////////////////////////////////////////////////////////////////////////////
 void ETH_MACAddressPerfectFilterCmd(uint32_t reg_addr, FunctionalState sta)
 {
-    sta ?   ((*(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr)) |= ETH_MACA1HR_AE) :
-    ((*(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr)) &= ~ETH_MACA1HR_AE);
+    sta ? ((*(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr)) |= ETH_MACA1HR_AE)
+        : ((*(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr)) &= ~ETH_MACA1HR_AE);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void ETH_MACAddressFilterConfig(uint32_t reg_addr, uint32_t sta)
 {
-    sta ?   ((*(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr)) |= ETH_MACA1HR_SA) :
-    ((*(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr)) |= ETH_MACA1HR_SA);
+    sta ? ((*(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr)) |= ETH_MACA1HR_SA)
+        : ((*(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr)) |= ETH_MACA1HR_SA);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void ETH_MACAddressMaskBytesFilterConfig(uint32_t reg_addr, uint32_t mask_byte)
 {
     (*(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr)) &= ~ETH_MACA1HR_MBC;
-    
+
     (*(__IO uint32_t*)(ETH_MAC_ADDR_HBASE + reg_addr)) |= mask_byte;
 }
 
@@ -260,28 +254,28 @@ void ETH_MACAddressMaskBytesFilterConfig(uint32_t reg_addr, uint32_t mask_byte)
 FrameTypeDef ETH_Get_Received_Frame(void)
 {
     FrameTypeDef frame;
-    
-    frame.len = ((DMARxDescToGet->CS & ETH_DMA_RDES_FL) >> ETH_DMA_RDES_FL_Pos) - 4;
-    frame.buf = (DMA_RX_FRAME_infos->ptrFS_Rx_Desc)->BUF1ADDR;
+
+    frame.len     = ((DMARxDescToGet->CS & ETH_DMA_RDES_FL) >> ETH_DMA_RDES_FL_Pos) - 4;
+    frame.buf     = (DMA_RX_FRAME_infos->ptrFS_Rx_Desc)->BUF1ADDR;
     frame.ptrDesc = DMA_RX_FRAME_infos->ptrFS_Rx_Desc;
-    
+
     DMARxDescToGet = (ETH_DMADESCTypeDef*)(DMARxDescToGet->BUF2NDADDR);
-    
+
     return frame;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 FrameTypeDef ETH_Get_Received_Frame_interrupt(void)
 {
-    FrameTypeDef frame = {0};
+    FrameTypeDef frame     = {0};
     __IO uint32_t desc_cnt = 0;
-    
-    while(!(DMARxDescToGet->CS & ETH_DMA_RDES_OWN) && desc_cnt < ETH_RX_BUF_NUM) {
+
+    while (!(DMARxDescToGet->CS & ETH_DMA_RDES_OWN) && desc_cnt < ETH_RX_BUF_NUM) {
         desc_cnt++;
         if ((DMARxDescToGet->CS & ETH_DMA_RDES_FS) && !(DMARxDescToGet->CS & ETH_DMA_RDES_LS)) {
             DMA_RX_FRAME_infos->ptrFS_Rx_Desc = DMARxDescToGet;
-            DMA_RX_FRAME_infos->cnt = 1;
-            DMARxDescToGet = (ETH_DMADESCTypeDef*)(DMARxDescToGet->BUF2NDADDR);
+            DMA_RX_FRAME_infos->cnt           = 1;
+            DMARxDescToGet                    = (ETH_DMADESCTypeDef*)(DMARxDescToGet->BUF2NDADDR);
         }
         else if ((DMARxDescToGet->CS & ETH_DMA_RDES_FS) && (DMARxDescToGet->CS & ETH_DMA_RDES_LS)) {
             DMA_RX_FRAME_infos->cnt++;
@@ -293,12 +287,11 @@ FrameTypeDef ETH_Get_Received_Frame_interrupt(void)
             if (DMA_RX_FRAME_infos->cnt == 1)
                 DMA_RX_FRAME_infos->ptrFS_Rx_Desc = DMARxDescToGet;
             frame.len = ((DMARxDescToGet->CS & ETH_DMA_RDES_FL) >> ETH_DMA_RDES_FL_Pos) - 4;
-            frame.buf = (DMA_RX_FRAME_infos->cnt > 1) ?\
-                (DMA_RX_FRAME_infos->ptrFS_Rx_Desc->BUF1ADDR) :\
-                    (DMARxDescToGet->BUF1ADDR);
-                    frame.ptrDesc = DMA_RX_FRAME_infos->ptrFS_Rx_Desc;
-                    DMARxDescToGet = (ETH_DMADESCTypeDef*)(DMARxDescToGet->BUF2NDADDR);
-                    return frame;
+            frame.buf =
+                (DMA_RX_FRAME_infos->cnt > 1) ? (DMA_RX_FRAME_infos->ptrFS_Rx_Desc->BUF1ADDR) : (DMARxDescToGet->BUF1ADDR);
+            frame.ptrDesc  = DMA_RX_FRAME_infos->ptrFS_Rx_Desc;
+            DMARxDescToGet = (ETH_DMADESCTypeDef*)(DMARxDescToGet->BUF2NDADDR);
+            return frame;
         }
     }
     return frame;
@@ -309,10 +302,10 @@ uint32_t ETH_Prepare_Transmit_Descriptors(u16 len)
 {
     uint32_t cnt = 0, i = 0;
     __IO ETH_DMADESCTypeDef* temp_desc = DMATxDescToSet;
-    
+
     if (DMATxDescToSet->CS & ETH_DMA_TDES_OWN)
         return ETH_ERROR;
-    if(len > ETH_TX_BUF_SIZE) {
+    if (len > ETH_TX_BUF_SIZE) {
         cnt = len / ETH_TX_BUF_SIZE;
         if (len % ETH_TX_BUF_SIZE)
             cnt++;
@@ -342,7 +335,7 @@ uint32_t ETH_Prepare_Transmit_Descriptors(u16 len)
     }
     DMATxDescToSet = temp_desc;
     if (ETH->DMASR & ETH_DMASR_TBUS) {
-        ETH->DMASR = ETH_DMASR_TBUS;
+        ETH->DMASR   = ETH_DMASR_TBUS;
         ETH->DMATPDR = 0;
     }
     return ETH_SUCCESS;
@@ -351,13 +344,13 @@ uint32_t ETH_Prepare_Transmit_Descriptors(u16 len)
 ////////////////////////////////////////////////////////////////////////////////
 void ETH_DMARxDescChainInit(ETH_DMADESCTypeDef* ptr_desc, uint8_t* buf, uint32_t cnt)
 {
-    uint32_t i = 0;
+    uint32_t            i = 0;
     ETH_DMADESCTypeDef* temp_desc;
     DMARxDescToGet = ptr_desc;
     for (i = 0; i < cnt; i++) {
-        temp_desc = ptr_desc + i;
-        temp_desc->CS = ETH_DMA_RDES_OWN;
-        temp_desc->BL = ETH_DMA_RDES_RCH | ETH_RX_BUF_SIZE;
+        temp_desc           = ptr_desc + i;
+        temp_desc->CS       = ETH_DMA_RDES_OWN;
+        temp_desc->BL       = ETH_DMA_RDES_RCH | ETH_RX_BUF_SIZE;
         temp_desc->BUF1ADDR = (uint32_t)&buf[i * ETH_RX_BUF_SIZE];
         if (i < cnt - 1) {
             temp_desc->BUF2NDADDR = (uint32_t)(ptr_desc + i + 1);
@@ -366,14 +359,14 @@ void ETH_DMARxDescChainInit(ETH_DMADESCTypeDef* ptr_desc, uint8_t* buf, uint32_t
             temp_desc->BUF2NDADDR = (uint32_t)(ptr_desc);
         }
     }
-    ETH->DMARDLAR = (uint32_t)ptr_desc;
+    ETH->DMARDLAR      = (uint32_t)ptr_desc;
     DMA_RX_FRAME_infos = &RX_Frame_Descriptor;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 uint32_t ETH_CheckFrameReceived(void)
 {
-    if(!(DMARxDescToGet->CS & ETH_DMA_RDES_OWN) && (DMARxDescToGet->CS & ETH_DMA_RDES_LS)) {
+    if (!(DMARxDescToGet->CS & ETH_DMA_RDES_OWN) && (DMARxDescToGet->CS & ETH_DMA_RDES_LS)) {
         DMA_RX_FRAME_infos->cnt++;
         if (DMA_RX_FRAME_infos->cnt == 1) {
             DMA_RX_FRAME_infos->ptrFS_Rx_Desc = DMARxDescToGet;
@@ -381,28 +374,28 @@ uint32_t ETH_CheckFrameReceived(void)
         DMA_RX_FRAME_infos->ptrLS_Rx_Desc = DMARxDescToGet;
         return 1;
     }
-    else if (!(DMARxDescToGet->CS & ETH_DMA_RDES_OWN) && !(DMARxDescToGet->CS &\
-        ETH_DMA_RDES_LS) && (DMARxDescToGet->CS & ETH_DMA_RDES_FS)) {
-            DMA_RX_FRAME_infos->ptrFS_Rx_Desc = DMARxDescToGet;
-            DMA_RX_FRAME_infos->ptrLS_Rx_Desc = (void*)0;
-            DMA_RX_FRAME_infos->cnt = 1;
-        }
-    else if (!(DMARxDescToGet->CS & ETH_DMA_RDES_OWN) && !(DMARxDescToGet->CS &\
-        ETH_DMA_RDES_LS)  && !(DMARxDescToGet->CS & ETH_DMA_RDES_FS)) {
-            DMA_RX_FRAME_infos->cnt++;
-            DMARxDescToGet = (ETH_DMADESCTypeDef*)(DMARxDescToGet->BUF2NDADDR);
-        }
+    else if (!(DMARxDescToGet->CS & ETH_DMA_RDES_OWN) && !(DMARxDescToGet->CS & ETH_DMA_RDES_LS) &&
+             (DMARxDescToGet->CS & ETH_DMA_RDES_FS)) {
+        DMA_RX_FRAME_infos->ptrFS_Rx_Desc = DMARxDescToGet;
+        DMA_RX_FRAME_infos->ptrLS_Rx_Desc = (void*)0;
+        DMA_RX_FRAME_infos->cnt           = 1;
+    }
+    else if (!(DMARxDescToGet->CS & ETH_DMA_RDES_OWN) && !(DMARxDescToGet->CS & ETH_DMA_RDES_LS) &&
+             !(DMARxDescToGet->CS & ETH_DMA_RDES_FS)) {
+        DMA_RX_FRAME_infos->cnt++;
+        DMARxDescToGet = (ETH_DMADESCTypeDef*)(DMARxDescToGet->BUF2NDADDR);
+    }
     return 0;
 }
 
 void ETH_DMATxDescChainInit(ETH_DMADESCTypeDef* ptr_desc, uint8_t* buf, uint32_t cnt)
 {
-    uint32_t i = 0;
+    uint32_t            i = 0;
     ETH_DMADESCTypeDef* temp_desc;
     DMATxDescToSet = ptr_desc;
     for (i = 0; i < cnt; i++) {
-        temp_desc = ptr_desc + i;
-        temp_desc->BL = ETH_DMA_TDES_TCH;
+        temp_desc           = ptr_desc + i;
+        temp_desc->BL       = ETH_DMA_TDES_TCH;
         temp_desc->BUF1ADDR = (uint32_t)(&buf[i * ETH_TX_BUF_SIZE]);
         if (i < cnt - 1) {
             temp_desc->BUF2NDADDR = (uint32_t)(ptr_desc + i + 1);
@@ -501,18 +494,17 @@ void ETH_DMARxDescReceiveITConfig(ETH_DMADESCTypeDef* ptr_desc, FunctionalState 
 ////////////////////////////////////////////////////////////////////////////////
 uint32_t ETH_GetDMARxDescBufferSize(ETH_DMADESCTypeDef* ptr_desc, uint32_t buf)
 {
-    return (buf != ETH_DMA_RDES_Buffer1 ? ((ptr_desc->BL & ETH_DMA_RDES_RBS2) \
-        >> ETH_DMA_RDES_BUFFER2_SIZESHIFT) : (ptr_desc->BL & ETH_DMA_RDES_RBS1));
+    return (buf != ETH_DMA_RDES_Buffer1 ? ((ptr_desc->BL & ETH_DMA_RDES_RBS2) >> ETH_DMA_RDES_BUFFER2_SIZESHIFT)
+                                        : (ptr_desc->BL & ETH_DMA_RDES_RBS1));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 uint32_t ETH_GetRxPktSize(ETH_DMADESCTypeDef* ptr_desc)
 {
     uint32_t len = 0;
-    if (!(ptr_desc->CS & ETH_DMA_RDES_OWN) && !(ptr_desc->CS & ETH_DMA_RDES_ES)\
-        && (ptr_desc->CS & ETH_DMA_RDES_LS)) {
-            len = ETH_GetDMARxDescFrameLength(ptr_desc);
-        }
+    if (!(ptr_desc->CS & ETH_DMA_RDES_OWN) && !(ptr_desc->CS & ETH_DMA_RDES_ES) && (ptr_desc->CS & ETH_DMA_RDES_LS)) {
+        len = ETH_GetDMARxDescFrameLength(ptr_desc);
+    }
     return len;
 }
 
@@ -656,8 +648,8 @@ void ETH_SetReceiveWatchdogTimer(uint8_t val)
 }
 #endif
 ////////////////////////////////////////////////////////////////////////////////
-#define PHY_READ_TO                     ((uint32_t)0x0004FFFF)
-#define PHY_WRITE_TO                    ((uint32_t)0x0004FFFF)
+#define PHY_READ_TO ((uint32_t)0x0004FFFF)
+#define PHY_WRITE_TO ((uint32_t)0x0004FFFF)
 /* ETHERNET errors */
 //#define  ETH_ERROR              ((uint32_t)0)
 //#define  ETH_SUCCESS            ((uint32_t)1)
@@ -665,7 +657,7 @@ void ETH_SetReceiveWatchdogTimer(uint8_t val)
 uint16_t ETH_ReadPHYRegister(uint16_t addr, uint16_t reg)
 {
     uint16_t ret;
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg       = 0;
     __IO uint32_t timeout = 0;
     /* Get the ETHERNET MACMIIAR value */
     tmpreg = ETH->MACMIIAR;
@@ -673,9 +665,9 @@ uint16_t ETH_ReadPHYRegister(uint16_t addr, uint16_t reg)
     tmpreg &= ~MACMIIAR_CR_MASK;
     /* Prepare the MII address register value */
     tmpreg |= (((uint32_t)addr << ETH_MACMIIAR_PA_Pos) & ETH_MACMIIAR_PA); /* Set the PHY device address */
-    tmpreg |= (((uint32_t)reg << ETH_MACMIIAR_MR_Pos) & ETH_MACMIIAR_MR);   /* Set the PHY register address */
-    tmpreg &= ~ETH_MACMIIAR_MW;                              /* Set the read mode */
-    tmpreg |= ETH_MACMIIAR_MB;                               /* Set the MII Busy bit */
+    tmpreg |= (((uint32_t)reg << ETH_MACMIIAR_MR_Pos) & ETH_MACMIIAR_MR);  /* Set the PHY register address */
+    tmpreg &= ~ETH_MACMIIAR_MW;                                            /* Set the read mode */
+    tmpreg |= ETH_MACMIIAR_MB;                                             /* Set the MII Busy bit */
     /* Write the result value into the MII Address register */
     ETH->MACMIIAR = tmpreg;
     /* Check for the Busy flag */
@@ -684,7 +676,7 @@ uint16_t ETH_ReadPHYRegister(uint16_t addr, uint16_t reg)
         tmpreg = ETH->MACMIIAR;
     } while ((tmpreg & ETH_MACMIIAR_MB) && (timeout < (uint32_t)PHY_READ_TO));
     /* Return ERROR in case of timeout */
-    if(timeout == PHY_READ_TO) {
+    if (timeout == PHY_READ_TO) {
         ret = (uint16_t)ETH_ERROR;
     }
     else
@@ -697,15 +689,15 @@ uint16_t ETH_ReadPHYRegister(uint16_t addr, uint16_t reg)
 uint16_t ETH_WritePHYRegister(uint16_t addr, uint16_t reg, uint16_t val)
 {
     uint16_t ret;
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg       = 0;
     __IO uint32_t timeout = 0;
-    
+
     tmpreg = ETH->MACMIIAR;
     tmpreg &= ~MACMIIAR_CR_MASK;
     tmpreg |= (((uint32_t)addr << ETH_MACMIIAR_PA_Pos) & ETH_MACMIIAR_PA); /* Set the PHY device address */
-    tmpreg |= (((uint32_t)reg << ETH_MACMIIAR_MR_Pos) & ETH_MACMIIAR_MR);   /* Set the PHY register address */
-    tmpreg |= ETH_MACMIIAR_MW;                               /* Set the write mode */
-    tmpreg |= ETH_MACMIIAR_MB;                               /* Set the MII Busy bit */
+    tmpreg |= (((uint32_t)reg << ETH_MACMIIAR_MR_Pos) & ETH_MACMIIAR_MR);  /* Set the PHY register address */
+    tmpreg |= ETH_MACMIIAR_MW;                                             /* Set the write mode */
+    tmpreg |= ETH_MACMIIAR_MB;                                             /* Set the MII Busy bit */
     /* Check for the Busy flag */
     ETH->MACMIIDR = val;
     ETH->MACMIIAR = tmpreg;
@@ -714,7 +706,7 @@ uint16_t ETH_WritePHYRegister(uint16_t addr, uint16_t reg, uint16_t val)
         tmpreg = ETH->MACMIIAR;
     } while ((tmpreg & ETH_MACMIIAR_MB) && (timeout < (uint32_t)PHY_WRITE_TO));
     /* Return ERROR in case of timeout */
-    if(timeout == PHY_WRITE_TO) {
+    if (timeout == PHY_WRITE_TO) {
         ret = ETH_ERROR;
     }
     else {
@@ -734,7 +726,7 @@ void ETH_ResetWakeUpFrameFilterRegisterPointer(void)
 void ETH_SetWakeUpFrameFilterRegister(uint32_t* buf)
 {
     uint32_t i = 0;
-    
+
     for (i = 0; i < ETH_WAKEUP_REGISTER_LENGTH; i++) {
         ETH->MACRWUFFR = buf[i];
     }
@@ -743,7 +735,7 @@ void ETH_SetWakeUpFrameFilterRegister(uint32_t* buf)
 ////////////////////////////////////////////////////////////////////////////////
 void ETH_GlobalUnicastWakeUpCmd(FunctionalState sta)
 {
-    sta ?   (ETH->MACPMTCSR |= ETH_MACPMTCSR_GU) : (ETH->MACPMTCSR &= ~ETH_MACPMTCSR_GU);
+    sta ? (ETH->MACPMTCSR |= ETH_MACPMTCSR_GU) : (ETH->MACPMTCSR &= ~ETH_MACPMTCSR_GU);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

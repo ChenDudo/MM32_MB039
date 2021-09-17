@@ -52,15 +52,12 @@
 #undef GLOBAL
 /// @}
 
-
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup DBG_Exported_Functions
 /// @{
 void DBGMCU_Configure(u32 periph, FunctionalState NewState);
 
 /// @}
-
 
 /// @}
 

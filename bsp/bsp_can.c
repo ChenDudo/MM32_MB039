@@ -29,8 +29,7 @@
 #include "bsp.h"
 #include "bsp_can.h"
 
-
-#if defined (CAN1)
+#if defined(CAN1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Board_Support_Package
 /// @{
@@ -55,21 +54,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_CAN_GPIO_Configure(CAN_Peli_TypeDef* CANx, bool remapEn, u8 remapIdx)
 {
-	if (!remapEn) {
-			GPIOA_ClockEnable();
-			GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_12,  NO_REMAP, 		GPIO_AF_4);
-			GPIO_Mode_IPU_Init        (GPIOA, GPIO_Pin_11, NO_REMAP, 		GPIO_AF_4);
-	}
-	else {
-		if (remapIdx == 0) {
-			GPIOB_ClockEnable();
-            GPIO_Mode_AF_PP_50MHz_Init(GPIOB, GPIO_Pin_9, NO_REMAP, 	GPIO_AF_4);
-			GPIO_Mode_FLOATING_Init	  (GPIOB, GPIO_Pin_8, NO_REMAP, 	GPIO_AF_4);
+    if (!remapEn) {
+        GPIOA_ClockEnable();
+        GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_12, NO_REMAP, GPIO_AF_4);
+        GPIO_Mode_IPU_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_4);
+    }
+    else {
+        if (remapIdx == 0) {
+            GPIOB_ClockEnable();
+            GPIO_Mode_AF_PP_50MHz_Init(GPIOB, GPIO_Pin_9, NO_REMAP, GPIO_AF_4);
+            GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_8, NO_REMAP, GPIO_AF_4);
         }
-	}
-	RCC->APB2ENR |= RCC_APB2ENR_EXTI;
+    }
+    RCC->APB2ENR |= RCC_APB2ENR_EXTI;
 #if defined(__MM3N1)
-	EXTI->MAPR   |= AFIO_MAPR_CAN;							// 1 << 2;
+    EXTI->MAPR |= AFIO_MAPR_CAN;  // 1 << 2;
 #endif
 }
 /// @}

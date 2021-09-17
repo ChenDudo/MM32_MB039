@@ -39,7 +39,6 @@
 /// @defgroup CAN_Exported_Types
 /// @{
 
-
 #if defined(CAN1)
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -68,24 +67,24 @@ typedef enum {
 /// @brief BASIC_CAN_interrupt
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    CAN_IT_RIE = CAN_CR_RIE,  													///< Overflow interrupt enable
-    CAN_IT_TIE = CAN_CR_TIE,  													///< Transmit interrupt enable
-    CAN_IT_EIE = CAN_CR_EIE,  													///< Error interrupt enable
-    CAN_IT_OIE = CAN_CR_OIE   													///< Receive interrupt enable
+    CAN_IT_RIE = CAN_CR_RIE,  ///< Overflow interrupt enable
+    CAN_IT_TIE = CAN_CR_TIE,  ///< Transmit interrupt enable
+    CAN_IT_EIE = CAN_CR_EIE,  ///< Error interrupt enable
+    CAN_IT_OIE = CAN_CR_OIE   ///< Receive interrupt enable
 } emCAN_BASIC_IntEn_Typedef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief PELI_CAN_interrupt
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    CAN_IT_RI  = CAN_IR_RI,   													///< Overflow interrupt enable
-    CAN_IT_TI  = CAN_IR_TI,   													///< Transmit interrupt enable
-    CAN_IT_EI  = CAN_IR_EI,   													///< Error interrupt enable
-    CAN_IT_DOI = CAN_IR_DOI,  													///< Receive interrupt enable
-    CAN_IT_EPI = CAN_IR_EPI,  													///< Receive interrupt enable
-    CAN_IT_ALI = CAN_IR_ALI,  													///< Receive interrupt enable
-    CAN_IT_BEI = CAN_IR_BEI,  													///< Receive interrupt enable
-    CAN_IT_ALL = 0xFFFF       													///< Receive interrupt enable
+    CAN_IT_RI  = CAN_IR_RI,   ///< Overflow interrupt enable
+    CAN_IT_TI  = CAN_IR_TI,   ///< Transmit interrupt enable
+    CAN_IT_EI  = CAN_IR_EI,   ///< Error interrupt enable
+    CAN_IT_DOI = CAN_IR_DOI,  ///< Receive interrupt enable
+    CAN_IT_EPI = CAN_IR_EPI,  ///< Receive interrupt enable
+    CAN_IT_ALI = CAN_IR_ALI,  ///< Receive interrupt enable
+    CAN_IT_BEI = CAN_IR_BEI,  ///< Receive interrupt enable
+    CAN_IT_ALL = 0xFFFF       ///< Receive interrupt enable
 
 } emCAN_PELI_IntEn_Typedef;
 
@@ -125,11 +124,11 @@ typedef enum {
 /// @brief  CAN_Basic init structure definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct {
-    u8              SJW;
-    u8              BRP;
-    FlagStatus      SAM;
-    u8              TESG2;
-    u8              TESG1;
+    u8         SJW;
+    u8         BRP;
+    FlagStatus SAM;
+    u8         TESG2;
+    u8         TESG1;
 } CAN_Basic_InitTypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -243,7 +242,6 @@ typedef struct {
 #define CAN_NO_MB (0x04U)     ///< CAN cell did not provide an empty mailbox
 /// @}
 
-
 /// @}
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -269,7 +267,7 @@ void CAN_Mode_Cmd(CAN_TypeDef* CANx, u32 mode);
 void CAN_ResetMode_Cmd(CAN_TypeDef* CANx, FunctionalState state);
 void CAN_ClearDataOverflow(CAN_TypeDef* CANx);
 void CAN_ClearITPendingBit(CAN_TypeDef* CANx);
-//void exCAN_ClearITPendingBit(CAN_Peli_TypeDef* CANx);
+// void exCAN_ClearITPendingBit(CAN_Peli_TypeDef* CANx);
 u32 exCAN_ClearITPendingBit(CAN_Peli_TypeDef* CANx);
 
 // Basic Work function ---------------------------------------------------------
@@ -281,8 +279,8 @@ void CAN_CancelTransmit(CAN_TypeDef* CANx);
 void CAN_FIFORelease(CAN_TypeDef* CANx);
 void CAN_Receive(CAN_TypeDef* CANx, CanBasicRxMsg* BasicRxMessage);
 
-u8 CAN_Transmit(CAN_TypeDef* CANx, CanBasicTxMsg* BasicTxMessage);
-u8 CAN_Init(CAN_TypeDef* CANx, CAN_Basic_InitTypeDef* CAN_Basic_InitStruct);
+u8         CAN_Transmit(CAN_TypeDef* CANx, CanBasicTxMsg* BasicTxMessage);
+u8         CAN_Init(CAN_TypeDef* CANx, CAN_Basic_InitTypeDef* CAN_Basic_InitStruct);
 FlagStatus CAN_GetFlagStatus(CAN_TypeDef* CANx, u32 flag);
 ITStatus   CAN_GetITStatus(CAN_TypeDef* CANx, u32 CAN_IT);
 
@@ -304,10 +302,7 @@ u8  CAN_Peli_GetLSBTransmitErrorCounter(void);
 
 ITStatus CAN_Peli_GetITStatus(u32 CAN_IT);
 
-
-
 #endif
-
 
 /// @}
 

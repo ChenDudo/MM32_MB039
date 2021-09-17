@@ -125,12 +125,12 @@ void UART_Init(UART_TypeDef* UARTx, UART_InitTypeDef* pInitStruct)
 void UART_StructInit(UART_InitTypeDef* pInitStruct)
 {
     /* UART_InitStruct members default value */
-    pInitStruct->BaudRate   	= 9600;
-    pInitStruct->WordLength     = UART_WordLength_8b;
-    pInitStruct->StopBits       = UART_StopBits_1;
-    pInitStruct->Parity         = UART_Parity_No;
-    pInitStruct->Mode           = UART_GCR_RX | UART_GCR_TX;
-    pInitStruct->HWFlowControl 	= UART_HWFlowControl_None;
+    pInitStruct->BaudRate      = 9600;
+    pInitStruct->WordLength    = UART_WordLength_8b;
+    pInitStruct->StopBits      = UART_StopBits_1;
+    pInitStruct->Parity        = UART_Parity_No;
+    pInitStruct->Mode          = UART_GCR_RX | UART_GCR_TX;
+    pInitStruct->HWFlowControl = UART_HWFlowControl_None;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -406,7 +406,6 @@ void UART_SendBreak(UART_TypeDef* UARTx)
 
 #endif
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  AutoBaudRate.
 /// @param  uart: Select the UART or the UART peripheral.
@@ -416,8 +415,11 @@ void UART_SendBreak(UART_TypeDef* UARTx)
 /// @retval None.
 ////////////////////////////////////////////////////////////////////////////////
 #if defined(ABRCR)
-void UART_AutoBaudRateSet(UART_TypeDef* uart, UARTABR_FE_TypeDef fedge, \
-    UARTABR_LE_TypeDef ledge, UARTABR_Bit_TypeDef cnt, FunctionalState state)
+void UART_AutoBaudRateSet(UART_TypeDef*       uart,
+                          UARTABR_FE_TypeDef  fedge,
+                          UARTABR_LE_TypeDef  ledge,
+                          UARTABR_Bit_TypeDef cnt,
+                          FunctionalState     state)
 {
     WRITE_REG(uart->ABRCR, (u16)(fedge | ledge | cnt | state));
 }
@@ -431,7 +433,7 @@ void UART_AutoBaudRateSet(UART_TypeDef* uart, UARTABR_FE_TypeDef fedge, \
 ///         state: ENABLE/DISABLE.
 /// @retval None.
 ////////////////////////////////////////////////////////////////////////////////
-//void UART_AutoBaudRateSet(UART_TypeDef* uart, UART_AutoBaud_TypeDef value, FunctionalState state)
+// void UART_AutoBaudRateSet(UART_TypeDef* uart, UART_AutoBaud_TypeDef value, FunctionalState state)
 //{
 //    if(value == UART_ABRCR_ABR_8b) {
 //        WRITE_REG(uart->ABRCR, UART_ABRCR_LATTER | UART_ABRCR_ABR_2b | (UART_ABRCR_ABREN & state));

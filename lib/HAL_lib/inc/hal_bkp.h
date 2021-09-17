@@ -43,7 +43,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Data_Backup_Register
 /// @anchor Data_Backup_Register
-#if defined(__MM3N1) || defined(__MM3O1) || defined(__MM0N1) || defined(__MM0P1) 
+#if defined(__MM3N1) || defined(__MM3O1) || defined(__MM0N1) || defined(__MM0P1)
 typedef enum {
     BKP_DR1  = 0x0004,
     BKP_DR2  = 0x0008,
@@ -99,18 +99,18 @@ typedef enum {
 /// @brief Tamper_Pin_active_level
 /// @anchor Tamper_Pin_active_level
 typedef enum {
-    BKP_TamperPinLevel_High,               										///< Tamper pin active on high level
-    BKP_TamperPinLevel_Low = BKP_CR_TPAL,  										///< Tamper pin active on low level
+    BKP_TamperPinLevel_High,               ///< Tamper pin active on high level
+    BKP_TamperPinLevel_Low = BKP_CR_TPAL,  ///< Tamper pin active on low level
 } BKPTPAL_Typedef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief RTC_output_source_to_output_on_the_Tamper_pin
 /// @anchor RTC_output_source_to_output_on_the_Tamper_pin
 typedef enum {
-    BKP_RTCOutputSource_None       = 0x0000,  									///< No RTC output on the Tamper pin
-    BKP_RTCOutputSource_CalibClock = 0x0080,  									///< Output the RTC clock with frequency divided by 64 on the Tamper pin
-    BKP_RTCOutputSource_Alarm      = 0x0100,  									///< Output the RTC Alarm pulse signal on the Tamper pin
-    BKP_RTCOutputSource_Second     = 0x0300   									///< Output the RTC Second pulse signal on the Tamper pin
+    BKP_RTCOutputSource_None       = 0x0000,  ///< No RTC output on the Tamper pin
+    BKP_RTCOutputSource_CalibClock = 0x0080,  ///< Output the RTC clock with frequency divided by 64 on the Tamper pin
+    BKP_RTCOutputSource_Alarm      = 0x0100,  ///< Output the RTC Alarm pulse signal on the Tamper pin
+    BKP_RTCOutputSource_Second     = 0x0300   ///< Output the RTC Second pulse signal on the Tamper pin
 } BKPRTCOUTPUTSRC_Typedef;
 
 #endif
@@ -154,7 +154,6 @@ FlagStatus BKP_GetFlagStatus(void);
 void exBKP_Init(void);
 void exBKP_ImmWrite(BKPDR_Typedef BKP_DR, u16 Data);
 u16  exBKP_ImmRead(BKPDR_Typedef BKP_DR);
-
 
 #endif
 /// @}

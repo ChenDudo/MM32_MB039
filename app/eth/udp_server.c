@@ -42,24 +42,23 @@
 /// @addtogroup UDP_Server_Functions
 /// @{
 
-static void udp_find_receive(struct netconn * conn, struct netbuf * buf)
+static void udp_find_receive(struct netconn* conn, struct netbuf* buf)
 {
     uint32_t ip = getIpAddress();
     uint8_t  mac[6];
 
-    char * buffer = NULL;
-    u16_t  buflen = 0;
+    char* buffer = NULL;
+    u16_t buflen = 0;
 
-    struct netbuf * newbuf;
+    struct netbuf* newbuf;
 
     char respstring[128] = {0};
     char macstring[25]   = {0};
 
     getMacAddress(mac);
-    sprintf(macstring, " MAC: %02X-%02X-%02X-%02X-%02X-%02X ", mac[0], mac[1],
-            mac[2], mac[3], mac[4], mac[5]);
+    sprintf(macstring, " MAC: %02X-%02X-%02X-%02X-%02X-%02X ", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
 
-    netbuf_data(buf, (void **)&buffer, &buflen);
+    netbuf_data(buf, (void**)&buffer, &buflen);
 
     if (buflen > 0) {
         if (strcmp(buffer, UDP_FIND_STRING) == 0) {
@@ -75,7 +74,7 @@ static void udp_find_receive(struct netconn * conn, struct netbuf * buf)
             }
 
             netbuf_alloc(newbuf, strlen(respstring));
-            netbuf_data(newbuf, (void **)&buffer, &buflen);
+            netbuf_data(newbuf, (void**)&buffer, &buflen);
             memcpy(buffer, respstring, buflen);
             newbuf->addr.addr = buf->addr.addr;
             newbuf->port      = buf->port;
@@ -86,10 +85,10 @@ static void udp_find_receive(struct netconn * conn, struct netbuf * buf)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-static void udp_find_server_thread(void * arg)
+static void udp_find_server_thread(void* arg)
 {
-    struct netconn * conn;
-    struct netbuf *  buf;
+    struct netconn* conn;
+    struct netbuf*  buf;
 
     LWIP_UNUSED_ARG(arg);
 
@@ -108,10 +107,10 @@ static void udp_find_server_thread(void * arg)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-static void udp_server_thread(void * arg)
+static void udp_server_thread(void* arg)
 {
-    struct netconn * conn;
-    struct netbuf *  buf;
+    struct netconn* conn;
+    struct netbuf*  buf;
 
     LWIP_UNUSED_ARG(arg);
 

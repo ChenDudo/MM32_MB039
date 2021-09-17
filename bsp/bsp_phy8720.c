@@ -69,27 +69,28 @@ void initPhy_8720(u16 phy_addr)
     if (ETH_InitStructure.ETH_AutoNegotiation != ETH_AutoNegotiation_Disable)
         ETH_WritePHYRegister(phy_addr, PHY_BCR, PHY_AutoNegotiation);
     else
-        ETH_WritePHYRegister(phy_addr, PHY_BCR, ((u16)(ETH_InitStructure.ETH_Mode >> 3) | (u16)(ETH_InitStructure.ETH_Speed >> 1) ));
-    
+        ETH_WritePHYRegister(phy_addr, PHY_BCR,
+                             ((u16)(ETH_InitStructure.ETH_Mode >> 3) | (u16)(ETH_InitStructure.ETH_Speed >> 1)));
+
     (ETH_Speed_10M == ETH_InitStructure.ETH_Speed) ? (SYSCFG->CFGR2 &= ~(1 << 21)) : (SYSCFG->CFGR2 |= (1 << 21));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void changePhy(u8 mode)
 {
-    switch(mode){
+    switch (mode) {
         case 0:
-        initPhy_8720(PHY_ADDRESS_LAN8720_A);
-        closePhy_8720(PHY_ADDRESS_LAN8720_B);
-        break;
+            initPhy_8720(PHY_ADDRESS_LAN8720_A);
+            closePhy_8720(PHY_ADDRESS_LAN8720_B);
+            break;
         case 1:
-        initPhy_8720(PHY_ADDRESS_LAN8720_B);
-        closePhy_8720(PHY_ADDRESS_LAN8720_A);
-        break;
+            initPhy_8720(PHY_ADDRESS_LAN8720_B);
+            closePhy_8720(PHY_ADDRESS_LAN8720_A);
+            break;
         default:
-        closePhy_8720(PHY_ADDRESS_LAN8720_A);
-        closePhy_8720(PHY_ADDRESS_LAN8720_B);
-        break;
+            closePhy_8720(PHY_ADDRESS_LAN8720_A);
+            closePhy_8720(PHY_ADDRESS_LAN8720_B);
+            break;
     }
 }
 
@@ -99,10 +100,8 @@ void BSP_PHY8720_Configure(u8 mode)
     changePhy(mode);
 }
 
-
 /// @}
 
 /// @}
 
 /// @}
-

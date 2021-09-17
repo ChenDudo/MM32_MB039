@@ -22,7 +22,6 @@
 #ifndef __HAL_CRS_H
 #define __HAL_CRS_H
 
-
 // Files includes  -------------------------------------------------------------
 #include "mm32_types.h"
 #include "MM32.h"
@@ -40,8 +39,7 @@
 /// @defgroup GPIO_Exported_Types
 /// @{
 
-
-#if defined(__MM0N1) ||defined(__MM3O1) ||defined(__MM0S1)
+#if defined(__MM0N1) || defined(__MM3O1) || defined(__MM0S1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  CRS Init structure definition
 ////////////////////////////////////////////////////////////////////////////////
@@ -60,23 +58,22 @@ typedef struct {
 /// @defgroup CRS_Exported_Constants
 /// @{
 
-	#define CRS_SYNC_Div1 	((u32)0x00000000)   								///< Synchro Signal not divided
-	#define CRS_SYNC_Div2 	((u32)0x01000000)   								///< Synchro Signal divided by 2
-	#define CRS_SYNC_Div4 	((u32)0x02000000)   								///< Synchro Signal divided by 4
-	#define CRS_SYNC_Div8 	((u32)0x03000000)   								///< Synchro Signal divided by 8
-	#define CRS_SYNC_Div16 	((u32)0x04000000)  									///< Synchro Signal divided by 16
-	#define CRS_SYNC_Div32 	((u32)0x05000000)  									///< Synchro Signal divided by 32
-	#define CRS_SYNC_Div64 	((u32)0x06000000)  									///< Synchro Signal divided by 64
-	#define CRS_SYNC_Div128 CRS_CFGR_DIV  										///< Synchro Signal divided by 128
+#define CRS_SYNC_Div1 ((u32)0x00000000)   ///< Synchro Signal not divided
+#define CRS_SYNC_Div2 ((u32)0x01000000)   ///< Synchro Signal divided by 2
+#define CRS_SYNC_Div4 ((u32)0x02000000)   ///< Synchro Signal divided by 4
+#define CRS_SYNC_Div8 ((u32)0x03000000)   ///< Synchro Signal divided by 8
+#define CRS_SYNC_Div16 ((u32)0x04000000)  ///< Synchro Signal divided by 16
+#define CRS_SYNC_Div32 ((u32)0x05000000)  ///< Synchro Signal divided by 32
+#define CRS_SYNC_Div64 ((u32)0x06000000)  ///< Synchro Signal divided by 64
+#define CRS_SYNC_Div128 CRS_CFGR_DIV      ///< Synchro Signal divided by 128
 
-	#define CRS_SYNCSource_GPIO 	((u32)0x00000000)  							///< Synchro Signal soucre GPIO
-	#define CRS_SYNCSource_LSE 		((u32)0x10000000)  							///< Synchro Signal source LSE
-	#define CRS_SYNCSource_USB 		((u32)0x20000000)  							///< Synchro Signal source USB SOF
-	#define CRS_SYNCPolarity_Rising  ((u32)0x00000000)  						///< Synchro Active on rising edge
-	#define CRS_SYNCPolarity_Falling CRS_CFGR_POL   							///< Synchro Active on falling edge
-	#define CRS_ERRORLIMIT_DEFAULT ((u32)0x00000022)  							///< Default Frequency error limit
+#define CRS_SYNCSource_GPIO ((u32)0x00000000)      ///< Synchro Signal soucre GPIO
+#define CRS_SYNCSource_LSE ((u32)0x10000000)       ///< Synchro Signal source LSE
+#define CRS_SYNCSource_USB ((u32)0x20000000)       ///< Synchro Signal source USB SOF
+#define CRS_SYNCPolarity_Rising ((u32)0x00000000)  ///< Synchro Active on rising edge
+#define CRS_SYNCPolarity_Falling CRS_CFGR_POL      ///< Synchro Active on falling edge
+#define CRS_ERRORLIMIT_DEFAULT ((u32)0x00000022)   ///< Default Frequency error limit
 /// @}
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup CRS_Exported_Variables
@@ -95,24 +92,24 @@ typedef struct {
 /// @defgroup CRS_Exported_Functions
 /// @{
 
-void       CRS_DeInit(void);
-void       CRS_AdjustHSI48CalibrationValue(u8 Value);
-void       CRS_FrequencyErrorCounterCmd(FunctionalState state);
-void       CRS_AutomaticCalibrationCmd(FunctionalState state);
-void       CRS_SoftwareSynchronizationGenerate(void);
-void       CRS_FrequencyErrorCounterReload(u32 CRS_ReloadValue);
-void       CRS_FrequencyErrorLimitConfig(u8 CRS_ErrorLimitValue);
-void       CRS_SyncPrescalerConfig(u32 CRS_Prescaler);
-void       CRS_SynSourceConfig(u32 CRS_Source);
-void       CRS_SynchronizationPolarityConfig(u32 CRS_Polarity);
-u32        CRS_GetReloadValue(void);
-u32        CRS_GetHSI48CalibrationValue(void);
-u32        CRS_GetFrequencyErrorValue(void);
-u32        CRS_GetFrequencyErrorDirection(void);
-void       CRS_ITConfig(u32 CRS_IT, FunctionalState state);
-void       CRS_ClearFlag(u32 CRS_FLAG);
-void       CRS_ClearITPendingBit(u32 CRS_IT);
-void       exCRS_Init(CRS_InitTypeDef* CRS_InitStruct);
+void CRS_DeInit(void);
+void CRS_AdjustHSI48CalibrationValue(u8 Value);
+void CRS_FrequencyErrorCounterCmd(FunctionalState state);
+void CRS_AutomaticCalibrationCmd(FunctionalState state);
+void CRS_SoftwareSynchronizationGenerate(void);
+void CRS_FrequencyErrorCounterReload(u32 CRS_ReloadValue);
+void CRS_FrequencyErrorLimitConfig(u8 CRS_ErrorLimitValue);
+void CRS_SyncPrescalerConfig(u32 CRS_Prescaler);
+void CRS_SynSourceConfig(u32 CRS_Source);
+void CRS_SynchronizationPolarityConfig(u32 CRS_Polarity);
+u32  CRS_GetReloadValue(void);
+u32  CRS_GetHSI48CalibrationValue(void);
+u32  CRS_GetFrequencyErrorValue(void);
+u32  CRS_GetFrequencyErrorDirection(void);
+void CRS_ITConfig(u32 CRS_IT, FunctionalState state);
+void CRS_ClearFlag(u32 CRS_FLAG);
+void CRS_ClearITPendingBit(u32 CRS_IT);
+void exCRS_Init(CRS_InitTypeDef* CRS_InitStruct);
 
 FlagStatus CRS_GetFlagStatus(u32 CRS_FLAG);
 ITStatus   CRS_GetITStatus(u32 CRS_IT);
@@ -129,4 +126,3 @@ ITStatus   exCRS_GetITSource(u32 CRS_IT);
 ////////////////////////////////////////////////////////////////////////////////
 #endif /* __HAL_CRS_H */
 ////////////////////////////////////////////////////////////////////////////////
-

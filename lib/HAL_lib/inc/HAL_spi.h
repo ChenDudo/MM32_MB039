@@ -43,62 +43,59 @@
 /// @brief  SPI mode enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    SPI_Mode_Slave  = 0x0000,        ///< SPI slave mode
-    SPI_Mode_Master = SPI_GCR_MODE   ///< SPI master mode
+    SPI_Mode_Slave  = 0x0000,       ///< SPI slave mode
+    SPI_Mode_Master = SPI_GCR_MODE  ///< SPI master mode
 } SPI_Mode_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  SPI data size enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    SPI_DataSize_8b  = 0x0000,         ///< 8 bits valid data
-    SPI_DataSize_32b = SPI_GCR_DWSEL   ///< 32 bits valid data
+    SPI_DataSize_8b  = 0x0000,        ///< 8 bits valid data
+    SPI_DataSize_32b = SPI_GCR_DWSEL  ///< 32 bits valid data
 } SPI_DataSize_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  SPI clock polarity enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    SPI_CPOL_Low  = 0x0000,        												///< The clock is low in idle state.
-    SPI_CPOL_High = SPI_CCR_CPOL  												///< The clock is high in idle state.
+    SPI_CPOL_Low  = 0x0000,       ///< The clock is low in idle state.
+    SPI_CPOL_High = SPI_CCR_CPOL  ///< The clock is high in idle state.
 } SPI_CPOL_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  SPI clock phase enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    SPI_CPHA_2Edge = 0x0000,       												///< Data sampling starts from the second clock edge.
-    SPI_CPHA_1Edge = SPI_CCR_CPHA  												///< Data sampling starts from the first clock edge.
+    SPI_CPHA_2Edge = 0x0000,       ///< Data sampling starts from the second clock edge.
+    SPI_CPHA_1Edge = SPI_CCR_CPHA  ///< Data sampling starts from the first clock edge.
 } SPI_CPHA_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  SPI nss control mode enum definition
 ////////////////////////////////////////////////////////////////////////////////
-typedef enum {
-	SPI_NSS_Soft = 0x0000,
-	SPI_NSS_Hard = SPI_GCR_NSS
-} SPI_NSS_TypeDef;
+typedef enum { SPI_NSS_Soft = 0x0000, SPI_NSS_Hard = SPI_GCR_NSS } SPI_NSS_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  SPI baud rate prescaler enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    SPI_BaudRatePrescaler_2   = 0x0002,  										///< SCK clock devide by 2
-    SPI_BaudRatePrescaler_4   = 0x0004,  										///< SCK clock devide by 4
-    SPI_BaudRatePrescaler_8   = 0x0008,  										///< SCK clock devide by 7
-    SPI_BaudRatePrescaler_16  = 0x0010,  										///< SCK clock devide by 16
-    SPI_BaudRatePrescaler_32  = 0x0020,  										///< SCK clock devide by 32
-    SPI_BaudRatePrescaler_64  = 0x0040,  										///< SCK clock devide by 64
-    SPI_BaudRatePrescaler_128 = 0x0080,  										///< SCK clock devide by 128
-    SPI_BaudRatePrescaler_256 = 0x0100   										///< SCK clock devide by 256
+    SPI_BaudRatePrescaler_2   = 0x0002,  ///< SCK clock devide by 2
+    SPI_BaudRatePrescaler_4   = 0x0004,  ///< SCK clock devide by 4
+    SPI_BaudRatePrescaler_8   = 0x0008,  ///< SCK clock devide by 7
+    SPI_BaudRatePrescaler_16  = 0x0010,  ///< SCK clock devide by 16
+    SPI_BaudRatePrescaler_32  = 0x0020,  ///< SCK clock devide by 32
+    SPI_BaudRatePrescaler_64  = 0x0040,  ///< SCK clock devide by 64
+    SPI_BaudRatePrescaler_128 = 0x0080,  ///< SCK clock devide by 128
+    SPI_BaudRatePrescaler_256 = 0x0100   ///< SCK clock devide by 256
 } SPI_BaudRatePrescaler_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  SPI first bit enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    SPI_FirstBit_MSB = 0x0000,         											///< Data transfers start from MSB
-    SPI_FirstBit_LSB = SPI_CCR_LSBFE  											///< Data transfers start from LSB
+    SPI_FirstBit_MSB = 0x0000,        ///< Data transfers start from MSB
+    SPI_FirstBit_LSB = SPI_CCR_LSBFE  ///< Data transfers start from LSB
 } SPI_FirstBit_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -106,11 +103,11 @@ typedef enum {
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
 #if defined(SPI_GCR_RXTLF_Half)
-    SPI_RXTLF = SPI_GCR_RXTLF_Half,  											///< RX FIFO trigger level
-    SPI_TXTLF = SPI_GCR_TXTLF_Half   											///< TX FIFO trigger level
+    SPI_RXTLF = SPI_GCR_RXTLF_Half,  ///< RX FIFO trigger level
+    SPI_TXTLF = SPI_GCR_TXTLF_Half   ///< TX FIFO trigger level
 #else
-    SPI_RXTLF = 0,  											                ///< RX FIFO trigger level
-    SPI_TXTLF = 0   											                ///< TX FIFO trigger level
+    SPI_RXTLF = 0,  ///< RX FIFO trigger level
+    SPI_TXTLF = 0   ///< TX FIFO trigger level
 #endif
 } SPI_TLF_TypeDef;
 
@@ -118,123 +115,122 @@ typedef enum {
 /// @brief  SPI bit derection enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    SPI_Direction_Rx,  															///< Receive enable
-    SPI_Direction_Tx,  															///< Transmit enable
-    SPI_Disable_Rx,    															///< Receive disable
-    SPI_Disable_Tx     															///< Transmit disable
+    SPI_Direction_Rx,  ///< Receive enable
+    SPI_Direction_Tx,  ///< Transmit enable
+    SPI_Disable_Rx,    ///< Receive disable
+    SPI_Disable_Tx     ///< Transmit disable
 } SPI_Direction_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  SPI flag enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    SPI_FLAG_RXAVL       = SPI_SR_RXAVL,       									///< Receive 1 byte available data flag
-    SPI_FLAG_TXEPT       = SPI_SR_TXEPT,       									///< Transmitter empty flag
-    SPI_FLAG_TXFULL      = SPI_SR_TXFULL,      									///< Transmitter FIFO full status flag
-    SPI_FLAG_RXAVL_4BYTE = SPI_SR_RXAVL_4BYTE  									///< Receive 4 bytes available data flag
+    SPI_FLAG_RXAVL       = SPI_SR_RXAVL,       ///< Receive 1 byte available data flag
+    SPI_FLAG_TXEPT       = SPI_SR_TXEPT,       ///< Transmitter empty flag
+    SPI_FLAG_TXFULL      = SPI_SR_TXFULL,      ///< Transmitter FIFO full status flag
+    SPI_FLAG_RXAVL_4BYTE = SPI_SR_RXAVL_4BYTE  ///< Receive 4 bytes available data flag
 } SPI_FLAG_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  SPI slave mode data edge adjust enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    SPI_SlaveAdjust_LOW,  														///< SPI slave mode data edge adjust in low speed mode
-    SPI_SlaveAdjust_FAST  														///< SPI slave mode data edge adjust in fast speed mode
+    SPI_SlaveAdjust_LOW,  ///< SPI slave mode data edge adjust in low speed mode
+    SPI_SlaveAdjust_FAST  ///< SPI slave mode data edge adjust in fast speed mode
 } SPI_SlaveAdjust_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  SPI data edge adjust enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    SPI_DataEdgeAdjust_LOW,  													///< SPI data edge adjust in low speed mode
-    SPI_DataEdgeAdjust_FAST  													///< SPI data edge adjust in fast speed mode
+    SPI_DataEdgeAdjust_LOW,  ///< SPI data edge adjust in low speed mode
+    SPI_DataEdgeAdjust_FAST  ///< SPI data edge adjust in fast speed mode
 } SPI_DataEdgeAdjust_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  SPI interruput enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    SPI_IT_TXEPT    = 0x40,  													///< Transmitter empty interrupt
-    SPI_IT_RXFULL   = 0x20,  													///< RX FIFO full interrupt
-    SPI_IT_RXMATCH  = 0x10,  													///< Receive data match the RXDNR number interrut
-    SPI_IT_RXOERR   = 0x08,  													///< Receive overrun error interrupt
-    SPI_IT_UNDERRUN = 0x04,  													///< Underrun interrupt
-    SPI_IT_RX       = 0x02,  													///< Receive available data interrupt
-    SPI_IT_TX       = 0x01   													///< Transmit FIFO available interrupt
+    SPI_IT_TXEPT    = 0x40,  ///< Transmitter empty interrupt
+    SPI_IT_RXFULL   = 0x20,  ///< RX FIFO full interrupt
+    SPI_IT_RXMATCH  = 0x10,  ///< Receive data match the RXDNR number interrut
+    SPI_IT_RXOERR   = 0x08,  ///< Receive overrun error interrupt
+    SPI_IT_UNDERRUN = 0x04,  ///< Underrun interrupt
+    SPI_IT_RX       = 0x02,  ///< Receive available data interrupt
+    SPI_IT_TX       = 0x01   ///< Transmit FIFO available interrupt
 } SPI_IT_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  SPI Init structure definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct {
-    SPI_Mode_TypeDef              	SPI_Mode;       							///< Specifies the SPI operating mode
-    SPI_DataSize_TypeDef          	SPI_DataSize;   							///< Specifies the SPI available data size
-    u8                            	SPI_DataWidth;  							///< SPI data length
-    SPI_CPOL_TypeDef              	SPI_CPOL;       							///< Specifies the serial clock steady state
-    SPI_CPHA_TypeDef              	SPI_CPHA;       							///< Specifies the clock active edge for the bit capture
-    SPI_NSS_TypeDef               	SPI_NSS;        							///< Specifies whether the NSS signal is managed by hardware or by software
-    u16 	SPI_BaudRatePrescaler;  					                        ///< Specifies the Baud Rate prescaler value which will be
-                                                          						///< used to configure the transmit and receive SCK clock
-    SPI_FirstBit_TypeDef 			SPI_FirstBit;                    			///< Specifies whether data transfers start from MSB or LSB bit
+    SPI_Mode_TypeDef     SPI_Mode;               ///< Specifies the SPI operating mode
+    SPI_DataSize_TypeDef SPI_DataSize;           ///< Specifies the SPI available data size
+    u8                   SPI_DataWidth;          ///< SPI data length
+    SPI_CPOL_TypeDef     SPI_CPOL;               ///< Specifies the serial clock steady state
+    SPI_CPHA_TypeDef     SPI_CPHA;               ///< Specifies the clock active edge for the bit capture
+    SPI_NSS_TypeDef      SPI_NSS;                ///< Specifies whether the NSS signal is managed by hardware or by software
+    u16                  SPI_BaudRatePrescaler;  ///< Specifies the Baud Rate prescaler value which will be
+                                                 ///< used to configure the transmit and receive SCK clock
+    SPI_FirstBit_TypeDef SPI_FirstBit;           ///< Specifies whether data transfers start from MSB or LSB bit
     //  u16 	SPI_length;
 } SPI_InitTypeDef;
 
 typedef enum {
-    I2S_Standard_Phillips               = 0x0000,
-    I2S_Standard_MSB                    = 0x0010,
-    I2S_Standard_LSB                    = 0x0020,
-    I2S_Standard_PCMShort               = 0x0030,
-    I2S_Standard_PCMLong                = 0x00B0,
+    I2S_Standard_Phillips = 0x0000,
+    I2S_Standard_MSB      = 0x0010,
+    I2S_Standard_LSB      = 0x0020,
+    I2S_Standard_PCMShort = 0x0030,
+    I2S_Standard_PCMLong  = 0x00B0,
 } SPI_I2S_STANDARD_TypeDef;
 
-
 typedef enum {
-    I2S_DataFormat_16b              = 0x0000,
-    I2S_DataFormat_16bextended      = 0x0001,
-    I2S_DataFormat_24b              = 0x0003,
-    I2S_DataFormat_32b              = 0x0005,
+    I2S_DataFormat_16b         = 0x0000,
+    I2S_DataFormat_16bextended = 0x0001,
+    I2S_DataFormat_24b         = 0x0003,
+    I2S_DataFormat_32b         = 0x0005,
 } SPI_I2S_DATAFORMAT_TypeDef;
 typedef enum {
-    I2S_AudioFreq_192k               = (192000),
-    I2S_AudioFreq_96k                = (96000),
-    I2S_AudioFreq_48k                = (48000),
-    I2S_AudioFreq_44k                = (44100),
-    I2S_AudioFreq_32k                = (32000),
-    I2S_AudioFreq_24k                = (24000),
-    I2S_AudioFreq_22k                = (22050),
-    I2S_AudioFreq_16k                = (16000),
-    I2S_AudioFreq_11k                = (11025),
-    I2S_AudioFreq_12k                = (12000),
-    I2S_AudioFreq_8k                 = (8000),
-    I2S_AudioFreq_4k                 = (4000),
-    I2S_AudioFreq_Default            = (2),
+    I2S_AudioFreq_192k    = (192000),
+    I2S_AudioFreq_96k     = (96000),
+    I2S_AudioFreq_48k     = (48000),
+    I2S_AudioFreq_44k     = (44100),
+    I2S_AudioFreq_32k     = (32000),
+    I2S_AudioFreq_24k     = (24000),
+    I2S_AudioFreq_22k     = (22050),
+    I2S_AudioFreq_16k     = (16000),
+    I2S_AudioFreq_11k     = (11025),
+    I2S_AudioFreq_12k     = (12000),
+    I2S_AudioFreq_8k      = (8000),
+    I2S_AudioFreq_4k      = (4000),
+    I2S_AudioFreq_Default = (2),
 } SPI_I2S_AUDIO_FREQ_TypeDef;
 typedef enum {
-    I2S_Mode_SlaveTx                = 0x0000,
-    I2S_Mode_SlaveRx                = 0x0100,
-    I2S_Mode_MasterTx               = 0x0200,
-    I2S_Mode_MasterRx               = 0x0300,
+    I2S_Mode_SlaveTx  = 0x0000,
+    I2S_Mode_SlaveRx  = 0x0100,
+    I2S_Mode_MasterTx = 0x0200,
+    I2S_Mode_MasterRx = 0x0300,
 } SPI_I2S_TRANS_MODE_TypeDef;
 
 typedef enum {
-    I2S_MCLKOutput_Enable           = 0x0800,
-    I2S_MCLKOutput_Disable          = 0x0000,
+    I2S_MCLKOutput_Enable  = 0x0800,
+    I2S_MCLKOutput_Disable = 0x0000,
 } SPI_I2S_MCLK_OUTPUT_TypeDef;
 
 typedef enum {
-    I2S_CPOL_Low  = 0x0000,                                                     ///< The clock is low in idle state.
-    I2S_CPOL_High = SPI_CCR_CPOL                                                ///< The clock is high in idle state.
+    I2S_CPOL_Low  = 0x0000,       ///< The clock is low in idle state.
+    I2S_CPOL_High = SPI_CCR_CPOL  ///< The clock is high in idle state.
 } SPI_I2S_CPOL_TypeDef;
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  I2S Init structure definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct {
-    SPI_I2S_TRANS_MODE_TypeDef      I2S_Mode;                                   ///< Specifies the I2S operating mode.
-    SPI_I2S_STANDARD_TypeDef        I2S_Standard;                               ///< Specifies the standard used for the I2S communication.
-    SPI_I2S_DATAFORMAT_TypeDef      I2S_DataFormat;                             ///< Specifies the data format for the I2S communication.
-    SPI_I2S_MCLK_OUTPUT_TypeDef     I2S_MCLKOutput;                             ///< Specifies whether the I2S MCLK output is enabled or not.
-    SPI_I2S_AUDIO_FREQ_TypeDef      I2S_AudioFreq;                              ///< Specifies the frequency selected for the I2S communication.
-    SPI_I2S_CPOL_TypeDef            I2S_CPOL;                                   ///< Specifies the idle state of the I2S clock.
+    SPI_I2S_TRANS_MODE_TypeDef  I2S_Mode;        ///< Specifies the I2S operating mode.
+    SPI_I2S_STANDARD_TypeDef    I2S_Standard;    ///< Specifies the standard used for the I2S communication.
+    SPI_I2S_DATAFORMAT_TypeDef  I2S_DataFormat;  ///< Specifies the data format for the I2S communication.
+    SPI_I2S_MCLK_OUTPUT_TypeDef I2S_MCLKOutput;  ///< Specifies whether the I2S MCLK output is enabled or not.
+    SPI_I2S_AUDIO_FREQ_TypeDef  I2S_AudioFreq;   ///< Specifies the frequency selected for the I2S communication.
+    SPI_I2S_CPOL_TypeDef        I2S_CPOL;        ///< Specifies the idle state of the I2S clock.
 } I2S_InitTypeDef;
 
 /// @}

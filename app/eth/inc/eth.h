@@ -37,14 +37,12 @@
 /// @defgroup Ethernet_Exported_Constants
 /// @{
 
-
 typedef struct {
     uint8_t ip[4];
     uint8_t mask[4];
     uint8_t gw[4];
     uint8_t mac[6];
 } InitEthernet_Typedef;
-
 
 /// @}
 
@@ -65,7 +63,7 @@ GLOBAL struct netif gnetif;
 GLOBAL uint32_t gLwipCounter;
 GLOBAL InitEthernet_Typedef gEthernetConfig;
 GLOBAL uint32_t gIPAddr;
-GLOBAL char enableETH, enableOK, retryEth;
+GLOBAL char     enableETH, enableOK, retryEth;
 #undef GLOBAL
 
 /// @}
@@ -74,10 +72,10 @@ GLOBAL char enableETH, enableOK, retryEth;
 /// @defgroup Ethernet_Exported_Functions
 /// @{
 
-void InitEthernet(InitEthernet_Typedef config);
+void     InitEthernet(InitEthernet_Typedef config);
 uint32_t getIpAddress(void);
-void getMacAddress(uint8_t *mac);
-void BSP_HTTP_Configure(void);
+void     getMacAddress(uint8_t* mac);
+void     BSP_HTTP_Configure(void);
 
 /// @}
 

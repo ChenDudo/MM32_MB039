@@ -34,7 +34,7 @@
 #include "i2c.h"
 
 ////////////////////////////////////////////////////////////////////////////////
-void initGPIO_I2C(I2C_TypeDef *I2Cx)
+void initGPIO_I2C(I2C_TypeDef* I2Cx)
 {
     GPIO_InitTypeDef GPIO_InitStruct;
 
@@ -43,37 +43,36 @@ void initGPIO_I2C(I2C_TypeDef *I2Cx)
     GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_4);
     GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_4);
 
-    GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_6;
+    GPIO_InitStruct.GPIO_Pin   = GPIO_Pin_6;
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF_OD;
+    GPIO_InitStruct.GPIO_Mode  = GPIO_Mode_AF_OD;
     GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-    GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_7;
+    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_7;
     GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 void NVIC_I2C(I2C_TypeDef* I2Cx)
 {
-    NVIC_InitTypeDef  NVIC_InitStructure;
+    NVIC_InitTypeDef NVIC_InitStructure;
 
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
 
-    if(I2Cx == I2C1)
-        NVIC_InitStructure.NVIC_IRQChannel = I2C1_IRQn;//check I2C1_EV_IRQn
+    if (I2Cx == I2C1)
+        NVIC_InitStructure.NVIC_IRQChannel = I2C1_IRQn;  // check I2C1_EV_IRQn
 
-    if(I2Cx == I2C2)
+    if (I2Cx == I2C2)
         NVIC_InitStructure.NVIC_IRQChannel = I2C2_IRQn;
 
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x1;
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0x1;
+    NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void i2cInitMaster(I2C_TypeDef *I2Cx, u8 sla, u32 uiI2C_speed)
+void i2cInitMaster(I2C_TypeDef* I2Cx, u8 sla, u32 uiI2C_speed)
 {
     I2C_InitTypeDef I2C_InitStruct;
 
@@ -81,10 +80,10 @@ void i2cInitMaster(I2C_TypeDef *I2Cx, u8 sla, u32 uiI2C_speed)
 
     I2C_StructInit(&I2C_InitStruct);
 
-    //Configure I2C as master mode
-    I2C_InitStruct.Mode = I2C_CR_MASTER;
+    // Configure I2C as master mode
+    I2C_InitStruct.Mode       = I2C_CR_MASTER;
     I2C_InitStruct.OwnAddress = 0;
-    I2C_InitStruct.Speed = I2C_CR_FAST;
+    I2C_InitStruct.Speed      = I2C_CR_FAST;
     I2C_InitStruct.ClockSpeed = uiI2C_speed;
     I2C_Init(I2Cx, &I2C_InitStruct);
 
@@ -92,91 +91,88 @@ void i2cInitMaster(I2C_TypeDef *I2Cx, u8 sla, u32 uiI2C_speed)
     I2C_Cmd(I2Cx, ENABLE);
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
 void i2cComplete(u16 sta)
 {
-	I2C_ClearFlag(I2C2,sta);
-	I2C_ClearITPendingBit(I2C2, I2C_IT_TX_EMPTY);
+    I2C_ClearFlag(I2C2, sta);
+    I2C_ClearITPendingBit(I2C2, I2C_IT_TX_EMPTY);
 
-	i2c.rev = WR;
-	i2c.sadd = true;
-	i2c.ack = true;
-	i2c.busy = false;
+    i2c.rev  = WR;
+    i2c.sadd = true;
+    i2c.ack  = true;
+    i2c.busy = false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void I2C2_EV_IRQHandler()
-{
-
-}
+void I2C2_EV_IRQHandler() {}
 
 ////////////////////////////////////////////////////////////////////////////////
 void I2C2_ER_IRQHandler()
 {
-    if(I2C_GetITStatus(I2C2, I2C_IT_STOP_DET)){
+    if (I2C_GetITStatus(I2C2, I2C_IT_STOP_DET)) {
         I2C_ClearITPendingBit(I2C2, I2C_IT_STOP_DET);
-	}
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void i2cAccess(u8 sub, u8* ptr, u16 cnt)
 {
-	i2c.sub = sub;
-	i2c.cnt = cnt;
-	i2c.ptr = ptr;
+    i2c.sub = sub;
+    i2c.cnt = cnt;
+    i2c.ptr = ptr;
 
-	i2c.busy = true;
-	i2c.ack = false;
-	i2c.error = false;
-	i2c.sadd = true;
-	i2c.rev = WR;
-	I2C_ITConfig(I2C2, I2C_IT_TX_EMPTY | I2C_IT_STOP_DET | I2C_IT_START_DET | I2C_IT_ACTIVITY, ENABLE);
+    i2c.busy  = true;
+    i2c.ack   = false;
+    i2c.error = false;
+    i2c.sadd  = true;
+    i2c.rev   = WR;
+    I2C_ITConfig(I2C2, I2C_IT_TX_EMPTY | I2C_IT_STOP_DET | I2C_IT_START_DET | I2C_IT_ACTIVITY, ENABLE);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void i2cSendPacket(u8 sub, u8* ptr, u16 cnt)
 {
-	i2c.opt = WR;
-	i2cAccess(sub,  ptr,  cnt);
+    i2c.opt = WR;
+    i2cAccess(sub, ptr, cnt);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void i2cRcvPacket(u8 sub, u8* ptr, u16 cnt )
+void i2cRcvPacket(u8 sub, u8* ptr, u16 cnt)
 {
-	i2c.opt = RD;
-	i2cAccess(sub,  ptr,  cnt);
+    i2c.opt = RD;
+    i2cAccess(sub, ptr, cnt);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void i2cRead(u8 sub, u8* ptr, u16 len)
 {
-	do{
-		i2cRcvPacket(sub, ptr, len);
-		while(i2c.busy);
-	}
-	while(!i2c.ack);
+    do {
+        i2cRcvPacket(sub, ptr, len);
+        while (i2c.busy)
+            ;
+    } while (!i2c.ack);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void i2cWrite(u8 sub, u8* ptr, u16 len)
 {
-	do{
-		i2cSendPacket(sub, ptr, len);
-		while(i2c.busy);
-	}
-	while(!i2c.ack);
+    do {
+        i2cSendPacket(sub, ptr, len);
+        while (i2c.busy)
+            ;
+    } while (!i2c.ack);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void i2cCheck()
 {
-	i2cRcvPacket(0, &i2cRx[0], 8);
-	while(!i2c.ack);
+    i2cRcvPacket(0, &i2cRx[0], 8);
+    while (!i2c.ack)
+        ;
 
-	if (memcmp(i2cRx, i2cTx, 8) != 0) {
-		i2cSendPacket(0, &i2cTx[0], 8);
-	}
+    if (memcmp(i2cRx, i2cTx, 8) != 0) {
+        i2cSendPacket(0, &i2cTx[0], 8);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -188,9 +184,10 @@ void i2cCheck()
 ////////////////////////////////////////////////////////////////////////////////
 void EEPROM_WaitEEready(void)
 {
-    //eeprom operation interval delay
+    // eeprom operation interval delay
     u32 i = 10000;
-    while(i--);
+    while (i--)
+        ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -201,10 +198,11 @@ void EEPROM_WaitEEready(void)
 ////////////////////////////////////////////////////////////////////////////////
 void EEPROM_WriteByte(u8 dat)
 {
-    //Send data
+    // Send data
     I2C_SendData(I2C1, dat);
-    //Checks whether transmit FIFO completely empty or not
-    while(I2C_GetFlagStatus(I2C1, I2C_STATUS_FLAG_TFE) == 0);
+    // Checks whether transmit FIFO completely empty or not
+    while (I2C_GetFlagStatus(I2C1, I2C_STATUS_FLAG_TFE) == 0)
+        ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -217,26 +215,25 @@ void EEPROM_ReadBuff(void)
 {
     u8 i, flag = 0, _cnt = 0;
     for (i = 0; i < i2c.cnt; i++) {
-        while(1) {
-            //Write command is sent when RX FIFO is not full
+        while (1) {
+            // Write command is sent when RX FIFO is not full
             if ((I2C_GetFlagStatus(I2C1, I2C_STATUS_FLAG_TFNF)) && (flag == 0)) {
-                //Configure to read
+                // Configure to read
                 I2C_ReadCmd(I2C1);
                 _cnt++;
-                //When flag is set, receive complete
+                // When flag is set, receive complete
                 if (_cnt == i2c.cnt)
                     flag = 1;
             }
-            //Check receive FIFO not empty
+            // Check receive FIFO not empty
             if (I2C_GetFlagStatus(I2C1, I2C_STATUS_FLAG_RFNE)) {
-                //read data to gEeprom.ptr
+                // read data to gEeprom.ptr
                 i2c.ptr[i] = I2C_ReceiveData(I2C1);
                 break;
             }
         }
     }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Send bytes
@@ -248,22 +245,23 @@ void EEPROM_ReadBuff(void)
 ////////////////////////////////////////////////////////////////////////////////
 u8 EEPROM_WriteBuff(u8 sub, u8* ptr, u16 cnt)
 {
-    //Send sub address
+    // Send sub address
     EEPROM_WriteByte(sub);
-    while (cnt --) {
-        //Send data
+    while (cnt--) {
+        // Send data
         EEPROM_WriteByte(*ptr);
-        //Point to the next data
+        // Point to the next data
         ptr++;
     }
-    //Stop transmission
+    // Stop transmission
     I2C_GenerateSTOP(I2C1, ENABLE);
-    //Checks whether stop condition has occurred or not.
-    while((I2C_GetITStatus(I2C1, I2C_IT_STOP_DET)) == 0);
+    // Checks whether stop condition has occurred or not.
+    while ((I2C_GetITStatus(I2C1, I2C_IT_STOP_DET)) == 0)
+        ;
     i2c.ack = true;
-    //I2C operation stops
+    // I2C operation stops
     i2c.busy = false;
-    //Wait for EEPROM getting ready.
+    // Wait for EEPROM getting ready.
     EEPROM_WaitEEready();
     return true;
 }
@@ -279,45 +277,48 @@ u8 EEPROM_WriteBuff(u8 sub, u8* ptr, u16 cnt)
 u8 EEPROM_SendPacket(u8 sub, u8* ptr, u16 cnt)
 {
     u8 i;
-    //i2c option flag set to write
+    // i2c option flag set to write
     i2c.opt = WR;
-    //number to send
+    // number to send
     i2c.cnt = cnt;
-    //sub address
+    // sub address
     i2c.sub = sub;
-    //I2C operation starts
+    // I2C operation starts
     i2c.busy = true;
-    i2c.ack = false;
+    i2c.ack  = false;
 
     if ((sub % PAGESIZE) > 0) {
-        //Need temp number of data, just right to the page address
+        // Need temp number of data, just right to the page address
         u8 temp = MIN((PAGESIZE - sub % PAGESIZE), i2c.cnt);
-        //If WRITE successful
-        if(EEPROM_WriteBuff(sub, ptr, temp)) {
-            //Point to the next page
-            ptr +=  temp;
-            i2c.cnt -=  temp;
+        // If WRITE successful
+        if (EEPROM_WriteBuff(sub, ptr, temp)) {
+            // Point to the next page
+            ptr += temp;
+            i2c.cnt -= temp;
             sub += temp;
         }
-        //gEeprom.cnt = 0 means transmition complete
-        if (i2c.cnt == 0) return true;
+        // gEeprom.cnt = 0 means transmition complete
+        if (i2c.cnt == 0)
+            return true;
     }
     for (i = 0; i < (i2c.cnt / PAGESIZE); i++) {
-        //Full page write
+        // Full page write
         if (EEPROM_WriteBuff(sub, ptr, PAGESIZE)) {
-            //Point to the next page
+            // Point to the next page
             ptr += PAGESIZE;
             sub += PAGESIZE;
             i2c.cnt -= PAGESIZE;
         }
-        if (i2c.cnt == 0) return true;
+        if (i2c.cnt == 0)
+            return true;
     }
     if (i2c.cnt > 0) {
-        if (EEPROM_WriteBuff(sub, ptr, i2c.cnt)) return true;
+        if (EEPROM_WriteBuff(sub, ptr, i2c.cnt))
+            return true;
     }
-    //I2C operation ends
+    // I2C operation ends
     i2c.busy = false;
-    i2c.ack = true;
+    i2c.ack  = true;
     return false;
 }
 
@@ -331,25 +332,26 @@ u8 EEPROM_SendPacket(u8 sub, u8* ptr, u16 cnt)
 ////////////////////////////////////////////////////////////////////////////////
 void EEPROM_ReadPacket(u8 sub, u8* ptr, u16 cnt)
 {
-    //I2C operation starts
+    // I2C operation starts
     i2c.busy = true;
-    i2c.ack = false;
-    i2c.sub = sub;
-    i2c.ptr = ptr;
-    i2c.cnt = cnt;
+    i2c.ack  = false;
+    i2c.sub  = sub;
+    i2c.ptr  = ptr;
+    i2c.cnt  = cnt;
 
-    //Send sub address
+    // Send sub address
     EEPROM_WriteByte(i2c.sub);
-    //receive bytes
+    // receive bytes
     EEPROM_ReadBuff();
-    //Stop transmission
+    // Stop transmission
     I2C_GenerateSTOP(I2C1, ENABLE);
-    //Checks whether stop condition has occurred or not.
-    while((I2C_GetITStatus(I2C1, I2C_IT_STOP_DET)) == 0);
+    // Checks whether stop condition has occurred or not.
+    while ((I2C_GetITStatus(I2C1, I2C_IT_STOP_DET)) == 0)
+        ;
 
-    //I2C operation ends
+    // I2C operation ends
     i2c.busy = false;
-    i2c.ack = true;
+    i2c.ack  = true;
     EEPROM_WaitEEready();
 }
 
@@ -365,8 +367,9 @@ void EEPROM_Write(u8 sub, u8* ptr, u16 len)
 {
     do {
         EEPROM_SendPacket(sub, ptr, len);
-        while(i2c.busy);
-    } while(!i2c.ack);
+        while (i2c.busy)
+            ;
+    } while (!i2c.ack);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -380,11 +383,12 @@ void EEPROM_Write(u8 sub, u8* ptr, u16 len)
 void EEPROM_Read(u8 sub, u8* ptr, u16 len)
 {
     do {
-        //read data
+        // read data
         EEPROM_ReadPacket(sub, ptr, len);
-        //till I2C is not work
-        while(i2c.busy);
-    } while(!i2c.ack);
+        // till I2C is not work
+        while (i2c.busy)
+            ;
+    } while (!i2c.ack);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -397,5 +401,5 @@ void BSP_I2C_Configure()
 
     if (memcmp(i2cRx, i2cTx, 8) != 0) {
         EEPROM_Write(0x00, i2cTx, 8);
-	}
+    }
 }

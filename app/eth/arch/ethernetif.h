@@ -36,52 +36,37 @@
 /// @{
 
 ///  Network Interface MTU
-#define NETIF_MTU                       1500
+#define NETIF_MTU 1500
 
 /// Network Interface Name
-#define IFNAME0                         'm'
-#define IFNAME1                         'm'
-
-
-
-
-
-
+#define IFNAME0 'm'
+#define IFNAME1 'm'
 
 /// Static IP ADDRESS: 10.3.1.222
-#define IP_ADDR0                        10
-#define IP_ADDR1                        3
-#define IP_ADDR2                        1
-#define IP_ADDR3                        222
+#define IP_ADDR0 10
+#define IP_ADDR1 3
+#define IP_ADDR2 1
+#define IP_ADDR3 222
 
-/// NETMASK: 
-#define NETMASK_ADDR0                   255
-#define NETMASK_ADDR1                   255
-#define NETMASK_ADDR2                   254
-#define NETMASK_ADDR3                   0
+/// NETMASK:
+#define NETMASK_ADDR0 255
+#define NETMASK_ADDR1 255
+#define NETMASK_ADDR2 254
+#define NETMASK_ADDR3 0
 
 /// Gateway Address
-#define GW_ADDR0                        10
-#define GW_ADDR1                        3
-#define GW_ADDR2                        0
-#define GW_ADDR3                        1
+#define GW_ADDR0 10
+#define GW_ADDR1 3
+#define GW_ADDR2 0
+#define GW_ADDR3 1
 
 /// MAC Address
-#define MAC_ADDR0                       2
-#define MAC_ADDR1                       0
-#define MAC_ADDR2                       0
-#define MAC_ADDR3                       0
-#define MAC_ADDR4                       2
-#define MAC_ADDR5                       2
-
-
-
-
-
-
-
-
-
+#define MAC_ADDR0 2
+#define MAC_ADDR1 0
+#define MAC_ADDR2 0
+#define MAC_ADDR3 0
+#define MAC_ADDR4 2
+#define MAC_ADDR5 2
 
 /// @}
 
@@ -117,10 +102,10 @@ GLOBAL uint8_t gMac[6];
 
 err_t ethernetif_init(struct netif* netif);
 
-void ethernetif_input(struct netif *netif);
-void ethernetif_output( void *argument );
-void ethernetif_update_config(struct netif *netif);
-void ethernetif_notify_conn_changed(struct netif *netif);
+void ethernetif_input(struct netif* netif);
+void ethernetif_output(void* argument);
+void ethernetif_update_config(struct netif* netif);
+void ethernetif_notify_conn_changed(struct netif* netif);
 
 /// @}
 

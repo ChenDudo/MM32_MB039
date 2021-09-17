@@ -55,34 +55,34 @@ void BSP_BEEP_Configure(u32 freq)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
     TIM_OCInitTypeDef       TIM_OCInitStructure;
-    u16 arr = 2000000 / freq - 1;
-    
-    (TIM1 == BEEP_TIMER) ? COMMON_EnableIpClock(emCLOCK_TIM1) : 
-        COMMON_EnableIpClock(emCLOCK_TIM3);
-    
-    TIM_TimeBaseStructure.TIM_Period        = arr;
-    TIM_TimeBaseStructure.TIM_Prescaler     = 59;
-    TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
-    TIM_TimeBaseStructure.TIM_CounterMode   = TIM_CounterMode_Up;
+    u16                     arr = 2000000 / freq - 1;
+
+    (TIM1 == BEEP_TIMER) ? COMMON_EnableIpClock(emCLOCK_TIM1) : COMMON_EnableIpClock(emCLOCK_TIM3);
+
+    TIM_TimeBaseStructure.TIM_Period            = arr;
+    TIM_TimeBaseStructure.TIM_Prescaler         = 59;
+    TIM_TimeBaseStructure.TIM_ClockDivision     = TIM_CKD_DIV1;
+    TIM_TimeBaseStructure.TIM_CounterMode       = TIM_CounterMode_Up;
     TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
     TIM_TimeBaseInit(BEEP_TIMER, &TIM_TimeBaseStructure);
-    
+
     TIM_OCStructInit(&TIM_OCInitStructure);
-    TIM_OCInitStructure.TIM_OCMode          = TIM_OCMode_PWM2;
-    TIM_OCInitStructure.TIM_OutputState     = TIM_OutputState_Enable;
-    TIM_OCInitStructure.TIM_Pulse           = arr >> 1;
-    TIM_OCInitStructure.TIM_OCPolarity      = TIM_OCPolarity_High;
-    
+    TIM_OCInitStructure.TIM_OCMode      = TIM_OCMode_PWM2;
+    TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+    TIM_OCInitStructure.TIM_Pulse       = arr >> 1;
+    TIM_OCInitStructure.TIM_OCPolarity  = TIM_OCPolarity_High;
+
     if (2 == BEEP_PWMCH) {
         TIM_OC2Init(BEEP_TIMER, &TIM_OCInitStructure);
         TIM_OC2PreloadConfig(BEEP_TIMER, TIM_OCPreload_Enable);
         BSP_TIM_CH2_GPIO_Configure(BEEP_TIMER, CH_REMAPEN, CH_REMAPID, 1);
-    } else {
+    }
+    else {
         TIM_OC1Init(BEEP_TIMER, &TIM_OCInitStructure);
         TIM_OC1PreloadConfig(BEEP_TIMER, TIM_OCPreload_Enable);
         BSP_TIM_CH1_GPIO_Configure(BEEP_TIMER, CH_REMAPEN, CH_REMAPID, 1);
     };
-    
+
     TIM_CtrlPWMOutputs(BEEP_TIMER, ENABLE);
     TIM_ARRPreloadConfig(BEEP_TIMER, ENABLE);
     TIM_Cmd(BEEP_TIMER, ENABLE);
@@ -92,7 +92,7 @@ void BSP_BEEP_Configure(u32 freq)
 void BEEP_on(u32 val)
 {
     TIM_SetAutoreload(BEEP_TIMER, val << 1);
-        
+
     if (2 == BEEP_PWMCH) {
         TIM_SetCompare2(BEEP_TIMER, val);
     }
@@ -111,12 +111,12 @@ void BEEP_off(void)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void BEEP_freq(u32 *val)
+void BEEP_freq(u32* val)
 {
     if (*val < 200) {
         *val = 200;
     }
-    
+
     TIM_SetAutoreload(BEEP_TIMER, *val);
 }
 
@@ -125,4 +125,3 @@ void BEEP_freq(u32 *val)
 /// @}
 
 /// @}
-

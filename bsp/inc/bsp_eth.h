@@ -43,17 +43,10 @@
 /// @defgroup LED_Exported_Constants
 /// @{
 
+#define ETH_INIT_FLAG 0x01  // Ethernet Init Flag
+#define ETH_LINK_FLAG 0x10  // Ethernet Link Flag
 
-
-#define ETH_INIT_FLAG           0x01                                            // Ethernet Init Flag
-#define ETH_LINK_FLAG           0x10                                            // Ethernet Link Flag
-
-
-typedef enum {
-    ethReadPhyErr = -2,
-    ethRstErr = -1,
-    ethOK
-} ethErrCode;
+typedef enum { ethReadPhyErr = -2, ethRstErr = -1, ethOK } ethErrCode;
 
 /// @}
 
@@ -70,47 +63,37 @@ typedef enum {
 GLOBAL ETH_InitTypeDef ETH_InitStructure;
 
 GLOBAL __IO u32 EthStatus;
-GLOBAL  ethErrCode EthErr;
+GLOBAL ethErrCode EthErr;
 
+#if defined(__CC_ARM)                                            /*!< ARM Compiler */
+__align(4) GLOBAL ETH_DMADESCTypeDef DMARxDscrTab[ETH_RXBUFNB];  /* Ethernet Rx MA Descriptor */
+__align(4) GLOBAL ETH_DMADESCTypeDef DMATxDscrTab[ETH_TXBUFNB];  /* Ethernet Tx DMA Descriptor */
+__align(4) GLOBAL uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE]; /* Ethernet Receive Buffer */
+__align(4) GLOBAL uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE]; /* Ethernet Transmit Buffer */
 
+#elif defined(__ICCARM__) /*!< IAR Compiler */
+#pragma data_alignment = 4
 
-#if defined   (__CC_ARM) /*!< ARM Compiler */
-__align(4) 
-GLOBAL ETH_DMADESCTypeDef  DMARxDscrTab[ETH_RXBUFNB];/* Ethernet Rx MA Descriptor */
-__align(4) 
-GLOBAL ETH_DMADESCTypeDef  DMATxDscrTab[ETH_TXBUFNB];/* Ethernet Tx DMA Descriptor */
-__align(4) 
-GLOBAL uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE]; /* Ethernet Receive Buffer */
-__align(4) 
-GLOBAL uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE]; /* Ethernet Transmit Buffer */
-
-#elif defined ( __ICCARM__ ) /*!< IAR Compiler */
-#pragma data_alignment=4
-
-#pragma location=0x2000C000
-GLOBAL ETH_DMADESCTypeDef  DMARxDscrTab[ETH_RX_BUF_NUM];/* Ethernet Rx MA Descriptor */
-#pragma location=0x2000C080
-GLOBAL ETH_DMADESCTypeDef  DMATxDscrTab[ETH_TX_BUF_NUM];/* Ethernet Tx DMA Descriptor */
-#pragma location=0x2000C100
+#pragma location = 0x2000C000
+GLOBAL ETH_DMADESCTypeDef DMARxDscrTab[ETH_RX_BUF_NUM];  /* Ethernet Rx MA Descriptor */
+#pragma location = 0x2000C080
+GLOBAL ETH_DMADESCTypeDef DMATxDscrTab[ETH_TX_BUF_NUM];  /* Ethernet Tx DMA Descriptor */
+#pragma location = 0x2000C100
 GLOBAL uint8_t Rx_Buff[ETH_RX_BUF_NUM][ETH_RX_BUF_SIZE]; /* Ethernet Receive Buffer */
-#pragma location=0x2000D8D0
+#pragma location = 0x2000D8D0
 GLOBAL uint8_t Tx_Buff[ETH_TX_BUF_NUM][ETH_TX_BUF_SIZE]; /* Ethernet Transmit Buffer */
 
-#elif defined (__GNUC__) /*!< GNU Compiler */
-GLOBAL ETH_DMADESCTypeDef  DMARxDscrTab[ETH_RXBUFNB] __attribute__ ((aligned (4))); /* Ethernet Rx DMA Descriptor */
-GLOBAL ETH_DMADESCTypeDef  DMATxDscrTab[ETH_TXBUFNB] __attribute__ ((aligned (4))); /* Ethernet Tx DMA Descriptor */
-GLOBAL uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE] __attribute__ ((aligned (4))); /* Ethernet Receive Buffer */
-GLOBAL uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE] __attribute__ ((aligned (4))); /* Ethernet Transmit Buffer */
+#elif defined(__GNUC__) /*!< GNU Compiler */
+GLOBAL ETH_DMADESCTypeDef DMARxDscrTab[ETH_RXBUFNB] __attribute__((aligned(4)));  /* Ethernet Rx DMA Descriptor */
+GLOBAL ETH_DMADESCTypeDef DMATxDscrTab[ETH_TXBUFNB] __attribute__((aligned(4)));  /* Ethernet Tx DMA Descriptor */
+GLOBAL uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE] __attribute__((aligned(4))); /* Ethernet Receive Buffer */
+GLOBAL uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE] __attribute__((aligned(4))); /* Ethernet Transmit Buffer */
 
-#elif defined  (__TASKING__) /*!< TASKING Compiler */
-__align(4) 
-GLOBAL ETH_DMADESCTypeDef  DMARxDscrTab[ETH_RXBUFNB];/* Ethernet Rx MA Descriptor */
-__align(4) 
-GLOBAL ETH_DMADESCTypeDef  DMATxDscrTab[ETH_TXBUFNB];/* Ethernet Tx DMA Descriptor */
-__align(4) 
-GLOBAL uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE]; /* Ethernet Receive Buffer */
-__align(4) 
-GLOBAL uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE]; /* Ethernet Transmit Buffer */
+#elif defined(__TASKING__) /*!< TASKING Compiler */
+__align(4) GLOBAL ETH_DMADESCTypeDef DMARxDscrTab[ETH_RXBUFNB];  /* Ethernet Rx MA Descriptor */
+__align(4) GLOBAL ETH_DMADESCTypeDef DMATxDscrTab[ETH_TXBUFNB];  /* Ethernet Tx DMA Descriptor */
+__align(4) GLOBAL uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE]; /* Ethernet Receive Buffer */
+__align(4) GLOBAL uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE]; /* Ethernet Transmit Buffer */
 
 #endif /* __CC_ARM */
 
@@ -126,8 +109,6 @@ void BSP_ETH_Configure();
 void ETH_NVIC_Config(void);
 
 /// @}
-
-
 
 /// @}
 

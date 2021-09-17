@@ -34,7 +34,6 @@
 /// @brief UART HAL modules
 /// @{
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup UART_Exported_Types
 /// @{
@@ -80,11 +79,11 @@ typedef enum {
 /// @anchor UART_Hardware_Flow_Control
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    UART_HWFlowControl_None    = 0U,
-/*1*<
-    UART_HWFlowControl_RTS     = UART_GCR_AUTOFLOW,
-    UART_HWFlowControl_CTS     = UART_GCR_AUTOFLOW,
->*1*/
+    UART_HWFlowControl_None = 0U,
+    /*1*<
+        UART_HWFlowControl_RTS     = UART_GCR_AUTOFLOW,
+        UART_HWFlowControl_CTS     = UART_GCR_AUTOFLOW,
+    >*1*/
     UART_HWFlowControl_RTS_CTS = UART_GCR_AUTOFLOW
 } UART_HW_FLOWCONTROL_TypeDef;
 
@@ -106,21 +105,15 @@ typedef enum {
 /// @anchor UARTABR_FE_TypeDef
 ////////////////////////////////////////////////////////////////////////////////
 #if defined(UART_ABRCR_FORMER)
-typedef enum {
-    UART_Former_Falling = 0U,
-    UART_Former_Rising  = UART_ABRCR_FORMER
-}UARTABR_FE_TypeDef;
-#endif        
+typedef enum { UART_Former_Falling = 0U, UART_Former_Rising = UART_ABRCR_FORMER } UARTABR_FE_TypeDef;
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief UART Auto BaudRate Control Enumerate definition
 /// @anchor UARTABR_LE_TypeDef
 ////////////////////////////////////////////////////////////////////////////////
-#if defined(UART_ABRCR_LATTER) 
-typedef enum {
-    UART_Latter_Falling = 0U,   
-    UART_Latter_Rising  = UART_ABRCR_LATTER
-}UARTABR_LE_TypeDef;
+#if defined(UART_ABRCR_LATTER)
+typedef enum { UART_Latter_Falling = 0U, UART_Latter_Rising = UART_ABRCR_LATTER } UARTABR_LE_TypeDef;
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -133,24 +126,24 @@ typedef enum {
     UART_Bitcnt_2 = UART_ABRCR_ABR_2b,
     UART_Bitcnt_4 = UART_ABRCR_ABR_4b,
     UART_Bitcnt_8 = UART_ABRCR_ABR_8b
-}UARTABR_Bit_TypeDef;
+} UARTABR_Bit_TypeDef;
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief UART Init Structure definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct {
-    u32                     	BaudRate;                      		///< This member configures the UART communication baud rate.
-    UART_WordLength_TypeDef 	WordLength;         				///< Specifies the number of data bits transmitted or
-																	///< received in a frame. This parameter can be a value of @ref UART_Word_Length
-    UART_Stop_Bits_TypeDef 		StopBits;                   		///< Specifies the number of stop bits transmitted.
-																	///< This parameter can be a value of @ref UART_Stop_Bits
-    UART_Parity_TypeDef 		Parity;              		        ///< Specifies the parity mode.
-																	///< This parameter can be a value of @ref UART_Parity
-    u16 						Mode;                          		///< Specifies wether the Receive or Transmit mode is
-																	///< enabled or disabled. This parameter can be a value of UART_Mode
-    UART_HW_FLOWCONTROL_TypeDef	HWFlowControl; 	 					///< Specifies wether the hardware flow control mode is enabled or disabled.
-																	///< This parameter can be a value of UART_Hardware_Flow_Control
+    u32                     BaudRate;           ///< This member configures the UART communication baud rate.
+    UART_WordLength_TypeDef WordLength;         ///< Specifies the number of data bits transmitted or
+                                                ///< received in a frame. This parameter can be a value of @ref UART_Word_Length
+    UART_Stop_Bits_TypeDef StopBits;            ///< Specifies the number of stop bits transmitted.
+                                                ///< This parameter can be a value of @ref UART_Stop_Bits
+    UART_Parity_TypeDef Parity;                 ///< Specifies the parity mode.
+                                                ///< This parameter can be a value of @ref UART_Parity
+    u16 Mode;                                   ///< Specifies wether the Receive or Transmit mode is
+                                                ///< enabled or disabled. This parameter can be a value of UART_Mode
+    UART_HW_FLOWCONTROL_TypeDef HWFlowControl;  ///< Specifies wether the hardware flow control mode is enabled or disabled.
+                                                ///< This parameter can be a value of UART_Hardware_Flow_Control
 } UART_InitTypeDef;
 
 /// @}
@@ -207,7 +200,11 @@ void UART_SendBreak(UART_TypeDef* UARTx);
 #endif
 
 #if defined(ABRCR)
-void UART_AutoBaudRateSet(UART_TypeDef* uart, UARTABR_FE_TypeDef fedge, UARTABR_LE_TypeDef ledge, UARTABR_Bit_TypeDef cnt, FunctionalState state);
+void UART_AutoBaudRateSet(UART_TypeDef*       uart,
+                          UARTABR_FE_TypeDef  fedge,
+                          UARTABR_LE_TypeDef  ledge,
+                          UARTABR_Bit_TypeDef cnt,
+                          FunctionalState     state);
 #endif
 
 /// @}

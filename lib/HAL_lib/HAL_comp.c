@@ -31,7 +31,6 @@
 /// @addtogroup COMP_HAL
 /// @{
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup COMP_Exported_Functions
 /// @{
@@ -71,17 +70,12 @@ void COMP_DeInit(u32 selection)
 ////////////////////////////////////////////////////////////////////////////////
 void COMP_Init(u32 selection, COMP_InitTypeDef* pInitStruct)
 {
-	*(u32*)(COMP_BASE + selection) = 	pInitStruct->Invert		    |
-										pInitStruct->NonInvert	    |
-										pInitStruct->Output 	    |
-										pInitStruct->OutputPol 	    |
-										pInitStruct->BlankingSrce	|
-										pInitStruct->Hysteresis	    |
-										pInitStruct->Mode
+    *(u32*)(COMP_BASE + selection) = pInitStruct->Invert | pInitStruct->NonInvert | pInitStruct->Output | pInitStruct->OutputPol |
+                                     pInitStruct->BlankingSrce | pInitStruct->Hysteresis | pInitStruct->Mode
 #if defined(__MM3U1)
-                                        | pInitStruct->OFLT
+                                     | pInitStruct->OFLT
 #endif
-                                        ;
+        ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -92,25 +86,25 @@ void COMP_Init(u32 selection, COMP_InitTypeDef* pInitStruct)
 ////////////////////////////////////////////////////////////////////////////////
 void COMP_StructInit(COMP_InitTypeDef* COMP_InitStruct)
 {
-    COMP_InitStruct->Invert	        = 0;                                        //invert input selection
+    COMP_InitStruct->Invert = 0;  // invert input selection
 #if defined(__MM0P1) || defined(__MM0S1)
-    COMP_InitStruct->NonInvert      = emCOMP_NonInvertingInput_IO4;             //inp = 1, noninvert input selection
+    COMP_InitStruct->NonInvert = emCOMP_NonInvertingInput_IO4;  // inp = 1, noninvert input selection
 #endif
 #if defined(__MM0N1) || defined(__MM0Q1)
-    COMP_InitStruct->NonInvert      = emCOMP_NonInvertingInput_IO2;             //inp = 1, noninvert input selection
+    COMP_InitStruct->NonInvert = emCOMP_NonInvertingInput_IO2;  // inp = 1, noninvert input selection
 #endif
-    COMP_InitStruct->Output        	= emCOMP_Output_None;                       //out = 0, output selection
-    COMP_InitStruct->BlankingSrce  	= COMP_BlankingSrce_None;
-    COMP_InitStruct->OutputPol     	= emCOMP_NonInverted;                       //pol = 0, output polarity
+    COMP_InitStruct->Output       = emCOMP_Output_None;  // out = 0, output selection
+    COMP_InitStruct->BlankingSrce = COMP_BlankingSrce_None;
+    COMP_InitStruct->OutputPol    = emCOMP_NonInverted;  // pol = 0, output polarity
 #if defined(__MM0N1)
-	COMP_InitStruct->Hysteresis 	= COMP_CSR_HYST_9;
+    COMP_InitStruct->Hysteresis = COMP_CSR_HYST_9;
 #endif
 #if defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1)
-	COMP_InitStruct->Hysteresis 	= COMP_CSR_HYST_15;
+    COMP_InitStruct->Hysteresis = COMP_CSR_HYST_15;
 #endif
-    COMP_InitStruct->Mode          	= emCOMP_Mode_UltraLowPower;                //mode = 0
+    COMP_InitStruct->Mode = emCOMP_Mode_UltraLowPower;  // mode = 0
 #if defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
-    COMP_InitStruct->OFLT 		    = COMP_CSR_OFLT_1;
+    COMP_InitStruct->OFLT = COMP_CSR_OFLT_1;
 #endif
 }
 
@@ -130,8 +124,7 @@ void COMP_StructInit(COMP_InitTypeDef* COMP_InitStruct)
 ////////////////////////////////////////////////////////////////////////////////
 void COMP_Cmd(u32 selection, FunctionalState state)
 {
-    (state) ? (*(u32*)(COMP_BASE + selection) |=  COMP_CSR_EN) :
-              (*(u32*)(COMP_BASE + selection) &= ~COMP_CSR_EN);
+    (state) ? (*(u32*)(COMP_BASE + selection) |= COMP_CSR_EN) : (*(u32*)(COMP_BASE + selection) &= ~COMP_CSR_EN);
 }
 #if defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
@@ -143,7 +136,7 @@ void COMP_Cmd(u32 selection, FunctionalState state)
 void COMP_SetCrv(u8 crv_select, u8 crv_level)
 {
     u32 temreg = 0;
-    temreg = COMP->CRV;
+    temreg     = COMP->CRV;
     temreg &= ~COMP_CRV_SEL;
     // Load config to CRV and enable
     temreg |= crv_select | crv_level | (1 << 4);
@@ -167,9 +160,7 @@ void COMP_SetCrv(u8 crv_select, u8 crv_level)
 ////////////////////////////////////////////////////////////////////////////////
 void COMP_SwitchCmd(u32 selection, FunctionalState state)
 {
-    (state) ?
-        (*(u32*)(COMP_BASE + selection) |=  COMP_CSR_COMPSW1) :
-        (*(u32*)(COMP_BASE + selection) &= ~COMP_CSR_COMPSW1);
+    (state) ? (*(u32*)(COMP_BASE + selection) |= COMP_CSR_COMPSW1) : (*(u32*)(COMP_BASE + selection) &= ~COMP_CSR_COMPSW1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -192,9 +183,7 @@ void COMP_SwitchCmd(u32 selection, FunctionalState state)
 ////////////////////////////////////////////////////////////////////////////////
 u32 COMP_GetOutputLevel(u32 comp)
 {
-    return (((*(u32*)(COMP_BASE + comp) & COMP_CSR_OUTPUT) != 0) ?
-                emCOMP_OutputLevel_High :
-                emCOMP_OutputLevel_Low );
+    return (((*(u32*)(COMP_BASE + comp) & COMP_CSR_OUTPUT) != 0) ? emCOMP_OutputLevel_High : emCOMP_OutputLevel_Low);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -244,8 +233,6 @@ void exCOMP_CrvSrc(u32 src)
 #endif
 
 #endif
-
-
 
 /// @}
 

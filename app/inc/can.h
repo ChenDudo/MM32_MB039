@@ -18,14 +18,14 @@ GLOBAL CanPeliRxMsg gPeliRxMessage;
 GLOBAL u8 canTx;
 GLOBAL u8 canSel;
 
-
 #undef GLOBAL
 ////////////////////////////////////////////////////////////////////////////////
 
 void initGPIO_CAN();
 void NVIC_CAN();
 void initCAN();
-void CAN_SendPacket();;
+void CAN_SendPacket();
+;
 void BSP_CAN_Configure();
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -41,7 +41,6 @@
 /// @addtogroup COMMON_Exported_Functions
 /// @{
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  EXTI Configure Common function
 /// @param  EXTI line:
@@ -49,14 +48,14 @@
 /// @param  Enable:
 /// @retval None.
 ////////////////////////////////////////////////////////////////////////////////
-void COMMON_EXTI_Enable(u32 line, EXTIMode_TypeDef mode, EXTITrigger_TypeDef edge )
+void COMMON_EXTI_Enable(u32 line, EXTIMode_TypeDef mode, EXTITrigger_TypeDef edge)
 {
-	EXTI_InitTypeDef EXTI_InitStructure;
-	EXTI_InitStructure.EXTI_Line 	= line;
-	EXTI_InitStructure.EXTI_Mode 	= mode;
-	EXTI_InitStructure.EXTI_Trigger = edge;
-	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-	EXTI_Init(&EXTI_InitStructure);
+    EXTI_InitTypeDef EXTI_InitStructure;
+    EXTI_InitStructure.EXTI_Line    = line;
+    EXTI_InitStructure.EXTI_Mode    = mode;
+    EXTI_InitStructure.EXTI_Trigger = edge;
+    EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+    EXTI_Init(&EXTI_InitStructure);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +66,7 @@ void COMMON_EXTI_Enable(u32 line, EXTIMode_TypeDef mode, EXTITrigger_TypeDef edg
 ////////////////////////////////////////////////////////////////////////////////
 void COMMON_ExitEventFallingEnable(u32 line)
 {
-	COMMON_EXTI_Enable(line, EXTI_Mode_Event, EXTI_Trigger_Falling);
+    COMMON_EXTI_Enable(line, EXTI_Mode_Event, EXTI_Trigger_Falling);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +77,7 @@ void COMMON_ExitEventFallingEnable(u32 line)
 ////////////////////////////////////////////////////////////////////////////////
 void COMMON_ExitEventRisingEnable(u32 line)
 {
-	COMMON_EXTI_Enable(line, EXTI_Mode_Event, EXTI_Trigger_Rising);
+    COMMON_EXTI_Enable(line, EXTI_Mode_Event, EXTI_Trigger_Rising);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +88,7 @@ void COMMON_ExitEventRisingEnable(u32 line)
 ////////////////////////////////////////////////////////////////////////////////
 void COMMON_ExitItFallingEnable(u32 line)
 {
-	COMMON_EXTI_Enable(line, EXTI_Mode_Interrupt, EXTI_Trigger_Falling);
+    COMMON_EXTI_Enable(line, EXTI_Mode_Interrupt, EXTI_Trigger_Falling);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +99,7 @@ void COMMON_ExitItFallingEnable(u32 line)
 ////////////////////////////////////////////////////////////////////////////////
 void COMMON_ExitItRisingEnable(u32 line)
 {
-	COMMON_EXTI_Enable(line, EXTI_Mode_Interrupt, EXTI_Trigger_Rising);
+    COMMON_EXTI_Enable(line, EXTI_Mode_Interrupt, EXTI_Trigger_Rising);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +110,7 @@ void COMMON_ExitItRisingEnable(u32 line)
 ////////////////////////////////////////////////////////////////////////////////
 void COMMON_ExitEventRisingFallingEnable(u32 line)
 {
-	COMMON_EXTI_Enable(line, EXTI_Mode_Event, EXTI_Trigger_Rising_Falling);
+    COMMON_EXTI_Enable(line, EXTI_Mode_Event, EXTI_Trigger_Rising_Falling);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -122,7 +121,7 @@ void COMMON_ExitEventRisingFallingEnable(u32 line)
 ////////////////////////////////////////////////////////////////////////////////
 void COMMON_ExitItRisingFallingEnable(u32 line)
 {
-	COMMON_EXTI_Enable(line, EXTI_Mode_Interrupt, EXTI_Trigger_Rising_Falling);
+    COMMON_EXTI_Enable(line, EXTI_Mode_Interrupt, EXTI_Trigger_Rising_Falling);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -139,11 +138,11 @@ void COMMON_NVIC_Configure(u8 ch, u8 pri, u8 sub)
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 #endif
 
-	exNVIC_Init_TypeDef  NVIC_InitStruct;
-	NVIC_InitStruct.NVIC_IRQChannel = ch;
-	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = pri;
-	NVIC_InitStruct.NVIC_IRQChannelSubPriority = sub;
-    NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+    exNVIC_Init_TypeDef NVIC_InitStruct;
+    NVIC_InitStruct.NVIC_IRQChannel                   = ch;
+    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = pri;
+    NVIC_InitStruct.NVIC_IRQChannelSubPriority        = sub;
+    NVIC_InitStruct.NVIC_IRQChannelCmd                = ENABLE;
 
     exNVIC_Init(&NVIC_InitStruct);
 }
@@ -165,22 +164,28 @@ void COMMON_NVIC_Configure(u8 ch, u8 pri, u8 sub)
 ////////////////////////////////////////////////////////////////////////////////
 void COMMON_EnableIpClock(EM_CLOCK val)
 {
-	u8 br = val >> 8;
-	u8 pos = val & 0x1F;
+    u8 br  = val >> 8;
+    u8 pos = val & 0x1F;
 
-	if 		(br >  5)	return;
-	else if (br == 0)	RCC_APB1PeriphClockCmd(1 << pos, ENABLE);
-	else if	(br == 1){
+    if (br > 5)
+        return;
+    else if (br == 0)
+        RCC_APB1PeriphClockCmd(1 << pos, ENABLE);
+    else if (br == 1) {
 #if !defined(__MM0T1)
-            RCC_APB2PeriphClockCmd(1 << pos, ENABLE);
+        RCC_APB2PeriphClockCmd(1 << pos, ENABLE);
 #endif
-    }	
+    }
 #if defined(__MM3U1)
-    else if	(br == 2)	RCC_AHB1PeriphClockCmd( 1 << pos, ENABLE);
-    else if	(br == 3)	RCC_AHB2PeriphClockCmd( 1 << pos, ENABLE);
-    else if	(br == 4)	RCC_AHB3PeriphClockCmd( 1 << pos, ENABLE);
+    else if (br == 2)
+        RCC_AHB1PeriphClockCmd(1 << pos, ENABLE);
+    else if (br == 3)
+        RCC_AHB2PeriphClockCmd(1 << pos, ENABLE);
+    else if (br == 4)
+        RCC_AHB3PeriphClockCmd(1 << pos, ENABLE);
 #else
-    else if	(br >= 2)	RCC_AHBPeriphClockCmd( 1 << pos, ENABLE);
+    else if (br >= 2)
+        RCC_AHBPeriphClockCmd(1 << pos, ENABLE);
 #endif
 }
 /*
@@ -208,17 +213,20 @@ F: None
 ////////////////////////////////////////////////////////////////////////////////
 void COMMON_DisableIpClock(EM_CLOCK val)
 {
-	u8 br = val >> 8;
-	u8 pos = val & 0x1F;
+    u8 br  = val >> 8;
+    u8 pos = val & 0x1F;
 
-	if 		(br >  4)	return;
-	else if (br == 0)	RCC_APB1PeriphClockCmd(1 << pos, DISABLE);
-	else if	(br == 1){
+    if (br > 4)
+        return;
+    else if (br == 0)
+        RCC_APB1PeriphClockCmd(1 << pos, DISABLE);
+    else if (br == 1) {
 #if !defined(__MM0T1)
-            RCC_APB2PeriphClockCmd(1 << pos, DISABLE);
+        RCC_APB2PeriphClockCmd(1 << pos, DISABLE);
 #endif
-    }	    
-	else if	(br >= 2)	RCC_AHBPeriphClockCmd( 1 << pos, DISABLE);
+    }
+    else if (br >= 2)
+        RCC_AHBPeriphClockCmd(1 << pos, DISABLE);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -239,8 +247,6 @@ bool delay(u16 ms)
 }
 /// @}
 
-
 /// @}
 
 /// @}
-

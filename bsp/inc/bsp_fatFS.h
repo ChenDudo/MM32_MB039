@@ -43,30 +43,29 @@
 
 /// @}
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup UART_Exported_Variables
 /// @{
 
 /* Disk IO Driver structure definition */
 typedef struct {
-    DSTATUS (*disk_initialize) (BYTE);                                          /* Initialize Disk Drive */
-    DSTATUS (*disk_status)     (BYTE);                                          /* Get Disk Status */
-    DRESULT (*disk_read)       (BYTE, BYTE*, DWORD, UINT);                      /* Read Sector(s) */
+    DSTATUS (*disk_initialize)(BYTE);               /* Initialize Disk Drive */
+    DSTATUS (*disk_status)(BYTE);                   /* Get Disk Status */
+    DRESULT (*disk_read)(BYTE, BYTE*, DWORD, UINT); /* Read Sector(s) */
 #if _USE_WRITE == 1
-    DRESULT (*disk_write)      (BYTE, const BYTE*, DWORD, UINT);                /* Write Sector(s) when _USE_WRITE = 0 */
+    DRESULT (*disk_write)(BYTE, const BYTE*, DWORD, UINT); /* Write Sector(s) when _USE_WRITE = 0 */
 #endif
 #if _USE_IOCTL == 1
-    DRESULT (*disk_ioctl)      (BYTE, BYTE, void*);                             /* I/O control operation when _USE_IOCTL = 1 */
+    DRESULT (*disk_ioctl)(BYTE, BYTE, void*); /* I/O control operation when _USE_IOCTL = 1 */
 #endif
 } Diskio_drvTypeDef;
 
 /* Global Disk IO Drivers structure definition */
 typedef struct {
-    uint8_t                 is_initialized[FF_VOLUMES];
+    uint8_t                  is_initialized[FF_VOLUMES];
     const Diskio_drvTypeDef* drv[FF_VOLUMES];
-    uint8_t                 lun[FF_VOLUMES];
-    volatile uint8_t        nbr;
+    uint8_t                  lun[FF_VOLUMES];
+    volatile uint8_t         nbr;
 } Disk_drvTypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +80,7 @@ GLOBAL Disk_drvTypeDef disk = {{0}, {0}, {0}, 0};
 
 GLOBAL Disk_drvTypeDef disk;
 GLOBAL uint8_t retSD;
-GLOBAL char SDPath[4];
+GLOBAL char    SDPath[4];
 
 #undef GLOBAL
 ////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +99,6 @@ uint8_t FATFS_GetAttachedDriversNbr(void);
 void BSP_FATFS_Configure(void);
 
 /// @}
-
 
 /// @}
 

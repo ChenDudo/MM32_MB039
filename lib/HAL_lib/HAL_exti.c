@@ -35,7 +35,6 @@
 /// @addtogroup EXTI_Exported_Functions
 /// @{
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Deinitializes the EXTI peripheral registers to their default reset
 ///         values.
@@ -57,15 +56,15 @@ void EXTI_DeInit()
 {
 #if defined(__MM3N1)
     // Clear all
-	exEXTI_LineDisable(~0x00000000);
+    exEXTI_LineDisable(~0x00000000);
 
-	// rc_w1
+    // rc_w1
     EXTI->PR = EXTI->PR;
 #endif
 
 #if defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1)
 
-	// Set EXTI_CFGR1 register to reset value without affecting MEM_MODE bits
+    // Set EXTI_CFGR1 register to reset value without affecting MEM_MODE bits
     EXTI->CFGR &= EXTI_CFGR_MEMMODE;
 
     // Set EXTICRx registers to reset value
@@ -74,7 +73,6 @@ void EXTI_DeInit()
     }
 #endif
 }
-
 
 #if defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1)
 ////////////////////////////////////////////////////////////////////////////////
@@ -138,24 +136,23 @@ void EXTI_LineConfig(u8 EXTI_PortSourceGPIOx, u8 EXTI_PinSourcex)
 ////////////////////////////////////////////////////////////////////////////////
 void EXTI_Init(EXTI_InitTypeDef* pInitStruct)
 {
-	exEXTI_LineDisable(pInitStruct->EXTI_Line);
+    exEXTI_LineDisable(pInitStruct->EXTI_Line);
 
     if (pInitStruct->EXTI_LineCmd) {
+        if (pInitStruct->EXTI_Mode == EXTI_Mode_Interrupt)
+            EXTI->IMR |= pInitStruct->EXTI_Line;
+        else
+            EXTI->EMR |= pInitStruct->EXTI_Line;
 
-		if (pInitStruct->EXTI_Mode == EXTI_Mode_Interrupt)
-			EXTI->IMR |= pInitStruct->EXTI_Line;
-		else
-			EXTI->EMR |= pInitStruct->EXTI_Line;
-
-		if (pInitStruct->EXTI_Trigger == EXTI_Trigger_Rising_Falling) {
-			EXTI->RTSR |= pInitStruct->EXTI_Line;
-			EXTI->FTSR |= pInitStruct->EXTI_Line;								// Rising and Faling	afio
-		}
-		else if (pInitStruct->EXTI_Trigger == EXTI_Trigger_Rising)
-			EXTI->RTSR |= pInitStruct->EXTI_Line;
-		else
-			EXTI->FTSR |= pInitStruct->EXTI_Line;
-	}
+        if (pInitStruct->EXTI_Trigger == EXTI_Trigger_Rising_Falling) {
+            EXTI->RTSR |= pInitStruct->EXTI_Line;
+            EXTI->FTSR |= pInitStruct->EXTI_Line;  // Rising and Faling	afio
+        }
+        else if (pInitStruct->EXTI_Trigger == EXTI_Trigger_Rising)
+            EXTI->RTSR |= pInitStruct->EXTI_Line;
+        else
+            EXTI->FTSR |= pInitStruct->EXTI_Line;
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -240,8 +237,8 @@ void EXTI_ClearITPendingBit(u32 EXTI_Line)
 ////////////////////////////////////////////////////////////////////////////////
 void exEXTI_LineDisable(u32 EXTI_Line)
 {
-    EXTI->IMR  &= ~EXTI_Line;
-    EXTI->EMR  &= ~EXTI_Line;
+    EXTI->IMR &= ~EXTI_Line;
+    EXTI->EMR &= ~EXTI_Line;
     EXTI->RTSR &= ~EXTI_Line;
     EXTI->FTSR &= ~EXTI_Line;
 }

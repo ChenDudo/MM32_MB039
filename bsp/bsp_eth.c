@@ -56,13 +56,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 void ETH_NVIC_Config(void)
 {
-    NVIC_InitTypeDef   NVIC_InitStructure;
+    NVIC_InitTypeDef NVIC_InitStructure;
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_3);
 
-    NVIC_InitStructure.NVIC_IRQChannel = ETH_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannel                   = ETH_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 7;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
+    NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
 
@@ -80,70 +80,73 @@ void ETH_GPIO_Config(void)
     COMMON_EnableIpClock(emCLOCK_EXTI);
 
     // Configure PA0, PA1, PA2, PA3 and PA7
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_7;
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_1 | GPIO_Pin_7;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_FLOATING;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_FLOATING;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+    GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_2;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-    GPIO_PinAFConfig(GPIOA, GPIO_PinSource1, GPIO_AF_11);                       //ETH_RX_CLK/REGOFF     PA1
-    GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_11);                       //ETH_MDIO              PA2
-    GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_11);                       //ETH_RX_DV             PA7--PD8
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource1, GPIO_AF_11);  // ETH_RX_CLK/REGOFF     PA1
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_11);  // ETH_MDIO              PA2
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_11);  // ETH_RX_DV             PA7--PD8
 
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13;
+    GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
     GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_11);                      // ETH_TX_EN     PB11
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource12, GPIO_AF_11);                      // ETH_TXD0     PB12
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource13, GPIO_AF_11);                      // ETH_TXD1        PB13
+    GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_11);  // ETH_TX_EN     PB11
+    GPIO_PinAFConfig(GPIOB, GPIO_PinSource12, GPIO_AF_11);  // ETH_TXD0     PB12
+    GPIO_PinAFConfig(GPIOB, GPIO_PinSource13, GPIO_AF_11);  // ETH_TXD1        PB13
 
     // Configure PC1, PC2, PC3, PC4 and PC5
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+    GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_1;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
     GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
+    GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_4 | GPIO_Pin_5;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_FLOATING;
     GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-    GPIO_PinAFConfig(GPIOC, GPIO_PinSource1, GPIO_AF_11);                       // ETH_MDC       PC1
-    GPIO_PinAFConfig(GPIOC, GPIO_PinSource4, GPIO_AF_11);                       // ETH_RXD0      PC4
-    GPIO_PinAFConfig(GPIOC, GPIO_PinSource5, GPIO_AF_11);                       // ETH_RXD1      PC5
+    GPIO_PinAFConfig(GPIOC, GPIO_PinSource1, GPIO_AF_11);  // ETH_MDC       PC1
+    GPIO_PinAFConfig(GPIOC, GPIO_PinSource4, GPIO_AF_11);  // ETH_RXD0      PC4
+    GPIO_PinAFConfig(GPIOC, GPIO_PinSource5, GPIO_AF_11);  // ETH_RXD1      PC5
 
-    SYSCFG->CFGR2 |= 0X01<<20;   //select RMII
+    SYSCFG->CFGR2 |= 0X01 << 20;  // select RMII
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 s8 buffer_send(u8* p, u16 len)
 {
-    uint8_t *buffer = (uint8_t *)(DMATxDescToSet->BUF1ADDR);
-    __IO ETH_DMADESCTypeDef *DmaTxDesc;
-    uint32_t framelength = 0;
-    uint32_t byteslefttocopy = len;
-    uint32_t payloadoffset = 0;
-    uint32_t bufferoffset = 0;
-    DmaTxDesc = DMATxDescToSet;
-    bufferoffset = 0;
+    uint8_t* buffer = (uint8_t*)(DMATxDescToSet->BUF1ADDR);
+    __IO ETH_DMADESCTypeDef* DmaTxDesc;
+    uint32_t                 framelength     = 0;
+    uint32_t                 byteslefttocopy = len;
+    uint32_t                 payloadoffset   = 0;
+    uint32_t                 bufferoffset    = 0;
+    DmaTxDesc                                = DMATxDescToSet;
+    bufferoffset                             = 0;
 
-    if((DmaTxDesc->CS & ETH_DMA_TDES_OWN))  return -8;
-    while((byteslefttocopy + bufferoffset) > ETH_TX_BUF_SIZE) {
-        memcpy((u8*)((u8*)buffer + bufferoffset),(u8*)((u8*)p + payloadoffset),(ETH_TX_BUF_SIZE - bufferoffset));// Copy data to Tx buffer
-        DmaTxDesc = (ETH_DMADESCTypeDef *)(DmaTxDesc->BUF2NDADDR);// Point to next descriptor
-        if((DmaTxDesc->CS & ETH_DMA_TDES_OWN))  return -8;// Check if the buffer is available
-        buffer = (u8*)(DmaTxDesc->BUF1ADDR);
+    if ((DmaTxDesc->CS & ETH_DMA_TDES_OWN))
+        return -8;
+    while ((byteslefttocopy + bufferoffset) > ETH_TX_BUF_SIZE) {
+        memcpy((u8*)((u8*)buffer + bufferoffset), (u8*)((u8*)p + payloadoffset),
+               (ETH_TX_BUF_SIZE - bufferoffset));                  // Copy data to Tx buffer
+        DmaTxDesc = (ETH_DMADESCTypeDef*)(DmaTxDesc->BUF2NDADDR);  // Point to next descriptor
+        if ((DmaTxDesc->CS & ETH_DMA_TDES_OWN))
+            return -8;  // Check if the buffer is available
+        buffer          = (u8*)(DmaTxDesc->BUF1ADDR);
         byteslefttocopy = byteslefttocopy - (ETH_TX_BUF_SIZE - bufferoffset);
-        payloadoffset = payloadoffset + (ETH_TX_BUF_SIZE - bufferoffset);
-        framelength = framelength + (ETH_TX_BUF_SIZE - bufferoffset);
-        bufferoffset = 0;
+        payloadoffset   = payloadoffset + (ETH_TX_BUF_SIZE - bufferoffset);
+        framelength     = framelength + (ETH_TX_BUF_SIZE - bufferoffset);
+        bufferoffset    = 0;
     }
-    memcpy((u8*)((u8*)buffer + bufferoffset),(u8*)((u8*)p + payloadoffset),byteslefttocopy);// Copy the remaining bytes
+    memcpy((u8*)((u8*)buffer + bufferoffset), (u8*)((u8*)p + payloadoffset), byteslefttocopy);  // Copy the remaining bytes
     bufferoffset = bufferoffset + byteslefttocopy;
-    framelength = framelength + byteslefttocopy;
-    ETH_Prepare_Transmit_Descriptors(framelength);// Prepare transmit descriptors to give to DMA
+    framelength  = framelength + byteslefttocopy;
+    ETH_Prepare_Transmit_Descriptors(framelength);  // Prepare transmit descriptors to give to DMA
     return 0;
 }
 
@@ -156,7 +159,7 @@ uint32_t ETH_PHYLoopBackCmd(uint16_t addr, FunctionalState sta)
 
     sta ? (temp_val |= PHY_Loopback) : (temp_val &= ~PHY_Loopback);
 
-    if(ETH_WritePHYRegister(addr, PHY_BCR, temp_val))
+    if (ETH_WritePHYRegister(addr, PHY_BCR, temp_val))
         ret = ETH_SUCCESS;
     else
         ret = ETH_ERROR;
@@ -171,10 +174,10 @@ s8 ETH_MAC_DMA_Config()
     COMMON_EnableIpClock(emCLOCK_ETH);
     ETH_DeInit();
     ETH_SoftwareReset();
-    
+
     u16 overTime = 65535;
-    while (ETH_GetSoftwareResetStatus()){
-        if (overTime-- == 0){
+    while (ETH_GetSoftwareResetStatus()) {
+        if (overTime-- == 0) {
             EthErr = ethRstErr;
             return EthErr;
         }
@@ -183,34 +186,34 @@ s8 ETH_MAC_DMA_Config()
     exETH_MDCClock();
 
     // ------------------------   MAC   ----------------------------------------
-    ETH_InitStructure.ETH_AutoNegotiation           = ETH_AutoNegotiation_Enable;
-    ETH_InitStructure.ETH_Speed                     = ETH_Speed_100M;
-    ETH_InitStructure.ETH_Mode                      = ETH_Mode_FullDuplex;
-    ETH_InitStructure.ETH_LoopbackMode              = ETH_LoopbackMode_Disable;
-    ETH_InitStructure.ETH_RetryTransmission         = ETH_RetryTransmission_Disable;
-    ETH_InitStructure.ETH_ReceiveAll                = ETH_ReceiveAll_Disable;
-    ETH_InitStructure.ETH_PromiscuousMode           = ETH_PromiscuousMode_Disable;
-    ETH_InitStructure.ETH_ChecksumOffload           = ETH_ChecksumOffload_Disable;
-    ETH_InitStructure.ETH_UnicastFramesFilter       = ETH_UnicastFramesFilter_Perfect;
-    ETH_InitStructure.ETH_AutomaticPadCRCStrip      = ETH_AutomaticPadCRCStrip_Disable;
-    ETH_InitStructure.ETH_MulticastFramesFilter     = ETH_MulticastFramesFilter_Perfect;
-    ETH_InitStructure.ETH_BroadcastFramesReception  = ETH_BroadcastFramesReception_Enable;
+    ETH_InitStructure.ETH_AutoNegotiation          = ETH_AutoNegotiation_Enable;
+    ETH_InitStructure.ETH_Speed                    = ETH_Speed_100M;
+    ETH_InitStructure.ETH_Mode                     = ETH_Mode_FullDuplex;
+    ETH_InitStructure.ETH_LoopbackMode             = ETH_LoopbackMode_Disable;
+    ETH_InitStructure.ETH_RetryTransmission        = ETH_RetryTransmission_Disable;
+    ETH_InitStructure.ETH_ReceiveAll               = ETH_ReceiveAll_Disable;
+    ETH_InitStructure.ETH_PromiscuousMode          = ETH_PromiscuousMode_Disable;
+    ETH_InitStructure.ETH_ChecksumOffload          = ETH_ChecksumOffload_Disable;
+    ETH_InitStructure.ETH_UnicastFramesFilter      = ETH_UnicastFramesFilter_Perfect;
+    ETH_InitStructure.ETH_AutomaticPadCRCStrip     = ETH_AutomaticPadCRCStrip_Disable;
+    ETH_InitStructure.ETH_MulticastFramesFilter    = ETH_MulticastFramesFilter_Perfect;
+    ETH_InitStructure.ETH_BroadcastFramesReception = ETH_BroadcastFramesReception_Enable;
     // ------------------------   DMA   ----------------------------------------
     //  When we use the Checksum offload feature, we need to enable the Store and Forward mode:
     // the store and forward guarantee that a whole frame is stored in the FIFO, so the MAC can insert/verify the checksum,
     // if the checksum is OK the DMA can handle the frame otherwise the frame is dropped
-    ETH_InitStructure.ETH_ReceiveStoreForward       = ETH_ReceiveStoreForward_Enable;
-    ETH_InitStructure.ETH_TransmitStoreForward      = ETH_TransmitStoreForward_Enable;
-    ETH_InitStructure.ETH_ForwardErrorFrames        = ETH_ForwardErrorFrames_Disable;
-    ETH_InitStructure.ETH_SecondFrameOperate        = ETH_SecondFrameOperate_Enable;
-    ETH_InitStructure.ETH_AddressAlignedBeats       = ETH_AddressAlignedBeats_Disable;
-    ETH_InitStructure.ETH_FixedBurst                = ETH_FixedBurst_Enable;
-    ETH_InitStructure.ETH_RxDMABurstLength          = 0;
-    ETH_InitStructure.ETH_TxDMABurstLength          = ETH_TxDMABurstLength_32Beat;
-    ETH_InitStructure.ETH_DMAArbitration            = ETH_DMAArbitration_RoundRobin_RxTx_1_1;
+    ETH_InitStructure.ETH_ReceiveStoreForward         = ETH_ReceiveStoreForward_Enable;
+    ETH_InitStructure.ETH_TransmitStoreForward        = ETH_TransmitStoreForward_Enable;
+    ETH_InitStructure.ETH_ForwardErrorFrames          = ETH_ForwardErrorFrames_Disable;
+    ETH_InitStructure.ETH_SecondFrameOperate          = ETH_SecondFrameOperate_Enable;
+    ETH_InitStructure.ETH_AddressAlignedBeats         = ETH_AddressAlignedBeats_Disable;
+    ETH_InitStructure.ETH_FixedBurst                  = ETH_FixedBurst_Enable;
+    ETH_InitStructure.ETH_RxDMABurstLength            = 0;
+    ETH_InitStructure.ETH_TxDMABurstLength            = ETH_TxDMABurstLength_32Beat;
+    ETH_InitStructure.ETH_DMAArbitration              = ETH_DMAArbitration_RoundRobin_RxTx_1_1;
     ETH_InitStructure.ETH_DropTCPIPChecksumErrorFrame = ETH_DropTCPIPChecksumErrorFrame_Enable;
     ETH_InitStructure.ETH_ForwardUndersizedGoodFrames = ETH_ForwardUndersizedGoodFrames_Disable;
-    EthStatus = ETH_Init(&ETH_InitStructure);
+    EthStatus                                         = ETH_Init(&ETH_InitStructure);
     return 0;
 }
 
@@ -218,19 +221,19 @@ s8 ETH_MAC_DMA_Config()
 void BSP_ETH_Configure()
 {
     u16 overTime = 65535;
-    EthStatus = 0;
+    EthStatus    = 0;
 
     ETH_GPIO_Config();
-    if(ETH_MAC_DMA_Config() < 0)
+    if (ETH_MAC_DMA_Config() < 0)
         return;
     BSP_PHY8720_Configure(0);
-    
-    while (1){
-        if (ETH_ReadPHYRegister(0, PHY_BSR) & PHY_Linked_Status){
+
+    while (1) {
+        if (ETH_ReadPHYRegister(0, PHY_BSR) & PHY_Linked_Status) {
             EthStatus |= ETH_LINK_FLAG;
             return;
         }
-        if (overTime-- == 0){
+        if (overTime-- == 0) {
             EthErr = ethReadPhyErr;
             return;
         }

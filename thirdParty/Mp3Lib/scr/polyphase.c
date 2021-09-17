@@ -53,8 +53,8 @@
  *    DQ_FRACBITS_OUT - 2 - 2 - 15
  *  (see comment on Dequantize() for more info)
  */
-#define DEF_NFRACBITS   (DQ_FRACBITS_OUT - 2 - 2 - 15)
-#define CSHIFT  12  /* coefficients have 12 leading sign bits for early-terminating mulitplies */
+#define DEF_NFRACBITS (DQ_FRACBITS_OUT - 2 - 2 - 15)
+#define CSHIFT 12 /* coefficients have 12 leading sign bits for early-terminating mulitplies */
 
 static __inline short ClipToShort(int x, int fracBits)
 {
@@ -71,24 +71,39 @@ static __inline short ClipToShort(int x, int fracBits)
     return (short)x;
 }
 
-#define MC0M(x) { \
-    c1 = *coef;     coef++;     c2 = *coef;     coef++; \
-    vLo = *(vb1+(x));           vHi = *(vb1+(23-(x))); \
-    sum1L = MADD64(sum1L, vLo,  c1);    sum1L = MADD64(sum1L, vHi, -c2); \
-}
+#define MC0M(x)                                                                                                                  \
+    {                                                                                                                            \
+        c1 = *coef;                                                                                                              \
+        coef++;                                                                                                                  \
+        c2 = *coef;                                                                                                              \
+        coef++;                                                                                                                  \
+        vLo   = *(vb1 + (x));                                                                                                    \
+        vHi   = *(vb1 + (23 - (x)));                                                                                             \
+        sum1L = MADD64(sum1L, vLo, c1);                                                                                          \
+        sum1L = MADD64(sum1L, vHi, -c2);                                                                                         \
+    }
 
-#define MC1M(x) { \
-    c1 = *coef;     coef++; \
-    vLo = *(vb1+(x)); \
-    sum1L = MADD64(sum1L, vLo,  c1); \
-}
+#define MC1M(x)                                                                                                                  \
+    {                                                                                                                            \
+        c1 = *coef;                                                                                                              \
+        coef++;                                                                                                                  \
+        vLo   = *(vb1 + (x));                                                                                                    \
+        sum1L = MADD64(sum1L, vLo, c1);                                                                                          \
+    }
 
-#define MC2M(x) { \
-        c1 = *coef;     coef++;     c2 = *coef;     coef++; \
-        vLo = *(vb1+(x));   vHi = *(vb1+(23-(x))); \
-        sum1L = MADD64(sum1L, vLo,  c1);    sum2L = MADD64(sum2L, vLo,  c2); \
-        sum1L = MADD64(sum1L, vHi, -c2);    sum2L = MADD64(sum2L, vHi,  c1); \
-}
+#define MC2M(x)                                                                                                                  \
+    {                                                                                                                            \
+        c1 = *coef;                                                                                                              \
+        coef++;                                                                                                                  \
+        c2 = *coef;                                                                                                              \
+        coef++;                                                                                                                  \
+        vLo   = *(vb1 + (x));                                                                                                    \
+        vHi   = *(vb1 + (23 - (x)));                                                                                             \
+        sum1L = MADD64(sum1L, vLo, c1);                                                                                          \
+        sum2L = MADD64(sum2L, vLo, c2);                                                                                          \
+        sum1L = MADD64(sum1L, vHi, -c2);                                                                                         \
+        sum2L = MADD64(sum2L, vHi, c1);                                                                                          \
+    }
 
 /**************************************************************************************
  * Function:    PolyphaseMono
@@ -111,17 +126,17 @@ static __inline short ClipToShort(int x, int fracBits)
  **************************************************************************************/
 static void PolyphaseMono(short* pcm, int* vbuf, const int* coefBase)
 {
-    int i;
+    int        i;
     const int* coef;
-    int* vb1;
-    int vLo, vHi, c1, c2;
-    Word64 sum1L, sum2L, rndVal;
+    int*       vb1;
+    int        vLo, vHi, c1, c2;
+    Word64     sum1L, sum2L, rndVal;
 
-    rndVal = (Word64)( 1 << (DEF_NFRACBITS - 1 + (32 - CSHIFT)) );
+    rndVal = (Word64)(1 << (DEF_NFRACBITS - 1 + (32 - CSHIFT)));
 
     /* special case, output sample 0 */
-    coef = coefBase;
-    vb1 = vbuf;
+    coef  = coefBase;
+    vb1   = vbuf;
     sum1L = rndVal;
 
     MC0M(0)
@@ -136,8 +151,8 @@ static void PolyphaseMono(short* pcm, int* vbuf, const int* coefBase)
     *(pcm + 0) = ClipToShort((int)SAR64(sum1L, (32 - CSHIFT)), DEF_NFRACBITS);
 
     /* special case, output sample 16 */
-    coef = coefBase + 256;
-    vb1 = vbuf + 64 * 16;
+    coef  = coefBase + 256;
+    vb1   = vbuf + 64 * 16;
     sum1L = rndVal;
 
     MC1M(0)
@@ -153,7 +168,7 @@ static void PolyphaseMono(short* pcm, int* vbuf, const int* coefBase)
 
     /* main convolution loop: sum1L = samples 1, 2, 3, ... 15   sum2L = samples 31, 30, ... 17 */
     coef = coefBase + 16;
-    vb1 = vbuf + 64;
+    vb1  = vbuf + 64;
     pcm++;
 
     /* right now, the compiler creates bad asm from this... */
@@ -170,37 +185,57 @@ static void PolyphaseMono(short* pcm, int* vbuf, const int* coefBase)
         MC2M(7)
 
         vb1 += 64;
-        *(pcm)       = ClipToShort((int)SAR64(sum1L, (32 - CSHIFT)), DEF_NFRACBITS);
+        *(pcm)         = ClipToShort((int)SAR64(sum1L, (32 - CSHIFT)), DEF_NFRACBITS);
         *(pcm + 2 * i) = ClipToShort((int)SAR64(sum2L, (32 - CSHIFT)), DEF_NFRACBITS);
         pcm++;
     }
 }
 
-#define MC0S(x) { \
-    c1 = *coef;     coef++;     c2 = *coef;     coef++; \
-    vLo = *(vb1+(x));       vHi = *(vb1+(23-(x))); \
-    sum1L = MADD64(sum1L, vLo,  c1);    sum1L = MADD64(sum1L, vHi, -c2); \
-    vLo = *(vb1+32+(x));    vHi = *(vb1+32+(23-(x))); \
-    sum1R = MADD64(sum1R, vLo,  c1);    sum1R = MADD64(sum1R, vHi, -c2); \
-}
+#define MC0S(x)                                                                                                                  \
+    {                                                                                                                            \
+        c1 = *coef;                                                                                                              \
+        coef++;                                                                                                                  \
+        c2 = *coef;                                                                                                              \
+        coef++;                                                                                                                  \
+        vLo   = *(vb1 + (x));                                                                                                    \
+        vHi   = *(vb1 + (23 - (x)));                                                                                             \
+        sum1L = MADD64(sum1L, vLo, c1);                                                                                          \
+        sum1L = MADD64(sum1L, vHi, -c2);                                                                                         \
+        vLo   = *(vb1 + 32 + (x));                                                                                               \
+        vHi   = *(vb1 + 32 + (23 - (x)));                                                                                        \
+        sum1R = MADD64(sum1R, vLo, c1);                                                                                          \
+        sum1R = MADD64(sum1R, vHi, -c2);                                                                                         \
+    }
 
-#define MC1S(x) { \
-    c1 = *coef;     coef++; \
-    vLo = *(vb1+(x)); \
-    sum1L = MADD64(sum1L, vLo,  c1); \
-    vLo = *(vb1+32+(x)); \
-    sum1R = MADD64(sum1R, vLo,  c1); \
-}
+#define MC1S(x)                                                                                                                  \
+    {                                                                                                                            \
+        c1 = *coef;                                                                                                              \
+        coef++;                                                                                                                  \
+        vLo   = *(vb1 + (x));                                                                                                    \
+        sum1L = MADD64(sum1L, vLo, c1);                                                                                          \
+        vLo   = *(vb1 + 32 + (x));                                                                                               \
+        sum1R = MADD64(sum1R, vLo, c1);                                                                                          \
+    }
 
-#define MC2S(x) { \
-        c1 = *coef;     coef++;     c2 = *coef;     coef++; \
-        vLo = *(vb1+(x));   vHi = *(vb1+(23-(x))); \
-        sum1L = MADD64(sum1L, vLo,  c1);    sum2L = MADD64(sum2L, vLo,  c2); \
-        sum1L = MADD64(sum1L, vHi, -c2);    sum2L = MADD64(sum2L, vHi,  c1); \
-        vLo = *(vb1+32+(x));    vHi = *(vb1+32+(23-(x))); \
-        sum1R = MADD64(sum1R, vLo,  c1);    sum2R = MADD64(sum2R, vLo,  c2); \
-        sum1R = MADD64(sum1R, vHi, -c2);    sum2R = MADD64(sum2R, vHi,  c1); \
-}
+#define MC2S(x)                                                                                                                  \
+    {                                                                                                                            \
+        c1 = *coef;                                                                                                              \
+        coef++;                                                                                                                  \
+        c2 = *coef;                                                                                                              \
+        coef++;                                                                                                                  \
+        vLo   = *(vb1 + (x));                                                                                                    \
+        vHi   = *(vb1 + (23 - (x)));                                                                                             \
+        sum1L = MADD64(sum1L, vLo, c1);                                                                                          \
+        sum2L = MADD64(sum2L, vLo, c2);                                                                                          \
+        sum1L = MADD64(sum1L, vHi, -c2);                                                                                         \
+        sum2L = MADD64(sum2L, vHi, c1);                                                                                          \
+        vLo   = *(vb1 + 32 + (x));                                                                                               \
+        vHi   = *(vb1 + 32 + (23 - (x)));                                                                                        \
+        sum1R = MADD64(sum1R, vLo, c1);                                                                                          \
+        sum2R = MADD64(sum2R, vLo, c2);                                                                                          \
+        sum1R = MADD64(sum1R, vHi, -c2);                                                                                         \
+        sum2R = MADD64(sum2R, vHi, c1);                                                                                          \
+    }
 
 /**************************************************************************************
  * Function:    PolyphaseStereo
@@ -224,17 +259,17 @@ static void PolyphaseMono(short* pcm, int* vbuf, const int* coefBase)
  **************************************************************************************/
 static void PolyphaseStereo(short* pcm, int* vbuf, const int* coefBase)
 {
-    int i;
+    int        i;
     const int* coef;
-    int* vb1;
-    int vLo, vHi, c1, c2;
-    Word64 sum1L, sum2L, sum1R, sum2R, rndVal;
+    int*       vb1;
+    int        vLo, vHi, c1, c2;
+    Word64     sum1L, sum2L, sum1R, sum2R, rndVal;
 
-    rndVal = (Word64)( 1 << (DEF_NFRACBITS - 1 + (32 - CSHIFT)) );
+    rndVal = (Word64)(1 << (DEF_NFRACBITS - 1 + (32 - CSHIFT)));
 
     /* special case, output sample 0 */
-    coef = coefBase;
-    vb1 = vbuf;
+    coef  = coefBase;
+    vb1   = vbuf;
     sum1L = sum1R = rndVal;
 
     MC0S(0)
@@ -250,8 +285,8 @@ static void PolyphaseStereo(short* pcm, int* vbuf, const int* coefBase)
     *(pcm + 1) = ClipToShort((int)SAR64(sum1R, (32 - CSHIFT)), DEF_NFRACBITS);
 
     /* special case, output sample 16 */
-    coef = coefBase + 256;
-    vb1 = vbuf + 64 * 16;
+    coef  = coefBase + 256;
+    vb1   = vbuf + 64 * 16;
     sum1L = sum1R = rndVal;
 
     MC1S(0)
@@ -268,7 +303,7 @@ static void PolyphaseStereo(short* pcm, int* vbuf, const int* coefBase)
 
     /* main convolution loop: sum1L = samples 1, 2, 3, ... 15   sum2L = samples 31, 30, ... 17 */
     coef = coefBase + 16;
-    vb1 = vbuf + 64;
+    vb1  = vbuf + 64;
     pcm += 2;
 
     /* right now, the compiler creates bad asm from this... */
@@ -286,8 +321,8 @@ static void PolyphaseStereo(short* pcm, int* vbuf, const int* coefBase)
         MC2S(7)
 
         vb1 += 64;
-        *(pcm + 0)         = ClipToShort((int)SAR64(sum1L, (32 - CSHIFT)), DEF_NFRACBITS);
-        *(pcm + 1)         = ClipToShort((int)SAR64(sum1R, (32 - CSHIFT)), DEF_NFRACBITS);
+        *(pcm + 0)             = ClipToShort((int)SAR64(sum1L, (32 - CSHIFT)), DEF_NFRACBITS);
+        *(pcm + 1)             = ClipToShort((int)SAR64(sum1R, (32 - CSHIFT)), DEF_NFRACBITS);
         *(pcm + 2 * 2 * i + 0) = ClipToShort((int)SAR64(sum2L, (32 - CSHIFT)), DEF_NFRACBITS);
         *(pcm + 2 * 2 * i + 1) = ClipToShort((int)SAR64(sum2R, (32 - CSHIFT)), DEF_NFRACBITS);
         pcm += 2;

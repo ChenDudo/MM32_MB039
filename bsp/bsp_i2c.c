@@ -63,40 +63,40 @@ void BSP_I2C_GPIO_Configure(I2C_TypeDef* I2Cx, bool remapEn, u8 remapIdx)
 void BSP_I2C_GPIO_Configure(I2C_TypeDef* I2Cx, bool remapEn, u8 remapIdx)
 {
     switch (*(u32*)&I2Cx) {
-    #if defined(I2C1)
-		case (u32)I2C1:
-			if (!remapEn) {
-					GPIOB_ClockEnable();
-					GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_6, NO_REMAP, GPIO_AF_1);
-					GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_7, NO_REMAP, GPIO_AF_1);
-			}
-			else {
-				if (remapIdx == 0) {
+#if defined(I2C1)
+        case (u32)I2C1:
+            if (!remapEn) {
+                GPIOB_ClockEnable();
+                GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_6, NO_REMAP, GPIO_AF_1);
+                GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_7, NO_REMAP, GPIO_AF_1);
+            }
+            else {
+                if (remapIdx == 0) {
                     GPIOB_ClockEnable();
                     GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_8, NO_REMAP, GPIO_AF_1);
                     GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_9, NO_REMAP, GPIO_AF_1);
-				}
-        #if defined (__MM0N1) || defined(__MM0P1) || defined(__MM0Q1)
-				if (remapIdx == 1) {
-					GPIOB_ClockEnable();
-					GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_1);
-					GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_1);
-				}
-        #endif
-			}
-			break;
-    #endif
-//------------------------------------------------------------------------------
-    #if defined(I2C2)
-		case (u32)I2C2:
-			if (!remapEn) {
-					GPIOB_ClockEnable();
-					GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_1);
-					GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_1);
-			}
-			break;
-    #endif
-		default: break;
+                }
+#if defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1)
+                if (remapIdx == 1) {
+                    GPIOB_ClockEnable();
+                    GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_1);
+                    GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_1);
+                }
+#endif
+            }
+            break;
+#endif
+            //------------------------------------------------------------------------------
+#if defined(I2C2)
+        case (u32)I2C2:
+            if (!remapEn) {
+                GPIOB_ClockEnable();
+                GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_1);
+                GPIO_Mode_AF_OD_20MHz_Init(GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_1);
+            }
+            break;
+#endif
+        default: break;
     }
 }
 #endif

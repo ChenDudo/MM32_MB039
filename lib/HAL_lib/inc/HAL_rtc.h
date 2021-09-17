@@ -81,8 +81,7 @@ typedef enum {
 #define GLOBAL extern
 #endif
 
-GLOBAL	bool accessRTC;
-
+GLOBAL bool accessRTC;
 
 #undef GLOBAL
 

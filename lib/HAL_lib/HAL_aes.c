@@ -60,7 +60,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 void AES_SetMode(AES_Operation_TypeDef operation, AES_ChainingMode_TypeDef chainingMode)
 {
-//	AES->CR = 0;
+    //	AES->CR = 0;
     AES->CR = (AES->CR & (~(u32)AES_CR_MODE)) | operation;
     AES->CR = (AES->CR & (~(u32)(AES_CR_CHMODL | AES_CR_CHMODH))) | chainingMode;
 }
@@ -69,19 +69,19 @@ u32 inin;
 
 u32 swap(u32 data)
 {
-//	return (data & 0xff000000) >> 24 | (data & 0x00ff0000) >> 8 | (data & 0x0000ff00) << 8 | (data & 0xff) << 24;
-//	return data;
+    //	return (data & 0xff000000) >> 24 | (data & 0x00ff0000) >> 8 | (data & 0x0000ff00) << 8 | (data & 0xff) << 24;
+    //	return data;
 
-	u32 dat = 0;
-	for (u8 i = 0; i < 32; i++) {
-		dat <<= 1;
-		if ((data & 0x00000001) == 1) {
-			dat++;
-		}
-		data >>= 1;
-	}
-	return dat;
-//	return (data & 0xffff0000) >> 16 | (data & 0x00ffff) << 16;
+    u32 dat = 0;
+    for (u8 i = 0; i < 32; i++) {
+        dat <<= 1;
+        if ((data & 0x00000001) == 1) {
+            dat++;
+        }
+        data >>= 1;
+    }
+    return dat;
+    //	return (data & 0xffff0000) >> 16 | (data & 0x00ffff) << 16;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -94,18 +94,18 @@ u32 swap(u32 data)
 bool AES_GetStatus(u8 sta, u8* pBuffer)
 {
     bool status = SUCCESS;
-    u16         i;
-	u32* pdata = (u32*)pBuffer;
+    u16  i;
+    u32* pdata = (u32*)pBuffer;
 
     AES_Cmd(ENABLE);
 
     if (sta) {
         for (i = 0; i < 4; i++) {
             AES_WriteSubData(pdata[i]);
-//            AES_WriteSubData(swap(pdata[i]));
-//            AES_WriteSubData(swap(pdata[3 - i]));
-//            AES_WriteSubData(((u32*)pBuffer)[3 - i]);
-			inin = AES->DINR;
+            //            AES_WriteSubData(swap(pdata[i]));
+            //            AES_WriteSubData(swap(pdata[3 - i]));
+            //            AES_WriteSubData(((u32*)pBuffer)[3 - i]);
+            inin = AES->DINR;
         }
     }
 
@@ -127,8 +127,8 @@ bool AES_GetStatus(u8 sta, u8* pBuffer)
         if (status != ERROR) {
             for (i = 0; i < 4; i++) {
                 ((u32*)pBuffer)[i] = AES->DOUTR;
-//                ((u32*)pBuffer)[3 - i] = swap(AES->DOUTR);
-//                ((u32*)pBuffer)[i] = swap(AES->DOUTR);
+                //                ((u32*)pBuffer)[3 - i] = swap(AES->DOUTR);
+                //                ((u32*)pBuffer)[i] = swap(AES->DOUTR);
             }
         }
     }
@@ -183,7 +183,7 @@ void LET_AES_IVR(u32* pInitVectors)
 ////////////////////////////////////////////////////////////////////////////////
 void AES_DeInit(void)
 {
-	COMMON_DisableIpClock(emCLOCK_AES);
+    COMMON_DisableIpClock(emCLOCK_AES);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -469,21 +469,18 @@ bool AES_ECB_Encrypt(u8* pKey, u8* pBuffer)
 ////////////////////////////////////////////////////////////////////////////////
 bool AES_ECB_Decrypt(u8* pKey, u8* pBuffer)
 {
-/*    AES_SetMode(AES_Operation_KeyDeriv, AES_Chaining_ECB);  // Key expasion MODE
-    LET_AES_KEY(pKey);
-//    AES_GetStatus(false, pBuffer);
+    /*    AES_SetMode(AES_Operation_KeyDeriv, AES_Chaining_ECB);  // Key expasion MODE
+        LET_AES_KEY(pKey);
+    //    AES_GetStatus(false, pBuffer);
+        AES_SetMode(AES_Operation_Decryp, AES_Chaining_ECB);  // ECB Decrypt MODE
+        return AES_GetStatus(true, pBuffer);
+    */
+    //    AES_SetMode(AES_Operation_KeyDeriv, AES_Chaining_ECB);  // Key expasion MODE
+    //    LET_AES_KEY(pKey);
+    //    AES_GetStatus(false, pBuffer);
     AES_SetMode(AES_Operation_Decryp, AES_Chaining_ECB);  // ECB Decrypt MODE
-    return AES_GetStatus(true, pBuffer);
-*/
-//    AES_SetMode(AES_Operation_KeyDeriv, AES_Chaining_ECB);  // Key expasion MODE
-//    LET_AES_KEY(pKey);
-//    AES_GetStatus(false, pBuffer);
-    AES_SetMode(AES_Operation_Decryp, AES_Chaining_ECB);  // ECB Decrypt MODE
     LET_AES_KEY(pKey);
     return AES_GetStatus(true, pBuffer);
-
-
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -496,7 +493,7 @@ bool AES_ECB_Decrypt(u8* pKey, u8* pBuffer)
 ////////////////////////////////////////////////////////////////////////////////
 bool AES_CBC_Encrypt(u8* pKey, u8* pInitVectors, u8* pBuffer)
 {
-//     AES_SetMode(AES_Operation_KeyDeriv, AES_Chaining_CBC);  // Key expasion MODE
+    //     AES_SetMode(AES_Operation_KeyDeriv, AES_Chaining_CBC);  // Key expasion MODE
     AES_SetMode(AES_Operation_Encryp, AES_Chaining_CBC);  // CBC Encrypt MODE
     LET_AES_KEY(pKey);
     LET_AES_IVR((u32*)pInitVectors);
@@ -515,7 +512,7 @@ bool AES_CBC_Decrypt(u8* pKey, u8* pInitVectors, u8* pBuffer)
 {
     AES_SetMode(AES_Operation_KeyDeriv, AES_Chaining_CBC);  // Key expasion MODE
     LET_AES_KEY(pKey);
-//    AES_GetStatus(false, pBuffer);
+    //    AES_GetStatus(false, pBuffer);
     AES_SetMode(AES_Operation_Decryp, AES_Chaining_CBC);  // CBC Decrypt MODE
     LET_AES_IVR((u32*)pInitVectors);
     return AES_GetStatus(true, pBuffer);

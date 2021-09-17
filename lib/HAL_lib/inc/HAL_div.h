@@ -45,9 +45,11 @@
 /// @defgroup CRS_Exported_Constants
 /// @{
 
-#define SET_HWDivider(x, y) 	HWDIV->DVD = x;   HWDIV->DVS = y;
-#define GET_HWDivider(void)		HWDIV->QUOT;
-#define GET_Divider(dvd, dvs) 	(dvd / dvs)
+#define SET_HWDivider(x, y)                                                                                                      \
+    HWDIV->DVD = x;                                                                                                              \
+    HWDIV->DVS = y;
+#define GET_HWDivider(void) HWDIV->QUOT;
+#define GET_Divider(dvd, dvs) (dvd / dvs)
 
 /// @}
 
@@ -66,7 +68,6 @@
 
 /// @}
 
-
 void HWDivider_Init(bool usign, bool zero);
 
 u32 Divider_Calc(u32 dvd, u32 dvs);
@@ -81,7 +82,6 @@ s32 HWDivider_Calc(u32 dvd, u32 dvs);
 /// @}
 
 /// @}
-
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif /* __HAL_DIV_H */

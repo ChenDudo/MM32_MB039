@@ -107,7 +107,7 @@ void DAC_DMACmd(emDACCH_TypeDef DAC_Channel, FunctionalState state)
 void DAC_SoftwareTriggerCmd(emDACCH_TypeDef DAC_Channel, FunctionalState state)
 {
     (state) ? (DAC->SWTRIGR |= (DAC_SWTRIGR_SWTRIG1 << (DAC_Channel >> 4)))
-               : (DAC->SWTRIGR &= ~(DAC_SWTRIGR_SWTRIG1 << (DAC_Channel >> 4)));
+            : (DAC->SWTRIGR &= ~(DAC_SWTRIGR_SWTRIG1 << (DAC_Channel >> 4)));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -118,7 +118,7 @@ void DAC_SoftwareTriggerCmd(emDACCH_TypeDef DAC_Channel, FunctionalState state)
 void DAC_DualSoftwareTriggerCmd(FunctionalState state)
 {
     (state) ? (DAC->SWTRIGR |= (DAC_SWTRIGR_SWTRIG1 | DAC_SWTRIGR_SWTRIG2))
-               : (DAC->SWTRIGR &= ~(DAC_SWTRIGR_SWTRIG1 | DAC_SWTRIGR_SWTRIG2));
+            : (DAC->SWTRIGR &= ~(DAC_SWTRIGR_SWTRIG1 | DAC_SWTRIGR_SWTRIG2));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

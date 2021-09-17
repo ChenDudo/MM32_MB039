@@ -26,7 +26,6 @@
 #include "lwip/err.h"
 #include "lwip/tcp.h"
 
-
 #include "eth.h"
 #include "tcp_server.h"
 
@@ -44,12 +43,12 @@
 
 void SendTcpPackage(char* data, uint16_t length)
 {
-    extern struct tcp_pcb *tcp_active_pcbs;
+    extern struct tcp_pcb* tcp_active_pcbs;
     tcp_write(tcp_active_pcbs, data, length, TCP_WRITE_FLAG_COPY);
     memset(data, 0, length);
 }
 
-static err_t ReceivedTcpPcbCallback(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err)
+static err_t ReceivedTcpPcbCallback(void* arg, struct tcp_pcb* tpcb, struct pbuf* p, err_t err)
 {
     if (p != NULL) {
         // Received data
@@ -58,14 +57,15 @@ static err_t ReceivedTcpPcbCallback(void *arg, struct tcp_pcb *tpcb, struct pbuf
         memset(p->payload, 0, p->tot_len);
 
         pbuf_free(p);
-    } else {
+    }
+    else {
         return tcp_close(tpcb);
     }
 
     return ERR_OK;
 }
 
-static err_t AccpectNewLinkCallback(void *arg, struct tcp_pcb *new_pcb, err_t err)
+static err_t AccpectNewLinkCallback(void* arg, struct tcp_pcb* new_pcb, err_t err)
 {
     tcp_recv(new_pcb, ReceivedTcpPcbCallback);
 
@@ -74,7 +74,7 @@ static err_t AccpectNewLinkCallback(void *arg, struct tcp_pcb *new_pcb, err_t er
 
 void InitTcpServer(uint16_t port)
 {
-    struct tcp_pcb * pcb = NULL;
+    struct tcp_pcb* pcb = NULL;
 
     // New TCP protocol control block
     pcb = tcp_new();

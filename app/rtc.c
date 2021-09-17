@@ -44,78 +44,69 @@ void NVIC_RTC()
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 
     /* Enable the RTC Interrupt */
-    NVIC_InitStructure.NVIC_IRQChannel = RTC_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannel                   = RTC_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
+    NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void RTC_IRQHandler(void)
 {
     if (RTC_GetITStatus(RTC_IT_SEC) != RESET) {
-		RTC_ClearITPendingBit(RTC_IT_SEC);
-	}
+        RTC_ClearITPendingBit(RTC_IT_SEC);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void initRTC()
 {
-	PWR_BackupAccessCmd(ENABLE);
-	RCC->BDCR |= 1<< 24;
-    RCC->BDCR |= 1<< 0;
+    PWR_BackupAccessCmd(ENABLE);
+    RCC->BDCR |= 1 << 24;
+    RCC->BDCR |= 1 << 0;
 
-	while (RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET){};
-	RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
-	RCC_RTCCLKCmd(ENABLE);
-	RTC_WaitForSynchro();
-	RTC_WaitForLastTask();
-	RTC_ITConfig(RTC_IT_SEC, ENABLE);
-	RTC_WaitForLastTask();
-	RTC_SetPrescaler(32767); /* RTC period = RTCCLK/RTC_PR = (32.768 KHz)/(32767+1) */
-	RTC_WaitForLastTask();
+    while (RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET) {};
+    RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
+    RCC_RTCCLKCmd(ENABLE);
+    RTC_WaitForSynchro();
+    RTC_WaitForLastTask();
+    RTC_ITConfig(RTC_IT_SEC, ENABLE);
+    RTC_WaitForLastTask();
+    RTC_SetPrescaler(32767); /* RTC period = RTCCLK/RTC_PR = (32.768 KHz)/(32767+1) */
+    RTC_WaitForLastTask();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void checkRTC()
 {
-    for(u32 i = 0; i < 1000; i++);
+    for (u32 i = 0; i < 1000; i++)
+        ;
     COMMON_EnableIpClock(emCLOCK_PWR);
     COMMON_EnableIpClock(emCLOCK_BKP);
 
-	PWR_BackupAccessCmd(DISABLE);
-	PWR_BackupAccessCmd(ENABLE);
-	for(u32 i = 0; i < 1000; i++);
+    PWR_BackupAccessCmd(DISABLE);
+    PWR_BackupAccessCmd(ENABLE);
+    for (u32 i = 0; i < 1000; i++)
+        ;
+    if (BKP_ReadBackupRegister(BKP_DR1) != 0xA5A5) {
+        BKP_WriteBackupRegister(BKP_DR1, 0xA5A5);
+        PWR_BackupAccessCmd(DISABLE);
+        initRTC();
+    }
+    else {
+        if (RCC_GetFlagStatus(RCC_FLAG_PORRST) != RESET)
+            RTC_WaitForSynchro();
+        RTC_ITConfig(RTC_IT_SEC, ENABLE);
+        RTC_WaitForLastTask();
+    }
+    BKP_TamperPinCmd(DISABLE);
+    BKP_ITConfig(DISABLE);
 
-	if (BKP_ReadBackupRegister(BKP_DR1) != 0xA5A5)  {
-		BKP_WriteBackupRegister(BKP_DR1, 0xA5A5);
+    // BKP_RTCOutputConfig(BKP_RTCOutputSource_CalibClock);
+    RCC_ClearFlag();
 
-		PWR_BackupAccessCmd(DISABLE);
-
-		initRTC();
-	}
-	else {
-		if (RCC_GetFlagStatus(RCC_FLAG_PORRST) != RESET)
-			RTC_WaitForSynchro();
-
-		RTC_ITConfig(RTC_IT_SEC, ENABLE);
-		RTC_WaitForLastTask();
-	}
-	BKP_TamperPinCmd(DISABLE);
-	BKP_ITConfig(DISABLE);
-
-    //BKP_RTCOutputConfig(BKP_RTCOutputSource_CalibClock);
-	RCC_ClearFlag();
-
-	timeSel = 0;
-
+    timeSel = 0;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
-
-
-
-

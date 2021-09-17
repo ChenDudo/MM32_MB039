@@ -25,7 +25,6 @@
 #include "hal_rcc.h"
 #include "hal_bkp.h"
 
-
 #include "common.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -50,16 +49,16 @@ void GPIO_DeInit(GPIO_TypeDef* GPIOx)
 {
     switch (*(u32*)&GPIOx) {
 #if defined(GPIOA)
-        case (u32)GPIOA: COMMON_DisableIpClock(emCLOCK_GPIOA);	break;
+        case (u32)GPIOA: COMMON_DisableIpClock(emCLOCK_GPIOA); break;
 #endif
 #if defined(GPIOB)
-        case (u32)GPIOB: COMMON_DisableIpClock(emCLOCK_GPIOB);	break;
+        case (u32)GPIOB: COMMON_DisableIpClock(emCLOCK_GPIOB); break;
 #endif
 #if defined(GPIOC)
-        case (u32)GPIOC: COMMON_DisableIpClock(emCLOCK_GPIOC);	break;
+        case (u32)GPIOC: COMMON_DisableIpClock(emCLOCK_GPIOC); break;
 #endif
 #if defined(GPIOD)
-        case (u32)GPIOD: COMMON_DisableIpClock(emCLOCK_GPIOD);	break;
+        case (u32)GPIOD: COMMON_DisableIpClock(emCLOCK_GPIOD); break;
 #endif
         default: break;
     }
@@ -76,22 +75,22 @@ void GPIO_AFIODeInit()
 #if defined(__MM3N1)
     exRCC_APB2PeriphReset(RCC_APB2ENR_EXTI);
 #else
-    #if defined(GPIOA)
-        GPIOA->AFRL = 0xFFFFFFFF;
-        GPIOA->AFRH = 0xF00FFFFF;		//  PA14:SWCLK, PA13:PSWDIO
-    #endif
-    #if defined(GPIOB)
-        GPIOB->AFRL = 0xFFFFFFFF;
-        GPIOB->AFRH = 0xFFFFFFFF;
-    #endif
-    #if defined(GPIOC)
-        GPIOC->AFRL = 0xFFFFFFFF;
-        GPIOC->AFRH = 0xFFFFFFFF;
-    #endif
-    #if defined(GPIOD)
-        GPIOD->AFRL = 0xFFFFFFFF;
-        GPIOD->AFRH = 0xFFFFFFFF;
-    #endif
+#if defined(GPIOA)
+    GPIOA->AFRL = 0xFFFFFFFF;
+    GPIOA->AFRH = 0xF00FFFFF;  //  PA14:SWCLK, PA13:PSWDIO
+#endif
+#if defined(GPIOB)
+    GPIOB->AFRL = 0xFFFFFFFF;
+    GPIOB->AFRH = 0xFFFFFFFF;
+#endif
+#if defined(GPIOC)
+    GPIOC->AFRL = 0xFFFFFFFF;
+    GPIOC->AFRH = 0xFFFFFFFF;
+#endif
+#if defined(GPIOD)
+    GPIOD->AFRL = 0xFFFFFFFF;
+    GPIOD->AFRH = 0xFFFFFFFF;
+#endif
 #endif
 }
 
@@ -104,22 +103,22 @@ void GPIO_AFIODeInit()
 void GPIO_checkBKP(void)
 {
 #if defined(__MM3N1) || defined(__MM3O1) || defined(__MM0N1) || defined(__MM0P1)
-	u16 BKPBuff[BKP_NUMBER];
-	exBKP_Init();
-	for (u8 i = 0;i < BKP_NUMBER;i++) {
-		BKPBuff[i] = exBKP_ImmRead((BKPDR_Typedef)(BKP_DR1 + 0x04 * i));
-	}
+    u16 BKPBuff[BKP_NUMBER];
+    exBKP_Init();
+    for (u8 i = 0; i < BKP_NUMBER; i++) {
+        BKPBuff[i] = exBKP_ImmRead((BKPDR_Typedef)(BKP_DR1 + 0x04 * i));
+    }
 #if defined(__MM3N1) || defined(__MM3O1)
-	BKP_DeInit();
+    BKP_DeInit();
 #endif
 #if defined(__MM0N1) || defined(__MM0P1)
-	for (u8 i = 0;i < BKP_NUMBER;i++) {
-		exBKP_ImmWrite((BKPDR_Typedef)(BKP_DR1 + 0x04 * i), 0x0000);
-	}
+    for (u8 i = 0; i < BKP_NUMBER; i++) {
+        exBKP_ImmWrite((BKPDR_Typedef)(BKP_DR1 + 0x04 * i), 0x0000);
+    }
 #endif
-	for (u8 i = 0;i < BKP_NUMBER;i++) {
-		exBKP_ImmWrite((BKPDR_Typedef)(BKP_DR1 + 0x04 * i), BKPBuff[i]);
-	}
+    for (u8 i = 0; i < BKP_NUMBER; i++) {
+        exBKP_ImmWrite((BKPDR_Typedef)(BKP_DR1 + 0x04 * i), BKPBuff[i]);
+    }
 #endif
 }
 
@@ -135,12 +134,10 @@ void GPIO_checkBKP(void)
 void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* pInitStruct)
 {
 #if defined(GPIOC)
-	switch (*(u32*)&GPIOx) {
-		case (u32)GPIOC:
-			GPIO_checkBKP();
-			break;
-		default: break;
-	}
+    switch (*(u32*)&GPIOx) {
+        case (u32)GPIOC: GPIO_checkBKP(); break;
+        default: break;
+    }
 #endif
 
     u8   idx;
@@ -317,8 +314,10 @@ void GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, u16 pin)
 #if defined(__MM3N1)
 void GPIO_PinRemapConfigSub(u32 remap, u32 mask, bool state)
 {
-    if (state)  EXTI->MAPR = EXTI->MAPR & ~mask | remap & mask;
-    else        EXTI->MAPR &= ~mask;
+    if (state)
+        EXTI->MAPR = EXTI->MAPR & ~mask | remap & mask;
+    else
+        EXTI->MAPR &= ~mask;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -357,16 +356,26 @@ void GPIO_PinRemapConfigSub(u32 remap, u32 mask, bool state)
 ////////////////////////////////////////////////////////////////////////////////
 void GPIO_PinRemapConfig(u32 remap, FunctionalState newState)
 {
-    if (remap >> 16) 			        	GPIO_PinRemapConfigSub(remap, AFIO_MAPR_SWJ_MASK, newState);	// bit 15, 2, 1, 0
-    else if (remap & AFIO_MAPR_PD01) 		GPIO_PinRemapConfigSub(remap, AFIO_MAPR_PD01, newState);
-	else if (remap & AFIO_MAPR_UART1) 		GPIO_PinRemapConfigSub(remap, AFIO_MAPR_UART1, newState);
-	else if (remap & AFIO_MAPR_I2C1) 		GPIO_PinRemapConfigSub(remap, AFIO_MAPR_I2C1, newState);
-	else if (remap & AFIO_MAPR_SPI1) 		GPIO_PinRemapConfigSub(remap, AFIO_MAPR_SPI1, newState);		// bit 5,4
-    else if (remap & AFIO_MAPR_UART3_MASK) 	GPIO_PinRemapConfigSub(remap, AFIO_MAPR_UART3_MASK, newState);	// bit 7, 6
-    else if (remap & AFIO_MAPR_TIM1_MASK) 	GPIO_PinRemapConfigSub(remap, AFIO_MAPR_TIM1_MASK, newState);	// bit 9, 8
-    else if (remap & AFIO_MAPR_TIM2_MASK) 	GPIO_PinRemapConfigSub(remap, AFIO_MAPR_TIM2_MASK, newState);	// bit 11, 10
-    else if (remap & AFIO_MAPR_TIM3_MASK) 	GPIO_PinRemapConfigSub(remap, AFIO_MAPR_TIM3_MASK, newState);	// bit 14, 13
-    else if (remap & AFIO_MAPR_CAN_MASK) 	GPIO_PinRemapConfigSub(remap, AFIO_MAPR_CAN_MASK, newState);
+    if (remap >> 16)
+        GPIO_PinRemapConfigSub(remap, AFIO_MAPR_SWJ_MASK, newState);  // bit 15, 2, 1, 0
+    else if (remap & AFIO_MAPR_PD01)
+        GPIO_PinRemapConfigSub(remap, AFIO_MAPR_PD01, newState);
+    else if (remap & AFIO_MAPR_UART1)
+        GPIO_PinRemapConfigSub(remap, AFIO_MAPR_UART1, newState);
+    else if (remap & AFIO_MAPR_I2C1)
+        GPIO_PinRemapConfigSub(remap, AFIO_MAPR_I2C1, newState);
+    else if (remap & AFIO_MAPR_SPI1)
+        GPIO_PinRemapConfigSub(remap, AFIO_MAPR_SPI1, newState);  // bit 5,4
+    else if (remap & AFIO_MAPR_UART3_MASK)
+        GPIO_PinRemapConfigSub(remap, AFIO_MAPR_UART3_MASK, newState);  // bit 7, 6
+    else if (remap & AFIO_MAPR_TIM1_MASK)
+        GPIO_PinRemapConfigSub(remap, AFIO_MAPR_TIM1_MASK, newState);  // bit 9, 8
+    else if (remap & AFIO_MAPR_TIM2_MASK)
+        GPIO_PinRemapConfigSub(remap, AFIO_MAPR_TIM2_MASK, newState);  // bit 11, 10
+    else if (remap & AFIO_MAPR_TIM3_MASK)
+        GPIO_PinRemapConfigSub(remap, AFIO_MAPR_TIM3_MASK, newState);  // bit 14, 13
+    else if (remap & AFIO_MAPR_CAN_MASK)
+        GPIO_PinRemapConfigSub(remap, AFIO_MAPR_CAN_MASK, newState);
 }
 #endif
 
@@ -384,9 +393,9 @@ void GPIO_PinRemapConfig(u32 remap, FunctionalState newState)
 #if !defined(__MM3N1)
 void GPIO_PinAFConfig(GPIO_TypeDef* GPIOx, u8 pin, u8 funcAF)
 {
-	u8 shift = (pin & 0x07) * 4;
-	u32* ptr = (pin < 8) ? (u32*)&GPIOx->AFRL : (u32*)&GPIOx->AFRH;
-    *ptr = (*ptr & ~(0x0F << shift)) | (funcAF << shift);
+    u8   shift = (pin & 0x07) * 4;
+    u32* ptr   = (pin < 8) ? (u32*)&GPIOx->AFRL : (u32*)&GPIOx->AFRH;
+    *ptr       = (*ptr & ~(0x0F << shift)) | (funcAF << shift);
 }
 #endif
 
@@ -405,25 +414,25 @@ void GPIO_PinAFConfig(GPIO_TypeDef* GPIOx, u8 pin, u8 funcAF)
 void exGPIO_PinAFConfig(GPIO_TypeDef* GPIOx, u16 pin, s32 remap, s8 funcAF)
 {
 #if defined(__MM3N1)
-	if (remap > 0) {
-		COMMON_EnableIpClock(emCLOCK_EXTI);
-		GPIO_PinRemapConfig(remap, ENABLE);
-	}
+    if (remap > 0) {
+        COMMON_EnableIpClock(emCLOCK_EXTI);
+        GPIO_PinRemapConfig(remap, ENABLE);
+    }
 #else
     COMMON_EnableIpClock(emCLOCK_EXTI);
-	if (funcAF >= 0) {
-		for (u8 i = 0; i < 32; i++) {
-			if (pin & 0x01)	{
-				pin = i;
-				break;
-			}
-			pin >>= 1;
-		}
+    if (funcAF >= 0) {
+        for (u8 i = 0; i < 32; i++) {
+            if (pin & 0x01) {
+                pin = i;
+                break;
+            }
+            pin >>= 1;
+        }
 
-		u8 shift = (pin & 0x07) * 4;
-		u32* ptr = (pin < 8) ? (u32*)&GPIOx->AFRL : (u32*)&GPIOx->AFRH;
-	    *ptr = (*ptr & ~(0x0F << shift)) | (funcAF << shift);
-	}
+        u8   shift = (pin & 0x07) * 4;
+        u32* ptr   = (pin < 8) ? (u32*)&GPIOx->AFRL : (u32*)&GPIOx->AFRH;
+        *ptr       = (*ptr & ~(0x0F << shift)) | (funcAF << shift);
+    }
 #endif
 }
 
@@ -432,4 +441,3 @@ void exGPIO_PinAFConfig(GPIO_TypeDef* GPIOx, u16 pin, s32 remap, s8 funcAF)
 /// @}
 
 /// @}
-

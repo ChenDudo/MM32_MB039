@@ -22,7 +22,6 @@
 #ifndef __BSP_BEEP_H
 #define __BSP_BEEP_H
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Board_Support_Package
 /// @{
@@ -43,27 +42,26 @@
 /// @{
 
 #if defined(__MM32_MB020)
-    #define BEEP_TIMER TIM3
-    #define BEEP_PWMCH 2
-    #define CH_REMAPEN 1
-    #define CH_REMAPID 0
+#define BEEP_TIMER TIM3
+#define BEEP_PWMCH 2
+#define CH_REMAPEN 1
+#define CH_REMAPID 0
 #elif defined(__MM32_MB032) || defined(__MM32_MB033)
-    #define BEEP_TIMER TIM1
-    #define BEEP_PWMCH 2
-    #define CH_REMAPEN 1
-    #define CH_REMAPID 1
+#define BEEP_TIMER TIM1
+#define BEEP_PWMCH 2
+#define CH_REMAPEN 1
+#define CH_REMAPID 1
 #elif defined(__MM32_MB036) || defined(__MM32_MB039)
-    #define BEEP_TIMER TIM1
-    #define BEEP_PWMCH 1
-    #define CH_REMAPEN 1
-    #define CH_REMAPID 0
+#define BEEP_TIMER TIM1
+#define BEEP_PWMCH 1
+#define CH_REMAPEN 1
+#define CH_REMAPID 0
 #else
-    #define BEEP_TIMER TIM1
-    #define BEEP_PWMCH 1
-    #define CH_REMAPEN 0
-    #define CH_REMAPID 0
+#define BEEP_TIMER TIM1
+#define BEEP_PWMCH 1
+#define CH_REMAPEN 0
+#define CH_REMAPID 0
 #endif
-
 
 /// @}
 
@@ -77,7 +75,6 @@
 #define GLOBAL extern
 #endif
 
-
 #undef GLOBAL
 
 /// @}
@@ -86,21 +83,17 @@
 /// @defgroup LED_Exported_Functions
 /// @{
 
-
-
 void BEEP_on(u32 val);
 void BEEP_off(void);
 
 void BEEP_once(void);
 void BEEP_lang(void);
 
-void BEEP_freq(u32 *val);
+void BEEP_freq(u32* val);
 
 void BSP_BEEP_Configure(u32 freq);
 
 /// @}
-
-
 
 /// @}
 

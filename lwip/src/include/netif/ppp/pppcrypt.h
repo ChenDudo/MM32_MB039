@@ -36,7 +36,7 @@
 /* This header file is included in all PPP modules needing hashes and/or ciphers */
 
 #ifndef PPPCRYPT_H
-#define	PPPCRYPT_H
+#define PPPCRYPT_H
 
 /*
  * If included PolarSSL copy is not used, user is expected to include
@@ -133,7 +133,7 @@ extern "C" {
 
 #endif /* LWIP_USE_EXTERNAL_MBEDTLS */
 
-void pppcrypt_56_to_64_bit_key(u_char *key, u_char *des_key);
+void pppcrypt_56_to_64_bit_key(u_char* key, u_char* des_key);
 
 #ifdef __cplusplus
 }

@@ -44,74 +44,73 @@
 /// @addtogroup UID_Exported_Functions
 /// @{
 
-
 ////////////////////////////////////////////////////////////////////////////////
 void adc_Tick()
 {
-	// 25deg temp reference value at 0x1FFF_F7F4
-	static float temp;
+    // 25deg temp reference value at 0x1FFF_F7F4
+    static float temp;
 
-	u16 *p;
-	p = (u16*)0x1FFFF7F4;
+    u16* p;
+    p = (u16*)0x1FFFF7F4;
 
-	temp =  ((*p == 0xffff) || (*p == 0x0000) || (*p < 1700) || (*p > 1900)) ?\
-        1800 : *p;
+    temp = ((*p == 0xffff) || (*p == 0x0000) || (*p < 1700) || (*p > 1900)) ? 1800 : *p;
 
-        adcVol += adcValue[0];
-        adcTmp += adcValue[3];
+    adcVol += adcValue[0];
+    adcTmp += adcValue[3];
 
-        if (rfCnt.adc++ >= 40) {
-            rfCnt.adc = 0;
-            adcVolt = ((adcVol / 40) * 30 + adcVolt * 70) / 100;
-            if (adcVolt > 4096)  adcVolt = 4096;
-            adcVol = 0;
-            rf.adc = true;
+    if (rfCnt.adc++ >= 40) {
+        rfCnt.adc = 0;
+        adcVolt   = ((adcVol / 40) * 30 + adcVolt * 70) / 100;
+        if (adcVolt > 4096)
+            adcVolt = 4096;
+        adcVol = 0;
+        rf.adc = true;
+    }
+
+    if (rfCnt.temp++ >= 400) {
+        rfCnt.temp = 0;
+        temp       = ((adcTmp / 400) * 10 + temp * 90) / 100;
+        adcTemp    = (10 * (temp - 1800) / 43) + 25;
+        adcTmp     = 0;
+        rf.temp    = true;
+    }
+    if (++adcCnt > 5) {
+        adcCnt = 0;
+        ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+        if (ADC_GetFlagStatus(ADC1, ADC_IT_EOC)) {
+            adcValue[0] = ADC1->CH5DR;
+            adcValue[1] = ADC1->CH4DR;
+            adcValue[2] = ADC1->CH1DR;
+            adcValue[3] = ADC1->CH14DR;
         }
-
-        if (rfCnt.temp++ >= 400) {
-            rfCnt.temp = 0;
-            temp = ((adcTmp / 400) * 10 + temp * 90) / 100;
-            adcTemp = (10 * (temp - 1800) / 43) + 25;
-            adcTmp = 0;
-            rf.temp = true;
+        for (u8 i = 0; i < 4; i++) {
+            rv[i] = (u16)((float)(rv[i] * 8 + adcValue[i] * 2) / 10);
         }
-        if(++adcCnt > 5){
-            adcCnt = 0;
-            ADC_SoftwareStartConvCmd(ADC1, ENABLE);
-            if(ADC_GetFlagStatus(ADC1, ADC_IT_EOC)){
-                adcValue[0] = ADC1->CH5DR;
-                adcValue[1] = ADC1->CH4DR;
-                adcValue[2] = ADC1->CH1DR;
-                adcValue[3] = ADC1->CH14DR;
-            }
-            for(u8 i = 0; i < 4; i++){
-                rv[i] = (u16)((float)(rv[i] * 8 + adcValue[i] * 2) / 10);
-            }
-            adcFlag = true;
-        }
+        adcFlag = true;
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_ADC_Configure()
 {
-    ADC_InitTypeDef     ADC_InitStructure;
-    GPIO_InitTypeDef    GPIO_InitStructure;
+    ADC_InitTypeDef  ADC_InitStructure;
+    GPIO_InitTypeDef GPIO_InitStructure;
 
     COMMON_EnableIpClock(emCLOCK_ADC1);
     COMMON_EnableIpClock(emCLOCK_DMA1);
     COMMON_EnableIpClock(emCLOCK_GPIOA);
 
     ADC_StructInit(&ADC_InitStructure);
-    ADC_InitStructure.ADC_Resolution        = ADC_Resolution_12b;
-    ADC_InitStructure.ADC_PRESCARE          = ADC_PCLK2_PRESCARE_16;
-    ADC_InitStructure.ADC_Mode              = ADC_Mode_Continue;
-    ADC_InitStructure.ADC_DataAlign         = ADC_DataAlign_Right;
-    ADC_InitStructure.ADC_ExternalTrigConv  = ADC1_ExternalTrigConv_T1_CC1;
+    ADC_InitStructure.ADC_Resolution       = ADC_Resolution_12b;
+    ADC_InitStructure.ADC_PRESCARE         = ADC_PCLK2_PRESCARE_16;
+    ADC_InitStructure.ADC_Mode             = ADC_Mode_Continue;
+    ADC_InitStructure.ADC_DataAlign        = ADC_DataAlign_Right;
+    ADC_InitStructure.ADC_ExternalTrigConv = ADC1_ExternalTrigConv_T1_CC1;
     ADC_Init(ADC1, &ADC_InitStructure);
 
-    GPIO_InitStructure.GPIO_Pin  =  GPIO_Pin_5 | GPIO_Pin_4 | GPIO_Pin_1;
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_5 | GPIO_Pin_4 | GPIO_Pin_1;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AIN;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 
     ADC_ANY_Cmd(ADC1, DISABLE);
@@ -123,9 +122,8 @@ void BSP_ADC_Configure()
     ADC_ANY_Cmd(ADC1, ENABLE);
 
     ADC_TempSensorVrefintCmd(ENABLE);
-	ADC_Cmd(ADC1, ENABLE);
+    ADC_Cmd(ADC1, ENABLE);
 }
-
 
 /// @}
 

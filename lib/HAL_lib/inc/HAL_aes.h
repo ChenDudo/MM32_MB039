@@ -45,9 +45,9 @@
 /// @brief  AES Init structure definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct {
-    u32 AES_Operation;  														///< AES operation mode
-    u32 AES_Chaining;  															///< AES chaining mode
-    u32 AES_DataType;  															///< AES data type select
+    u32 AES_Operation;  ///< AES operation mode
+    u32 AES_Chaining;   ///< AES chaining mode
+    u32 AES_DataType;   ///< AES data type select
 
 } AES_InitTypeDef;
 
@@ -55,90 +55,90 @@ typedef struct {
 /// @brief  AES key structure definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct {
-    u32 AES_Key0;  																///< AES key part 0
-    u32 AES_Key1;  																///< AES key part 1
-    u32 AES_Key2;  																///< AES key part 2
-    u32 AES_Key3;  																///< AES key part 3
-    u32 AES_Key4;  																///< AES key part 4
-    u32 AES_Key5;  																///< AES key part 5
-    u32 AES_Key6;  																///< AES key part 6
-    u32 AES_Key7;  																///< AES key part 7
+    u32 AES_Key0;  ///< AES key part 0
+    u32 AES_Key1;  ///< AES key part 1
+    u32 AES_Key2;  ///< AES key part 2
+    u32 AES_Key3;  ///< AES key part 3
+    u32 AES_Key4;  ///< AES key part 4
+    u32 AES_Key5;  ///< AES key part 5
+    u32 AES_Key6;  ///< AES key part 6
+    u32 AES_Key7;  ///< AES key part 7
 } AES_KeyInitTypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  AES initialization vector structure definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct {
-    u32 AES_IV0;  																///< AES initialization vector part 0
-    u32 AES_IV1;  																///< AES initialization vector part 1
-    u32 AES_IV2;  																///< AES initialization vector part 2
-    u32 AES_IV3;  																///< AES initialization vector part 3
+    u32 AES_IV0;  ///< AES initialization vector part 0
+    u32 AES_IV1;  ///< AES initialization vector part 1
+    u32 AES_IV2;  ///< AES initialization vector part 2
+    u32 AES_IV3;  ///< AES initialization vector part 3
 } AES_IVInitTypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  AES operation enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    AES_Operation_Encryp            = AES_CR_ENCRYPT,    						///< Encrypt operation
-    AES_Operation_KeyDeriv          = AES_CR_KEYEXT,     						///< Key extand operation
-    AES_Operation_Decryp            = AES_CR_DECRYPT,    						///< Decrypt operation
-    AES_Operation_KeyDerivAndDecryp = AES_CR_EXTDECRYPT  						///< Key extand and decrypt operation
+    AES_Operation_Encryp            = AES_CR_ENCRYPT,    ///< Encrypt operation
+    AES_Operation_KeyDeriv          = AES_CR_KEYEXT,     ///< Key extand operation
+    AES_Operation_Decryp            = AES_CR_DECRYPT,    ///< Decrypt operation
+    AES_Operation_KeyDerivAndDecryp = AES_CR_EXTDECRYPT  ///< Key extand and decrypt operation
 } AES_Operation_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  AES chaining mode enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    AES_Chaining_ECB = AES_CR_ECB,  											///< AES EBC chainging mode
-    AES_Chaining_CBC = AES_CR_CBC,  											///< AES CBC chainging mode
-    AES_Chaining_CTR = AES_CR_CTR,  											///< AES CTR chainging mode
-    AES_Chaining_CFB = AES_CR_CFB,  											///< AES CFB chainging mode
-    AES_Chaining_OFB = AES_CR_OFB   											///< AES OFB chainging mode
+    AES_Chaining_ECB = AES_CR_ECB,  ///< AES EBC chainging mode
+    AES_Chaining_CBC = AES_CR_CBC,  ///< AES CBC chainging mode
+    AES_Chaining_CTR = AES_CR_CTR,  ///< AES CTR chainging mode
+    AES_Chaining_CFB = AES_CR_CFB,  ///< AES CFB chainging mode
+    AES_Chaining_OFB = AES_CR_OFB   ///< AES OFB chainging mode
 } AES_ChainingMode_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  AES data type enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    AES_DataType_32b = AES_CR_UNREVERSE,    									///< Input data unreverse
-    AES_DataType_16b = AES_CR_HALFREVERSE,  									///< Input data half word reverse
-    AES_DataType_8b  = AES_CR_BYTEREVERSE,  									///< Input data byte reverse
-    AES_DataType_1b  = AES_CR_BITREVERSE    									///< Input data bit reverse
+    AES_DataType_32b = AES_CR_UNREVERSE,    ///< Input data unreverse
+    AES_DataType_16b = AES_CR_HALFREVERSE,  ///< Input data half word reverse
+    AES_DataType_8b  = AES_CR_BYTEREVERSE,  ///< Input data byte reverse
+    AES_DataType_1b  = AES_CR_BITREVERSE    ///< Input data bit reverse
 } AES_DataType_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  AES flag enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    AES_FLAG_CCF   = AES_SR_CCF,    											///< AES calculate complete flag
-    AES_FLAG_RDERR = AES_SR_RDERR,  											///< AES read error flag
-    AES_FLAG_WRERR = AES_SR_WRERR   											///< AES write error flag
+    AES_FLAG_CCF   = AES_SR_CCF,    ///< AES calculate complete flag
+    AES_FLAG_RDERR = AES_SR_RDERR,  ///< AES read error flag
+    AES_FLAG_WRERR = AES_SR_WRERR   ///< AES write error flag
 } AES_Flag_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  AES interrupt enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    AES_IT_CC  = AES_CR_CCIE,  													///< AES calculate complete interrut enable
-    AES_IT_ERR = AES_CR_ERRIE  													///< AES error interrupt enable
+    AES_IT_CC  = AES_CR_CCIE,  ///< AES calculate complete interrut enable
+    AES_IT_ERR = AES_CR_ERRIE  ///< AES error interrupt enable
 } AES_Interrupt_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  AES DMA transfer enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    AES_DMATransfer_In    = AES_CR_DMAINEN,                     				///< AES DMA input enable
-    AES_DMATransfer_Out   = AES_CR_DMAOUTEN,                    				///< AES DMA output enable
-    AES_DMATransfer_InOut = (AES_CR_DMAINEN | AES_CR_DMAOUTEN)  				///< AES DMA input and output enable
+    AES_DMATransfer_In    = AES_CR_DMAINEN,                     ///< AES DMA input enable
+    AES_DMATransfer_Out   = AES_CR_DMAOUTEN,                    ///< AES DMA output enable
+    AES_DMATransfer_InOut = (AES_CR_DMAINEN | AES_CR_DMAOUTEN)  ///< AES DMA input and output enable
 } AES_DMATransfer_TypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  AES key size enum definition
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    AES_Key_128 = AES_CR_KSIZE128,  											///< 128 bits key size
-    AES_Key_192 = AES_CR_KSIZE192,  											///< 192 bits key size
-    AES_Key_256 = AES_CR_KSIZE256   											///< 256 bits key size
+    AES_Key_128 = AES_CR_KSIZE128,  ///< 128 bits key size
+    AES_Key_192 = AES_CR_KSIZE192,  ///< 192 bits key size
+    AES_Key_256 = AES_CR_KSIZE256   ///< 256 bits key size
 } AES_KeySize_TypeDef;
 
 /// @}
@@ -219,7 +219,6 @@ bool AES_OFB_Encrypt(u8* pKey, u8* pInitVectors, u8* pBuffer);
 bool AES_OFB_Decrypt(u8* pKey, u8* pInitVectors, u8* pBuffer);
 
 #endif
-
 
 /// @}
 

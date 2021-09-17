@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     MUSIC.H
-/// @author   
+/// @author
 /// @version  v1.0.0
 /// @date     2021-03-13
 /// @brief    THIS FILE CONTAINS ALL THE FUNCTIONS PROTOTYPES FOR THE UID
@@ -24,7 +24,6 @@
 
 // Files includes  -------------------------------------------------------------
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Example_Layer
 /// @{
@@ -34,19 +33,15 @@
 /// @brief UID example modules
 /// @{
 
-typedef enum {
-    PLAYSTEP1,
-    PLAYSTEP2,
-    PLAYSTEP3
-} emMusicStep;
+typedef enum { PLAYSTEP1, PLAYSTEP2, PLAYSTEP3 } emMusicStep;
 
 typedef struct {
-    u8 PlayFlag;
-    u8 CurrentPlayFlag; 
+    u8          PlayFlag;
+    u8          CurrentPlayFlag;
     emMusicStep PlayStep;
-    s8 MusicNum;
-    u16 ToneCount;
-    u16 ToneNumCount;
+    s8          MusicNum;
+    u16         ToneCount;
+    u16         ToneNumCount;
 } _sPlayMusic;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -61,8 +56,8 @@ typedef struct {
 
 #endif
 
-GLOBAL _sPlayMusic  sPlayMusic;
-GLOBAL u16          playCnt;
+GLOBAL _sPlayMusic sPlayMusic;
+GLOBAL u16 playCnt;
 #undef GLOBAL
 
 /// @}

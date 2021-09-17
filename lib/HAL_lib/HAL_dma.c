@@ -23,7 +23,7 @@
 // Files includes  -------------------------------------------------------------
 #include "mm32_types.h"
 #include "hal_dma.h"
- 
+
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Hardware_Abstract_Layer
 /// @{
@@ -36,7 +36,8 @@
 /// @addtogroup DMA_Exported_Functions
 /// @{
 
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) ||      \
+    defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Deinitializes the DMA Channeln registers to their default reset
 ///         values.
@@ -68,9 +69,9 @@ void DMA_Init(DMA_Channel_TypeDef* channel, DMA_InitTypeDef* pInitStruct)
     MODIFY_REG(
         channel->CCR,
         (DMA_CCR_DIR | DMA_CCR_CIRC | DMA_CCR_PINC | DMA_CCR_MINC | DMA_CCR_PSIZE | DMA_CCR_MSIZE | DMA_CCR_PL | DMA_CCR_M2M),
-        ((u32)pInitStruct->DIR | (u32)pInitStruct->Mode | (u32)pInitStruct->PeripheralInc |
-         (u32)pInitStruct->MemoryInc | (u32)pInitStruct->PeripheralDataSize | (u32)pInitStruct->MemoryDataSize |
-         (u32)pInitStruct->Priority | (u32)pInitStruct->M2M));
+        ((u32)pInitStruct->DIR | (u32)pInitStruct->Mode | (u32)pInitStruct->PeripheralInc | (u32)pInitStruct->MemoryInc |
+         (u32)pInitStruct->PeripheralDataSize | (u32)pInitStruct->MemoryDataSize | (u32)pInitStruct->Priority |
+         (u32)pInitStruct->M2M));
 
 #if defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1)
     MODIFY_REG(channel->CCR, DMA_CCR_ARE, pInitStruct->AutoReload);
@@ -101,7 +102,7 @@ void DMA_StructInit(DMA_InitTypeDef* pInitStruct)
     pInitStruct->M2M                = DMA_M2M_Enable;
 
 #if defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1)
-    pInitStruct->AutoReload 		= DMA_Auto_Reload_Disable;
+    pInitStruct->AutoReload = DMA_Auto_Reload_Disable;
 #endif
 }
 

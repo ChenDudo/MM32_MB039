@@ -47,7 +47,7 @@ void PWR_DeInit(void)
     exRCC_APB1PeriphReset(RCC_APB1ENR_PWR);
 }
 
-#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1)|| defined(__MM0S1) || defined(__MM3U1)
+#if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0S1) || defined(__MM3U1)
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Enables or disables access to the RTC and backup registers.
 /// @param  state: new state of the access to the RTC and backup
@@ -121,7 +121,9 @@ void PWR_WakeUpPinCmd(FunctionalState state)
     (state != DISABLE) ? (PWR->CSR |= PWR_CSR_EWUP) : (PWR->CSR &= ~PWR_CSR_EWUP);
 #endif
 #if defined(PWR_CSR_EWUP)
-    (state != DISABLE) ? (PWR->CR2 |= PWR_CR2_EWUP1 | PWR_CR2_EWUP2 | PWR_CR2_EWUP3 | PWR_CR2_EWUP4 | PWR_CR2_EWUP5 | PWR_CR2_EWUP6) : (PWR->CR2 &= ~(PWR_CR2_EWUP1 | PWR_CR2_EWUP2 | PWR_CR2_EWUP3 | PWR_CR2_EWUP4 | PWR_CR2_EWUP5 | PWR_CR2_EWUP6));
+    (state != DISABLE)
+        ? (PWR->CR2 |= PWR_CR2_EWUP1 | PWR_CR2_EWUP2 | PWR_CR2_EWUP3 | PWR_CR2_EWUP4 | PWR_CR2_EWUP5 | PWR_CR2_EWUP6)
+        : (PWR->CR2 &= ~(PWR_CR2_EWUP1 | PWR_CR2_EWUP2 | PWR_CR2_EWUP3 | PWR_CR2_EWUP4 | PWR_CR2_EWUP5 | PWR_CR2_EWUP6));
 #endif
 }
 
@@ -203,22 +205,22 @@ void PWR_ClearFlag(u32 flag)
 ////////////////////////////////////////////////////////////////////////////////
 void exPWR_EnterLowPowerMode(emPWR_LP_Mode_Typedef lp_Mode, emPWR_Wait_Mode_Typedef wait_Mode)
 {
-	if (lp_Mode != LP_SLEEP_MODE) {
+    if (lp_Mode != LP_SLEEP_MODE) {
 #if defined(PWR_CR_CWUF)
-		PWR->CR |= lp_Mode | PWR_CR_CWUF;
+        PWR->CR |= lp_Mode | PWR_CR_CWUF;
 #endif
 #if defined(PWR_SCR_CWUF1)
         PWR->CR |= lp_Mode;
         PWR->SCR |= PWR_SCR_CWUF1 | PWR_SCR_CWUF2 | PWR_SCR_CWUF3 | PWR_SCR_CWUF4 | PWR_SCR_CWUF5 | PWR_SCR_CWUF6;
 #endif
-		SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+        SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
     }
-	if (wait_Mode == LP_WFE) {
-		__WFE();		// sleep & stop & standby
-		return;
-	}
+    if (wait_Mode == LP_WFE) {
+        __WFE();  // sleep & stop & standby
+        return;
+    }
     else {
-	__WFI();		// sleep & stop & standby
+        __WFI();  // sleep & stop & standby
     }
 }
 

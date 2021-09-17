@@ -52,7 +52,7 @@
 void RTC_ITConfig(RTC_IT_TypeDef it, FunctionalState state)
 {
     (state == ENABLE) ? (RTC->CR |= it) : (RTC->CR &= (u16)~it);
-	RTC_WaitForLastTask();
+    RTC_WaitForLastTask();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -63,10 +63,10 @@ void RTC_ITConfig(RTC_IT_TypeDef it, FunctionalState state)
 void RTC_EnterConfigMode(void)
 {
 #if defined(PWR_CR_DBP)
-    PWR->CR  &= ~PWR_CR_DBP;
+    PWR->CR &= ~PWR_CR_DBP;
 #endif
 #if defined(RCC_BDCR_DBP)
-    RCC->BDCR  &= ~RCC_BDCR_DBP;
+    RCC->BDCR &= ~RCC_BDCR_DBP;
 #endif
     RTC->CSR |= RTC_CSR_CNF;
 }
@@ -79,12 +79,13 @@ void RTC_EnterConfigMode(void)
 void RTC_ExitConfigMode(void)
 {
     RTC->CSR &= ~RTC_CSR_CNF;
-	while (!(RTC->CSR & RTC_CSR_RTOFF));
+    while (!(RTC->CSR & RTC_CSR_RTOFF))
+        ;
 #if defined(PWR_CR_DBP)
-    PWR->CR  &= ~PWR_CR_DBP;
+    PWR->CR &= ~PWR_CR_DBP;
 #endif
 #if defined(RCC_BDCR_DBP)
-    RCC->BDCR  &= ~RCC_BDCR_DBP;
+    RCC->BDCR &= ~RCC_BDCR_DBP;
 #endif
 }
 
@@ -106,11 +107,12 @@ u32 RTC_GetCounter(void)
 ////////////////////////////////////////////////////////////////////////////////
 void RTC_SetCounter(u32 count)
 {
-	RTC->CSR |= RTC_CSR_CNF;
-	RTC->CNTH = count >> 16;
+    RTC->CSR |= RTC_CSR_CNF;
+    RTC->CNTH = count >> 16;
     RTC->CNTL = count;
-	RTC->CSR &= ~RTC_CSR_CNF;
-	while (!(RTC->CSR & RTC_CSR_RTOFF));
+    RTC->CSR &= ~RTC_CSR_CNF;
+    while (!(RTC->CSR & RTC_CSR_RTOFF))
+        ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -120,11 +122,12 @@ void RTC_SetCounter(u32 count)
 ////////////////////////////////////////////////////////////////////////////////
 void RTC_SetPrescaler(u32 prescaler)
 {
-	RTC->CSR |= RTC_CSR_CNF;
-	RTC->PRLH = (prescaler & 0x000F0000) >> 16;
-	RTC->PRLL = (prescaler & 0x0000FFFF);
-	RTC->CSR &= ~RTC_CSR_CNF;
-	while (!(RTC->CSR & RTC_CSR_RTOFF));
+    RTC->CSR |= RTC_CSR_CNF;
+    RTC->PRLH = (prescaler & 0x000F0000) >> 16;
+    RTC->PRLL = (prescaler & 0x0000FFFF);
+    RTC->CSR &= ~RTC_CSR_CNF;
+    while (!(RTC->CSR & RTC_CSR_RTOFF))
+        ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -134,11 +137,12 @@ void RTC_SetPrescaler(u32 prescaler)
 ////////////////////////////////////////////////////////////////////////////////
 void RTC_SetAlarm(u32 alarm)
 {
-	RTC->CSR |= RTC_CSR_CNF;
-	RTC->ALRH = alarm >> 16;
-	RTC->ALRL = alarm;
-	RTC->CSR &= ~RTC_CSR_CNF;
-	while (!(RTC->CSR & RTC_CSR_RTOFF));
+    RTC->CSR |= RTC_CSR_CNF;
+    RTC->ALRH = alarm >> 16;
+    RTC->ALRL = alarm;
+    RTC->CSR &= ~RTC_CSR_CNF;
+    while (!(RTC->CSR & RTC_CSR_RTOFF))
+        ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -148,7 +152,7 @@ void RTC_SetAlarm(u32 alarm)
 ////////////////////////////////////////////////////////////////////////////////
 u32 RTC_GetDivider(void)
 {
-	u32 dat = ((u32)(RTC->DIVH & RTC_DIVH_DIV) << 16);
+    u32 dat = ((u32)(RTC->DIVH & RTC_DIVH_DIV) << 16);
     return (RTC->DIVL | dat);
 }
 
@@ -160,7 +164,8 @@ u32 RTC_GetDivider(void)
 ////////////////////////////////////////////////////////////////////////////////
 void RTC_WaitForLastTask(void)
 {
-    while (!(RTC->CSR & RTC_CSR_RTOFF));
+    while (!(RTC->CSR & RTC_CSR_RTOFF))
+        ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +179,8 @@ void RTC_WaitForLastTask(void)
 void RTC_WaitForSynchro(void)
 {
     RTC->CSR &= ~RTC_CSR_RSF;
-    while (!(RTC->CSR & RTC_CSR_RSF));
+    while (!(RTC->CSR & RTC_CSR_RSF))
+        ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -190,7 +196,7 @@ void RTC_WaitForSynchro(void)
 /////////////////////////////////////////////////////////////////////////////////
 FlagStatus RTC_GetFlagStatus(RTC_FLAG_TypeDef flag)
 {
-	return  (FlagStatus)(RTC->CSR & flag);
+    return (FlagStatus)(RTC->CSR & flag);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -220,7 +226,7 @@ void RTC_ClearFlag(RTC_FLAG_TypeDef flag)
 ////////////////////////////////////////////////////////////////////////////////
 ITStatus RTC_GetITStatus(RTC_IT_TypeDef it)
 {
-	return  (ITStatus)(RTC->CSR & it);
+    return (ITStatus)(RTC->CSR & it);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -234,9 +240,9 @@ ITStatus RTC_GetITStatus(RTC_IT_TypeDef it)
 ////////////////////////////////////////////////////////////////////////////////
 void RTC_ClearITPendingBit(RTC_IT_TypeDef it)
 {
-//	RTC->CSR |= RTC_CSR_CNF;
+    //	RTC->CSR |= RTC_CSR_CNF;
     RTC->CSR &= ~it;
-//	RTC->CSR &= ~RTC_CSR_CNF;
+    //	RTC->CSR &= ~RTC_CSR_CNF;
 }
 
 #endif

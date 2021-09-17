@@ -26,7 +26,6 @@
 #include "mm32_types.h"
 #include "MM32.h"
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Hardware_Abstract_Layer
 /// @{
@@ -45,7 +44,7 @@
 /// @brief OPAMP_OutputLevel
 ////////////////////////////////////////////////////////////////////////////////
 typedef enum {
-    OPAMP1 = OPAMP_CSR_OP1, //	OPAMP1_EN,
+    OPAMP1 = OPAMP_CSR_OP1,  //	OPAMP1_EN,
     OPAMP2 = OPAMP_CSR_OP2,
     OPAMP3 = OPAMP_CSR_OP3,
     OPAMP4 = OPAMP_CSR_OP4

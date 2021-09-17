@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     ADC.H
-/// @author   
+/// @author
 /// @version  v1.0.0
 /// @date     2021-03-13
 /// @brief    THIS FILE CONTAINS ALL THE FUNCTIONS PROTOTYPES FOR THE UID
@@ -23,7 +23,6 @@
 #define __ADC_H
 
 // Files includes  -------------------------------------------------------------
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Example_Layer
@@ -62,9 +61,8 @@
 GLOBAL bool adcFlag;
 GLOBAL u16 adcValue[4], rv[4], adcCnt;
 
-
 /**/
-GLOBAL u32 ADC1Value[2];
+GLOBAL u32   ADC1Value[2];
 GLOBAL float adcTemp;
 GLOBAL float adcTmp;
 

@@ -28,7 +28,6 @@
 #include "bsp.h"
 #include "bsp_opamp.h"
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Board_Support_Package
 /// @{
@@ -56,74 +55,67 @@
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_OPAMP_GPIO_Configure(u32 OPAMPx)
 {
-#if defined(__REGISTER)	 /* ----------- Register Access ------------- */
-    switch((u32)OPAMPx) {
-//------------------------------------------------------------------------------
-    case OPAMP1:
-        GPIOA_ClockEnable();
-        GPIOA->CRL = (GPIOA->CRL & 0xF0FFFFFF)
-					| (u32)PORT_AIN     			<< PORT_BIT6;
-        break;
+#if defined(__REGISTER) /* ----------- Register Access ------------- */
+    switch ((u32)OPAMPx) {
+            //------------------------------------------------------------------------------
+        case OPAMP1:
+            GPIOA_ClockEnable();
+            GPIOA->CRL = (GPIOA->CRL & 0xF0FFFFFF) | (u32)PORT_AIN << PORT_BIT6;
+            break;
 
-//------------------------------------------------------------------------------
-    case OPAMP2:
-        GPIOB_ClockEnable();
-        GPIOB->CRL = (GPIOB->CRL & 0xFFFFF0FF)
-					| (u32)PORT_AIN     			<< PORT_BIT2;
-        break;
+            //------------------------------------------------------------------------------
+        case OPAMP2:
+            GPIOB_ClockEnable();
+            GPIOB->CRL = (GPIOB->CRL & 0xFFFFF0FF) | (u32)PORT_AIN << PORT_BIT2;
+            break;
 
-//------------------------------------------------------------------------------
-    case OPAMP3:
-        GPIOB_ClockEnable();
-        GPIOB->CRH = (GPIOB->CRH & 0xFFFFF0FF)
-					| (u32)PORT_AIN     			<< PORT_BIT10;
-        break;
+            //------------------------------------------------------------------------------
+        case OPAMP3:
+            GPIOB_ClockEnable();
+            GPIOB->CRH = (GPIOB->CRH & 0xFFFFF0FF) | (u32)PORT_AIN << PORT_BIT10;
+            break;
 
-//------------------------------------------------------------------------------
-    case OPAMP4:
-        GPIOA_ClockEnable();
-        GPIOA->CRH = (GPIOA->CRH & 0xFFFFFF0F)
-					| (u32)PORT_AIN     			<< PORT_BIT9;
-        break;
+            //------------------------------------------------------------------------------
+        case OPAMP4:
+            GPIOA_ClockEnable();
+            GPIOA->CRH = (GPIOA->CRH & 0xFFFFFF0F) | (u32)PORT_AIN << PORT_BIT9;
+            break;
 
-    default: break;
+        default: break;
     }
 
+#else  /* ----------- Hardware Abstraction Layer Access ------------- */
 
+    switch ((u32)OPAMPx) {
+            //------------------------------------------------------------------------------
+        case OPAMP1:
+            GPIOA_ClockEnable();
+            GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_6, GPIO_Mode_IPD, NO_REMAP, GPIO_AF_0);
+            break;
 
-#else     	/* ----------- Hardware Abstraction Layer Access ------------- */
+            //------------------------------------------------------------------------------
+        case OPAMP2:
+            GPIOB_ClockEnable();
+            GPIO_Mode_IN_Init(GPIOB, GPIO_Pin_2, GPIO_Mode_IPD, NO_REMAP, GPIO_AF_0);
+            break;
 
+            //------------------------------------------------------------------------------
+        case OPAMP3:
+            GPIOB_ClockEnable();
+            GPIO_Mode_IN_Init(GPIOB, GPIO_Pin_10, GPIO_Mode_IPD, NO_REMAP, GPIO_AF_0);
+            break;
 
-    switch((u32)OPAMPx) {
-//------------------------------------------------------------------------------
-    case OPAMP1:
-        GPIOA_ClockEnable();
-        GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_6, GPIO_Mode_IPD, NO_REMAP, GPIO_AF_0);
-        break;
+            //------------------------------------------------------------------------------
+        case OPAMP4:
+            GPIOA_ClockEnable();
+            GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_9, GPIO_Mode_IPD, NO_REMAP, GPIO_AF_0);
+            break;
 
-//------------------------------------------------------------------------------
-    case OPAMP2:
-        GPIOB_ClockEnable();
-        GPIO_Mode_IN_Init(GPIOB, GPIO_Pin_2, GPIO_Mode_IPD, NO_REMAP, GPIO_AF_0);
-        break;
-
-//------------------------------------------------------------------------------
-    case OPAMP3:
-        GPIOB_ClockEnable();
-        GPIO_Mode_IN_Init(GPIOB, GPIO_Pin_10, GPIO_Mode_IPD, NO_REMAP, GPIO_AF_0);
-        break;
-
-//------------------------------------------------------------------------------
-    case OPAMP4:
-        GPIOA_ClockEnable();
-        GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_9, GPIO_Mode_IPD, NO_REMAP, GPIO_AF_0);
-        break;
-
-    default: break;
+        default: break;
     }
 /* -------------------------------------------------------------------------- */
-#endif			 /* ----------------- End Access  ------------------- */
-/* -------------------------------------------------------------------------- */
+#endif /* ----------------- End Access  ------------------- */
+    /* -------------------------------------------------------------------------- */
 }
 
 /// @}

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     MAIN.H
-/// @author   
+/// @author
 /// @version  v1.0.0
 /// @date     2021-03-13
 /// @brief    THIS FILE CONTAINS ALL THE FUNCTIONS PROTOTYPES FOR THE UID
@@ -24,7 +24,6 @@
 
 // Files includes  -------------------------------------------------------------
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Example_Layer
 /// @{
@@ -34,43 +33,37 @@
 /// @brief UID example modules
 /// @{
 
-
-
-
-
-
-
-enum{
-	REFRESH_ADC,
-	REFRESH_TEMP,
-	REFRESH_FLASH,
-	REFRESH_I2C,
-	REFRESH_CAN,
-	REFRESH_RTC,
-	REFRESH_UART1,
-	REFRESH_UART2,
-	REFRESH_IR,
-	REFRESH_LED,
+enum {
+    REFRESH_ADC,
+    REFRESH_TEMP,
+    REFRESH_FLASH,
+    REFRESH_I2C,
+    REFRESH_CAN,
+    REFRESH_RTC,
+    REFRESH_UART1,
+    REFRESH_UART2,
+    REFRESH_IR,
+    REFRESH_LED,
     REFRESH_MUSIC,
     REFRESH_SDIO,
     REFRESH_ETH
 };
 
 typedef struct {
-	u16 adc;
-	u16 temp;
-	u16 flash;
-	u16 i2c;
-	u16 can;
-	u16 rtc;
-	u16 uart1;
-	u16 uart2;
-	u16 led;
-	u16 lcd;
+    u16 adc;
+    u16 temp;
+    u16 flash;
+    u16 i2c;
+    u16 can;
+    u16 rtc;
+    u16 uart1;
+    u16 uart2;
+    u16 led;
+    u16 lcd;
     u16 music;
     u16 sdio;
     u16 eth;
-}Peripheraldef;
+} Peripheraldef;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup UID_Exported_Variables

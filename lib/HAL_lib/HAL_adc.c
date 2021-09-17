@@ -55,7 +55,6 @@ void ADC_DeInit(ADC_TypeDef* ADCn)
 #else
     exRCC_APB1PeriphReset(RCC_APB1ENR_ADC1);
 #endif
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -86,8 +85,8 @@ void ADC_StructInit(ADC_InitTypeDef* pInitStruct)
 {
     pInitStruct->ADC_Resolution         = ADC_Resolution_12b;
     pInitStruct->ADC_PRESCARE           = ADC_PCLK2_PRESCARE_2;
-    pInitStruct->ADC_Mode               = ADC_CR_IMM;		//ADC_Mode_Single;
-    pInitStruct->ADC_ContinuousConvMode = DISABLE;  // useless
+    pInitStruct->ADC_Mode               = ADC_CR_IMM;  // ADC_Mode_Single;
+    pInitStruct->ADC_ContinuousConvMode = DISABLE;     // useless
     pInitStruct->ADC_ExternalTrigConv   = ADC1_ExternalTrigConv_T1_CC1;
     pInitStruct->ADC_DataAlign          = ADC_DataAlign_Right;
 }
@@ -165,8 +164,8 @@ void ADC_RegularChannelConfig(ADC_TypeDef* ADCn, u32 channel, u8 rank, u16 sampl
 #if defined(__MM3U1)
     u32 tempchan;
     sampleTime = (u16)sampleTime & 0xF;
-    tempchan = channel;
-    if(tempchan > 8) {
+    tempchan   = channel;
+    if (tempchan > 8) {
         tempchan = tempchan & 0xF;
         tempchan = tempchan - 8;
         ADCn->SMPR2 &= ~(0xF << tempchan);
@@ -180,8 +179,8 @@ void ADC_RegularChannelConfig(ADC_TypeDef* ADCn, u32 channel, u8 rank, u16 sampl
     ADCn->CFGR &= ~ADC_CFGR_SAMCTL;
     ADCn->CFGR |= sampleTime;
 #if !defined(__MM0T1)
-	ADCn->CHSR &= ~(1 << channel);
-	ADCn->CHSR |=  (1 << channel);
+    ADCn->CHSR &= ~(1 << channel);
+    ADCn->CHSR |= (1 << channel);
 #endif
 
 #if defined(__MM3N1)
@@ -189,7 +188,7 @@ void ADC_RegularChannelConfig(ADC_TypeDef* ADCn, u32 channel, u8 rank, u16 sampl
         ADC_TempSensorVrefintCmd(ENABLE);
 #endif
 
-#if defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1)  || defined(__MM0S1)
+#if defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1)
     if (channel & ADC_CHSR_CHT)
         ADC_TempSensorVrefintCmd(ENABLE);
     else if (channel & ADC_CHSR_CHV)
@@ -239,7 +238,7 @@ u32 ADC_GetDualModeConversionValue()
 void ADC_ExternalTrigInjectedConvConfig(ADC_TypeDef* ADCn, EXTERTRIG_TypeDef ADC_ExternalTrigInjecConv)
 {
     ADCn->CR &= ~ADC_CR_TRGSEL;
-    ADCn->CR |=  ADC_ExternalTrigInjecConv;
+    ADCn->CR |= ADC_ExternalTrigInjecConv;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -302,16 +301,14 @@ void ADC_AnalogWatchdogSingleChannelConfig(ADC_TypeDef* ADCn, ADCCHANNEL_TypeDef
 void ADC_TempSensorVrefintCmd(FunctionalState state)
 {
 #if defined(__MM3N1)
-    (state) ? (ADC1->CFGR |=   ADC_CFGR_TVEN,  ADC2->CFGR |=  ADC_CFGR_TVEN)
-            : (ADC1->CFGR &=  ~ADC_CFGR_TVEN,  ADC2->CFGR &= ~ADC_CFGR_TVEN);
+    (state) ? (ADC1->CFGR |= ADC_CFGR_TVEN, ADC2->CFGR |= ADC_CFGR_TVEN)
+            : (ADC1->CFGR &= ~ADC_CFGR_TVEN, ADC2->CFGR &= ~ADC_CFGR_TVEN);
 #endif
 
 #if defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
-    (state) ? (ADC1->CFGR |=  (ADC_CFGR_TEN | ADC_CFGR_VEN))
-		    : (ADC1->CFGR &= ~(ADC_CFGR_TEN | ADC_CFGR_VEN));
+    (state) ? (ADC1->CFGR |= (ADC_CFGR_TEN | ADC_CFGR_VEN)) : (ADC1->CFGR &= ~(ADC_CFGR_TEN | ADC_CFGR_VEN));
 #endif
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Enables or disables the temperature sensor and Vrefint channel.
@@ -335,21 +332,19 @@ void ADC_VrefintCmd(FunctionalState state)
 void exADC_TempSensorVrefintCmd(u32 chs, FunctionalState state)
 {
 #if defined(__MM3N1)
-	if (chs & ADC_CHSR_CHTV) {
-		(state) ? (ADC1->CFGR |=   ADC_CFGR_TVEN,  ADC2->CFGR |=  ADC_CFGR_TVEN)
-				: (ADC1->CFGR &=  ~ADC_CFGR_TVEN,  ADC2->CFGR &= ~ADC_CFGR_TVEN);
-	}
+    if (chs & ADC_CHSR_CHTV) {
+        (state) ? (ADC1->CFGR |= ADC_CFGR_TVEN, ADC2->CFGR |= ADC_CFGR_TVEN)
+                : (ADC1->CFGR &= ~ADC_CFGR_TVEN, ADC2->CFGR &= ~ADC_CFGR_TVEN);
+    }
 #endif
 
 #if defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1) || defined(__MM3U1)
-	if (chs & ADC_CHSR_CHT) {
-		(state) ? (ADC1->CFGR |=  ADC_CFGR_TEN)
-				: (ADC1->CFGR &= ~ADC_CFGR_TEN);
-	}
-	else if (chs & ADC_CHSR_CHV) {
-		(state) ? (ADC1->CFGR |=  ADC_CFGR_VEN)
-				: (ADC1->CFGR &= ~ADC_CFGR_VEN);
-	}
+    if (chs & ADC_CHSR_CHT) {
+        (state) ? (ADC1->CFGR |= ADC_CFGR_TEN) : (ADC1->CFGR &= ~ADC_CFGR_TEN);
+    }
+    else if (chs & ADC_CHSR_CHV) {
+        (state) ? (ADC1->CFGR |= ADC_CFGR_VEN) : (ADC1->CFGR &= ~ADC_CFGR_VEN);
+    }
 #endif
 }
 
@@ -408,7 +403,7 @@ void ADC_ClearITPendingBit(ADC_TypeDef* ADCn, ADCFLAG_TypeDef ADC_IT)
 void ADC_ANY_CH_Config(ADC_TypeDef* ADCn, u8 rank, ADCCHANNEL_TypeDef adc_channel)
 {
     rank = rank & 0xF;
-    if(rank < 8) {
+    if (rank < 8) {
         ADCn->CHANY0 &= ~(0x0F << (4 * rank));
         ADCn->CHANY0 |= (adc_channel << (4 * rank));
     }
@@ -416,7 +411,6 @@ void ADC_ANY_CH_Config(ADC_TypeDef* ADCn, u8 rank, ADCCHANNEL_TypeDef adc_channe
         ADCn->CHANY1 &= ~(0x0F << (4 * (rank - 8)));
         ADCn->CHANY1 |= (adc_channel << (4 * (rank - 8)));
     }
-
 }
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Configures the adc any channels conversion Max rank number
@@ -426,7 +420,8 @@ void ADC_ANY_CH_Config(ADC_TypeDef* ADCn, u8 rank, ADCCHANNEL_TypeDef adc_channe
 ////////////////////////////////////////////////////////////////////////////////
 void ADC_ANY_NUM_Config(ADC_TypeDef* ADCn, u8 num)
 {
-    if(num > 15) num = 15;                                                      //15 ? 16 need to be confirmed
+    if (num > 15)
+        num = 15;  // 15 ? 16 need to be confirmed
     ADCn->ANY_CFG = num;
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -452,8 +447,8 @@ void ADC_ANY_Cmd(ADC_TypeDef* ADCn, FunctionalState state)
 ////////////////////////////////////////////////////////////////////////////////
 void ADC_InjectedSequencerConfig(ADC_TypeDef* ADCn, u32 event, u32 sampleTime)
 {
-    ADCn->ANY_CR &= ~(ADC_ANY_CR_JCEN | ADC_ANY_CR_CHANY_MDEN | ADC_ANY_CR_JTRGSEL_7 \
-                    | ADC_ANY_CR_JTRGSHIFT_7 | ADC_ANY_CR_JTRGEN);
+    ADCn->ANY_CR &=
+        ~(ADC_ANY_CR_JCEN | ADC_ANY_CR_CHANY_MDEN | ADC_ANY_CR_JTRGSEL_7 | ADC_ANY_CR_JTRGSHIFT_7 | ADC_ANY_CR_JTRGEN);
     ADCn->ANY_CR |= (ADC_ANY_CR_JCEN | ADC_ANY_CR_CHANY_MDEN | sampleTime | event | ADC_ANY_CR_JTRGEN);
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -489,25 +484,24 @@ void ADC_InjectedSequencerChannelConfig(ADC_TypeDef* ADCn, uint8_t jqsn, uint8_t
 u32 ADC_InjectedSequencerGetConversionValue(ADC_TypeDef* ADCn, uint8_t jqsn)
 {
     u32 value = 0;
-    switch(jqsn) {
-        case 0 :
+    switch (jqsn) {
+        case 0:
             value = (u32)ADCn->JDR0;
             value -= ADCn->JOFR0;
             break;
-        case 1 :
+        case 1:
             value = (u32)ADCn->JDR1;
             value -= ADCn->JOFR1;
             break;
-        case 2 :
+        case 2:
             value = (u32)ADCn->JDR2;
             value -= ADCn->JOFR2;
             break;
-        case 3 :
+        case 3:
             value = (u32)ADCn->JDR3;
             value -= ADCn->JOFR3;
             break;
-        default :
-            break;
+        default: break;
     }
     return value & 0xFFF;
 }
@@ -524,8 +518,6 @@ void ADC_InjectedSequencerSetJQFR(ADC_TypeDef* ADCn, uint8_t jqsn, uint8_t value
 }
 #endif
 
-
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @brief  Get channel convertion result.
 /// @param  adc  :   select the ADC peripheral.
@@ -534,7 +526,7 @@ void ADC_InjectedSequencerSetJQFR(ADC_TypeDef* ADCn, uint8_t jqsn, uint8_t value
 ////////////////////////////////////////////////////////////////////////////////
 u32 ADC_GetChannelConvertedValue(ADC_TypeDef* ADCn, ADCCHANNEL_TypeDef channel)
 {
-    return (*(u32*) ((u32)ADCn + 0x18 + 4 * ((u32)channel)));
+    return (*(u32*)((u32)ADCn + 0x18 + 4 * ((u32)channel)));
 }
 /// @}
 

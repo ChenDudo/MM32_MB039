@@ -56,9 +56,10 @@
 #ifndef _ASSEMBLY_H
 #define _ASSEMBLY_H
 
-#if (defined _WIN32 && !defined _WIN32_WCE) || (defined __WINS__ && defined _SYMBIAN) || defined(_OPENWAVE_SIMULATOR) || defined(WINCE_EMULATOR)    /* Symbian emulator for Ix86 */
+#if (defined _WIN32 && !defined _WIN32_WCE) || (defined __WINS__ && defined _SYMBIAN) || defined(_OPENWAVE_SIMULATOR) ||         \
+    defined(WINCE_EMULATOR) /* Symbian emulator for Ix86 */
 
-#pragma warning( disable : 4035 )   /* complains about inline asm not returning a value */
+#pragma warning(disable : 4035) /* complains about inline asm not returning a value */
 
 static __inline int MULSHIFT32(int x, int y)
 {
@@ -110,7 +111,7 @@ typedef __int64 Word64;
 static __inline Word64 MADD64(Word64 sum, int x, int y)
 {
     unsigned int sumLo = ((unsigned int*)&sum)[0];
-    int sumHi = ((int*)&sum)[1];
+    int          sumHi = ((int*)&sum)[1];
 
     __asm {
         mov     eax, x
@@ -124,9 +125,9 @@ static __inline Word64 MADD64(Word64 sum, int x, int y)
 
 static __inline Word64 SHL64(Word64 x, int n)
 {
-    unsigned int xLo = ((unsigned int*)&x)[0];
-    int xHi = ((int*)&x)[1];
-    unsigned char nb = (unsigned char)n;
+    unsigned int  xLo = ((unsigned int*)&x)[0];
+    int           xHi = ((int*)&x)[1];
+    unsigned char nb  = (unsigned char)n;
 
     if (n < 32) {
         __asm {
@@ -156,9 +157,9 @@ static __inline Word64 SHL64(Word64 x, int n)
 
 static __inline Word64 SAR64(Word64 x, int n)
 {
-    unsigned int xLo = ((unsigned int*)&x)[0];
-    int xHi = ((int*)&x)[1];
-    unsigned char nb = (unsigned char)n;
+    unsigned int  xLo = ((unsigned int*)&x)[0];
+    int           xHi = ((int*)&x)[1];
+    unsigned char nb  = (unsigned char)n;
 
     if (n < 32) {
         __asm {
@@ -191,7 +192,7 @@ static __inline Word64 SAR64(Word64 x, int n)
 #elif (defined _WIN32) && (defined _WIN32_WCE)
 
 /* use asm function for now (EVC++ 3.0 does horrible job compiling __int64 version) */
-#define MULSHIFT32  xmp3_MULSHIFT32
+#define MULSHIFT32 xmp3_MULSHIFT32
 int MULSHIFT32(int x, int y);
 
 static __inline int FASTABS(int x)
@@ -275,13 +276,11 @@ static __inline int CLZ(int x)
 
 typedef long long Word64;
 
-#define MULSHIFT32  xmp3_MULSHIFT32
-extern int MULSHIFT32(int x, int y);
-
+#define MULSHIFT32 xmp3_MULSHIFT32
+extern int        MULSHIFT32(int x, int y);
 
 #define FASTABS xmp3_FASTABS
-int FASTABS(int x);
-
+int               FASTABS(int x);
 
 static __inline int CLZ(int x)
 {
@@ -303,6 +302,6 @@ static __inline int CLZ(int x)
 
 #error Unsupported platform in assembly.h
 
-#endif  /* platforms */
+#endif /* platforms */
 
 #endif /* _ASSEMBLY_H */

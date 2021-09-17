@@ -31,7 +31,6 @@
 #include "bsp_key.h"
 #include "common.h"
 
-
 /* -----------------------------------------------------------------------------
 ----------  P e r i p h e r a l s    i n i t i a l i z a t i o n   -------------
 ----------------------------------------------------------------------------- */
@@ -54,10 +53,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_KEY_Configure(void)
 {
-	KEY1_CONFIG;
-	KEY2_CONFIG;
-	KEY3_CONFIG;
-	KEY4_CONFIG;
+    KEY1_CONFIG;
+    KEY2_CONFIG;
+    KEY3_CONFIG;
+    KEY4_CONFIG;
 }
 
 /* -----------------------------------------------------------------------------
@@ -69,10 +68,22 @@ void BSP_KEY_Configure(void)
 /// @retval bool: 1: key is set
 ///			0: kei is reset
 ////////////////////////////////////////////////////////////////////////////////
-bool Key1(void)	{ return KEY1_VAL;}
-bool Key2(void)	{ return KEY2_VAL;}
-bool Key3(void)	{ return KEY3_VAL;}
-bool Key4(void)	{ return KEY4_VAL;}
+bool Key1(void)
+{
+    return KEY1_VAL;
+}
+bool Key2(void)
+{
+    return KEY2_VAL;
+}
+bool Key3(void)
+{
+    return KEY3_VAL;
+}
+bool Key4(void)
+{
+    return KEY4_VAL;
+}
 
 void BSP_KeyTick(void)
 {
@@ -87,8 +98,8 @@ void BSP_KeyTick(void)
 void BSP_KeyPressStatusPreemp(void)
 {
     for (u8 i = 0; i < 4; i++) {
-        if(KeyCurrentStatus[i] == KEY_PRESSING || KeyCurrentStatus[i] == KEY_DOWNED) 
-            KeyCurrentStatus[i] = KEY_PRESSED;    
+        if (KeyCurrentStatus[i] == KEY_PRESSING || KeyCurrentStatus[i] == KEY_DOWNED)
+            KeyCurrentStatus[i] = KEY_PRESSED;
     }
 }
 
@@ -98,10 +109,10 @@ void BSP_KeyFuncSet(u8 key, void (*down)(void), void (*pressing)(void))
     keyPressingFunc[key] = pressing;
 }
 
-void BSP_Key(u8 key) 
+void BSP_Key(u8 key)
 {
     static bool (*keyPtr)(void) = NULL;
-    
+
     switch (--key) {
         case 0: keyPtr = Key1; break;
         case 1: keyPtr = Key2; break;
@@ -109,66 +120,67 @@ void BSP_Key(u8 key)
         case 3: keyPtr = Key4; break;
         default: keyPtr = NULL; break;
     }
-    
+
     if ((keyPtr != NULL) && keyPtr()) {
         keyDelayFlag[key] = true;
         if (keyDelayCnt[key] >= 20 && KeyCurrentStatus[key] == KEY_RELEASE) {
             BSP_KeyPressStatusPreemp();
             KeyCurrentStatus[key] = KEY_DOWN;
-            keyclkFlag[key] = true;
-            keyDelayFlag[key] = false;
-            keyDelayCnt[key] = 0;
+            keyclkFlag[key]       = true;
+            keyDelayFlag[key]     = false;
+            keyDelayCnt[key]      = 0;
         }
         if (keyDelayCnt[key] >= 1000 && (KeyCurrentStatus[key] == KEY_DOWN || KeyCurrentStatus[key] == KEY_DOWNED)) {
             BSP_KeyPressStatusPreemp();
             KeyCurrentStatus[key] = KEY_PRESSING;
         }
-    } else {
-        keyDelayFlag[key] = false;
-        keyclkFlag[key] = false;
-        keyDelayCnt[key] = 0;
+    }
+    else {
+        keyDelayFlag[key]     = false;
+        keyclkFlag[key]       = false;
+        keyDelayCnt[key]      = 0;
         KeyCurrentStatus[key] = KEY_RELEASE;
     }
-    
+
     if (KeyCurrentStatus[key] == KEY_DOWN) {
         KeyCurrentStatus[key] = KEY_DOWNED;
-        if(keyDownFunc[key] != NULL)
+        if (keyDownFunc[key] != NULL)
             keyDownFunc[key]();
     }
-    
+
     if (KeyCurrentStatus[key] == KEY_PRESSING) {
-        if(keyPressingFunc[key] != NULL)
+        if (keyPressingFunc[key] != NULL)
             keyPressingFunc[key]();
     }
-    
-    switch(keyStateMachine[key]){
+
+    switch (keyStateMachine[key]) {
         case 0:
-        if (keyclkFlag[key]){
-            keyclkFlag[key] = false;
-            keyDelayCnt2[key] = 0;
-            keyStateMachine[key] = 1;
-        }
-        break;
-        case 1:
-        if (keyDelayCnt2[key] < 500){
-            if (keyclkFlag[key]){
-                keyStateMachine[key]  = 2;
-                keyclkFlag[key] = false;
+            if (keyclkFlag[key]) {
+                keyclkFlag[key]      = false;
+                keyDelayCnt2[key]    = 0;
+                keyStateMachine[key] = 1;
             }
-        }
-        else {
-            keyDoubleFlag[key] = false;
-            keyDelayCnt2[key] = 0;
-            keyStateMachine[key]  = 0;
-        }
-        break;
+            break;
+        case 1:
+            if (keyDelayCnt2[key] < 500) {
+                if (keyclkFlag[key]) {
+                    keyStateMachine[key] = 2;
+                    keyclkFlag[key]      = false;
+                }
+            }
+            else {
+                keyDoubleFlag[key]   = false;
+                keyDelayCnt2[key]    = 0;
+                keyStateMachine[key] = 0;
+            }
+            break;
         case 2:
-        if(KeyCurrentStatus[key] == KEY_RELEASE){
-            keyDoubleFlag[key] = true;
-            keyDelayCnt2[key] = 0;
-            keyStateMachine[key]  = 0;
-        }
-        break;
+            if (KeyCurrentStatus[key] == KEY_RELEASE) {
+                keyDoubleFlag[key]   = true;
+                keyDelayCnt2[key]    = 0;
+                keyStateMachine[key] = 0;
+            }
+            break;
     }
 }
 

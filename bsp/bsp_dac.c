@@ -47,15 +47,19 @@
 #if defined(__MM3N1)
 void BSP_DAC_GPIO_Configure(u8 idx)
 {
-	#if defined(__REGISTER)
-		GPIOA_ClockEnable();
-		if (idx == 0)	GPIOA->CRL = (GPIOA->CRL & 0xFFF0FFFF);                 // GPIOA_Pin4~5-Analog
-		else			GPIOA->CRL = (GPIOA->CRL & 0xFF0FFFFF);
-	#else
-		GPIOA_ClockEnable();
-		if (idx == 0)	GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_4, GPIO_Mode_AIN ,NO_REMAP, NO_REMAP);
-		else			GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_5, GPIO_Mode_AIN ,NO_REMAP, NO_REMAP);
-	#endif
+#if defined(__REGISTER)
+    GPIOA_ClockEnable();
+    if (idx == 0)
+        GPIOA->CRL = (GPIOA->CRL & 0xFFF0FFFF);  // GPIOA_Pin4~5-Analog
+    else
+        GPIOA->CRL = (GPIOA->CRL & 0xFF0FFFFF);
+#else
+    GPIOA_ClockEnable();
+    if (idx == 0)
+        GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_4, GPIO_Mode_AIN, NO_REMAP, NO_REMAP);
+    else
+        GPIO_Mode_IN_Init(GPIOA, GPIO_Pin_5, GPIO_Mode_AIN, NO_REMAP, NO_REMAP);
+#endif
 }
 #endif
 

@@ -20,16 +20,9 @@
 #ifndef __DHCP_CLIENT_H
 #define __DHCP_CLIENT_H
 
-typedef enum {
-    DHCP_OFF = 0,
-    DHCP_START,
-    DHCP_PROCESSING,
-    DHCP_SUCCESS,
-    DHCP_FAILED,
-    DHCP_CLOSE
-} DHCP_STATUS;
+typedef enum { DHCP_OFF = 0, DHCP_START, DHCP_PROCESSING, DHCP_SUCCESS, DHCP_FAILED, DHCP_CLOSE } DHCP_STATUS;
 
-#define DHCP_TRIES_MAX  4   // retry times
+#define DHCP_TRIES_MAX 4  // retry times
 
 #ifdef _DHCP_CLIENT_C_
 #define GLOBAL
@@ -42,10 +35,9 @@ GLOBAL DHCP_STATUS dhcp_status;
 GLOBAL uint32_t dhcp_user_fine_tmr;
 GLOBAL uint8_t gGetIPFlag;
 
-
 #undef GLOBAL
 
-void dhcp_pre_check(struct netif *netif);
-void dhcp_tick_check(struct netif *netif, uint32_t cnt);
+void dhcp_pre_check(struct netif* netif);
+void dhcp_tick_check(struct netif* netif, uint32_t cnt);
 
 #endif

@@ -59,7 +59,7 @@ typedef struct {
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct {
     u8              NVIC_IRQChannel;
-    u8              NVIC_IRQChannelPreemptionPriority;  						// Cortex-M0 not used
+    u8              NVIC_IRQChannelPreemptionPriority;  // Cortex-M0 not used
     u8              NVIC_IRQChannelSubPriority;
     FunctionalState NVIC_IRQChannelCmd;
 } exNVIC_Init_TypeDef;
@@ -71,27 +71,25 @@ typedef struct {
 /// @defgroup NVIC_Exported_Constants
 /// @{
 
-#define NVIC_VectTab_RAM 		(0x20000000U)
-#define NVIC_VectTab_FLASH 		(0x08000000U)
+#define NVIC_VectTab_RAM (0x20000000U)
+#define NVIC_VectTab_FLASH (0x08000000U)
 
-#define NVIC_LP_SEVONPEND 		(0x10U)
-#define NVIC_LP_SLEEPDEEP 		(0x04U)
-#define NVIC_LP_SLEEPONEXIT 	(0x02U)
+#define NVIC_LP_SEVONPEND (0x10U)
+#define NVIC_LP_SLEEPDEEP (0x04U)
+#define NVIC_LP_SLEEPONEXIT (0x02U)
 
-#define NVIC_PriorityGroup_0     (0x0700U) /* 0 bits for pre-emption priority 4 bits for subpriority */
-#define NVIC_PriorityGroup_1     (0x0600U) /* 1 bits for pre-emption priority 3 bits for subpriority */
-#define NVIC_PriorityGroup_2     (0x0500U) /* 2 bits for pre-emption priority 2 bits for subpriority */
-#define NVIC_PriorityGroup_3     (0x0400U) /* 3 bits for pre-emption priority 1 bits for subpriority */
-#define NVIC_PriorityGroup_4     (0x0300U) /* 4 bits for pre-emption priority 0 bits for subpriority */
+#define NVIC_PriorityGroup_0 (0x0700U) /* 0 bits for pre-emption priority 4 bits for subpriority */
+#define NVIC_PriorityGroup_1 (0x0600U) /* 1 bits for pre-emption priority 3 bits for subpriority */
+#define NVIC_PriorityGroup_2 (0x0500U) /* 2 bits for pre-emption priority 2 bits for subpriority */
+#define NVIC_PriorityGroup_3 (0x0400U) /* 3 bits for pre-emption priority 1 bits for subpriority */
+#define NVIC_PriorityGroup_4 (0x0300U) /* 4 bits for pre-emption priority 0 bits for subpriority */
 
 #define AIRCR_VECTKEY_MASK (0x05FA0000U)
 
-#define SysTick_CLKSource_HCLK_Div8 	(0xFFFFFFFBU)
-#define SysTick_CLKSource_HCLK 			(0x00000004U)
+#define SysTick_CLKSource_HCLK_Div8 (0xFFFFFFFBU)
+#define SysTick_CLKSource_HCLK (0x00000004U)
 
 /// @}
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup NVIC_Exported_Variables

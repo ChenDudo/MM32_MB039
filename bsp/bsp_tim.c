@@ -101,41 +101,41 @@ void BSP_TIM_CH1_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, boo
 
     switch (*(u32*)&tim) {
         case (u32)TIM1:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_1) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_6, 	NO_REMAP, GPIO_AF_1);
-        }
-        else {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_2) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_2);
-        }
-        break;
+            if (!remapEn) {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_1)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_1);
+            }
+            else {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_2)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_2);
+            }
+            break;
         case (u32)TIM3:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_4) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_8, 	NO_REMAP, GPIO_AF_4);
-        }
-        else {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_4) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_4);
-        }
-        break;
+            if (!remapEn) {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_4)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_4);
+            }
+            else {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_4)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_4);
+            }
+            break;
         case (u32)TIM14:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_3) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_3);
-        }
-        else {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_3) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_3);
-        }
-        break;
+            if (!remapEn) {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_3)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_3);
+            }
+            else {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_3)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_3);
+            }
+            break;
         default: break;
     }
 }
@@ -151,157 +151,157 @@ void BSP_TIM_CH1_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, boo
     switch (*(u32*)&tim) {
 #if defined(TIM1)
         case (u32)TIM1:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_2) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_8, 	NO_REMAP, GPIO_AF_2);
-        }
-        else {
-            if (remapIdx == 0) {
+            if (!remapEn) {
                 GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_1) :\
-                    GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_8, 	NO_REMAP, GPIO_AF_1);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_2)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_2);
             }
-        }
-        break;
+            else {
+                if (remapIdx == 0) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_1)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_1);
+                }
+            }
+            break;
 #endif
 #if defined(TIM2)
         case (u32)TIM2:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_2) :\
-                GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_2);
-        }
-        else {
-            if (remapIdx == 0) {
+            if (!remapEn) {
                 GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_15, NO_REMAP, GPIO_AF_2) :\
-                    GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_15, NO_REMAP, GPIO_AF_2);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_2)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_2);
             }
-            if (remapIdx == 1) {
-                GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_2) :\
-                    GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_2);
+            else {
+                if (remapIdx == 0) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_15, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_15, NO_REMAP, GPIO_AF_2);
+                }
+                if (remapIdx == 1) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_2);
+                }
+                if (remapIdx == 2) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_15, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_15, NO_REMAP, GPIO_AF_2);
+                }
             }
-            if (remapIdx == 2) {
-                GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_15, NO_REMAP, GPIO_AF_2) :\
-                    GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_15, NO_REMAP, GPIO_AF_2);
-            }
-        }
-        break;
+            break;
 #endif
 #if defined(TIM3)
         case (u32)TIM3:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_1) :\
-                GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_1);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOB_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_4, NO_REMAP, GPIO_AF_1) :\
-                    GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_4, NO_REMAP, GPIO_AF_1);
+            if (!remapEn) {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_1)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_1);
             }
-            if (remapIdx == 1) {
-                GPIOC_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_6, NO_REMAP, GPIO_AF_1) :\
-                    GPIO_Mode_FLOATING_Init(	 GPIOC, GPIO_Pin_6, NO_REMAP, GPIO_AF_1);
+            else {
+                if (remapIdx == 0) {
+                    GPIOB_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_4, NO_REMAP, GPIO_AF_1)
+                                : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_4, NO_REMAP, GPIO_AF_1);
+                }
+                if (remapIdx == 1) {
+                    GPIOC_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_6, NO_REMAP, GPIO_AF_1)
+                                : GPIO_Mode_FLOATING_Init(GPIOC, GPIO_Pin_6, NO_REMAP, GPIO_AF_1);
+                }
             }
-        }
-        break;
+            break;
 #endif
 #if defined(TIM4)
         case (u32)TIM4:
-        GPIOB_ClockEnable();
-        (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_6, NO_REMAP, NO_FUNCAF) :\
-            GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_6, NO_REMAP, NO_FUNCAF);
-        break;
+            GPIOB_ClockEnable();
+            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_6, NO_REMAP, NO_FUNCAF)
+                        : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_6, NO_REMAP, NO_FUNCAF);
+            break;
 #endif
 #if defined(TIM8)
         case (u32)TIM8:
-        if (!remapEn) {
-            GPIOC_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_6, NO_REMAP, GPIO_AF_3) :\
-                GPIO_Mode_FLOATING_Init(	 GPIOC, GPIO_Pin_6, NO_REMAP, GPIO_AF_3);
-        }
-        else {
-            if (remapIdx == 0) {
+            if (!remapEn) {
                 GPIOC_ClockEnable();
-                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_0, NO_REMAP, GPIO_AF_6) :\
-                        GPIO_Mode_FLOATING_Init(   GPIOC, GPIO_Pin_0, NO_REMAP, GPIO_AF_6);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_6, NO_REMAP, GPIO_AF_3)
+                            : GPIO_Mode_FLOATING_Init(GPIOC, GPIO_Pin_6, NO_REMAP, GPIO_AF_3);
             }
-        }
-        break;
+            else {
+                if (remapIdx == 0) {
+                    GPIOC_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_0, NO_REMAP, GPIO_AF_6)
+                                : GPIO_Mode_FLOATING_Init(GPIOC, GPIO_Pin_0, NO_REMAP, GPIO_AF_6);
+                }
+            }
+            break;
 #endif
 #if defined(TIM14)
         case (u32)TIM14:
-        if (!remapEn) {
-            GPIOB_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_0) :\
-                GPIO_Mode_FLOATING_Init(   GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_0);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_4, NO_REMAP, GPIO_AF_4) :\
-                    GPIO_Mode_FLOATING_Init(   GPIOA, GPIO_Pin_4, NO_REMAP, GPIO_AF_4);
+            if (!remapEn) {
+                GPIOB_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_0)
+                            : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_0);
             }
-            if (remapIdx == 1) {
-                GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_4) :\
-                    GPIO_Mode_FLOATING_Init(   GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_4);
+            else {
+                if (remapIdx == 0) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_4, NO_REMAP, GPIO_AF_4)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_4, NO_REMAP, GPIO_AF_4);
+                }
+                if (remapIdx == 1) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_4)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_4);
+                }
+                if (remapIdx == 2) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_6)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_6);
+                }
             }
-            if (remapIdx == 2) {
-                GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_6) :\
-                    GPIO_Mode_FLOATING_Init(   GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_6);
-            }
-        }
-        break;
+            break;
 #endif
 #if defined(TIM16)
         case (u32)TIM16:
-        if (!remapEn) {
-            GPIOB_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_8, NO_REMAP, GPIO_AF_2) :\
-                GPIO_Mode_FLOATING_Init(   GPIOB, GPIO_Pin_8, NO_REMAP, GPIO_AF_2);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_5) :\
-                    GPIO_Mode_FLOATING_Init(   GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_5);
+            if (!remapEn) {
+                GPIOB_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_8, NO_REMAP, GPIO_AF_2)
+                            : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_8, NO_REMAP, GPIO_AF_2);
             }
-            if (remapIdx == 1) {
-                GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_6) :\
-                    GPIO_Mode_FLOATING_Init(   GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_6);
+            else {
+                if (remapIdx == 0) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_5)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_5);
+                }
+                if (remapIdx == 1) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_6)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_6);
+                }
             }
-        }
-        break;
+            break;
 #endif
 #if defined(TIM17)
         case (u32)TIM17:
-        if (!remapEn) {
-            GPIOB_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_9, NO_REMAP, GPIO_AF_2) :\
-                GPIO_Mode_FLOATING_Init(   GPIOB, GPIO_Pin_9, NO_REMAP, GPIO_AF_2);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_5) :\
-                    GPIO_Mode_FLOATING_Init(   GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_5);
+            if (!remapEn) {
+                GPIOB_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_9, NO_REMAP, GPIO_AF_2)
+                            : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_9, NO_REMAP, GPIO_AF_2);
             }
-            if (remapIdx == 1) {
-                GPIOD_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOD, GPIO_Pin_7, NO_REMAP, GPIO_AF_6) :\
-                    GPIO_Mode_FLOATING_Init(   GPIOD, GPIO_Pin_7, NO_REMAP, GPIO_AF_6);
+            else {
+                if (remapIdx == 0) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_5)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_5);
+                }
+                if (remapIdx == 1) {
+                    GPIOD_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOD, GPIO_Pin_7, NO_REMAP, GPIO_AF_6)
+                                : GPIO_Mode_FLOATING_Init(GPIOD, GPIO_Pin_7, NO_REMAP, GPIO_AF_6);
+                }
             }
-        }
-        break;
+            break;
 #endif
         default: break;
     }
@@ -349,29 +349,29 @@ void BSP_TIM_CH2_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, boo
 
     switch (*(u32*)&tim) {
         case (u32)TIM1:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_1) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_8, 	NO_REMAP, GPIO_AF_1);
-        }
-        else {
-            if (remapIdx == 0) {
+            if (!remapEn) {
                 GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_2) :\
-                    GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_2);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_1)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_1);
             }
-            if (remapIdx == 1) {
-                GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_2) :\
-                    GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_2);
+            else {
+                if (remapIdx == 0) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_2);
+                }
+                if (remapIdx == 1) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_2);
+                }
             }
-        }
-        break;
+            break;
         case (u32)TIM3:
-        GPIOA_ClockEnable();
-        (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_4) :\
-            GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_4);
-        break;
+            GPIOA_ClockEnable();
+            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_4)
+                        : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_4);
+            break;
         default: break;
     }
 }
@@ -387,91 +387,90 @@ void BSP_TIM_CH2_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, boo
     switch (*(u32*)&tim) {
 #if defined(TIM1)
         case (u32)TIM1:
-        if (!remapEn) {
-            //GPIOA_ClockEnable();
+            if (!remapEn) {
+                // GPIOA_ClockEnable();
 
-
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_2) :
-                    	  GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_9, 	NO_REMAP, GPIO_AF_2);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_9, 	NO_REMAP, GPIO_AF_2);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_2)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_2);
             }
-        }
-        break;
+            else {
+                if (remapIdx == 0) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_2);
+                }
+            }
+            break;
 #endif
 #if defined(TIM2)
         case (u32)TIM2:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_1, NO_REMAP, GPIO_AF_2) :
-                          GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_1, NO_REMAP, GPIO_AF_2);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOB_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_3, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_3, NO_REMAP, GPIO_AF_2);
-            }
-            if (remapIdx == 1) {
+            if (!remapEn) {
                 GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_1, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_1, NO_REMAP, GPIO_AF_2);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_1, NO_REMAP, GPIO_AF_2)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_1, NO_REMAP, GPIO_AF_2);
             }
-            if (remapIdx == 2) {
-                GPIOB_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_3, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_3, NO_REMAP, GPIO_AF_2);
+            else {
+                if (remapIdx == 0) {
+                    GPIOB_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_3, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_3, NO_REMAP, GPIO_AF_2);
+                }
+                if (remapIdx == 1) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_1, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_1, NO_REMAP, GPIO_AF_2);
+                }
+                if (remapIdx == 2) {
+                    GPIOB_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_3, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_3, NO_REMAP, GPIO_AF_2);
+                }
             }
-        }
-        break;
+            break;
 #endif
 #if defined(TIM3)
         case (u32)TIM3:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_1) :
-                          GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_1);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOB_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_5, NO_REMAP, GPIO_AF_1) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_5, NO_REMAP, GPIO_AF_1);
+            if (!remapEn) {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_1)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_1);
             }
-            if (remapIdx == 1) {
-                GPIOC_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_7, NO_REMAP, GPIO_AF_1) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOC, GPIO_Pin_7, NO_REMAP, GPIO_AF_1);
+            else {
+                if (remapIdx == 0) {
+                    GPIOB_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_5, NO_REMAP, GPIO_AF_1)
+                                : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_5, NO_REMAP, GPIO_AF_1);
+                }
+                if (remapIdx == 1) {
+                    GPIOC_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_7, NO_REMAP, GPIO_AF_1)
+                                : GPIO_Mode_FLOATING_Init(GPIOC, GPIO_Pin_7, NO_REMAP, GPIO_AF_1);
+                }
             }
-        }
-        break;
+            break;
 #endif
 #if defined(TIM4)
         case (u32)TIM4:
-        GPIOB_ClockEnable();
-        (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_7, NO_REMAP, NO_FUNCAF) :
-                	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_7, NO_REMAP, NO_FUNCAF);
-        break;
+            GPIOB_ClockEnable();
+            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_7, NO_REMAP, NO_FUNCAF)
+                        : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_7, NO_REMAP, NO_FUNCAF);
+            break;
 #endif
 #if defined(TIM8)
         case (u32)TIM8:
-        if (!remapEn) {
-            GPIOC_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_7, NO_REMAP, GPIO_AF_3) :
-                          GPIO_Mode_FLOATING_Init(	 GPIOC, GPIO_Pin_7, NO_REMAP, GPIO_AF_3);
-        }
-        else {
-            if (remapIdx == 0) {
+            if (!remapEn) {
                 GPIOC_ClockEnable();
-                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_1, NO_REMAP, GPIO_AF_6) :
-                            	  GPIO_Mode_FLOATING_Init(   GPIOC, GPIO_Pin_1, NO_REMAP, GPIO_AF_6);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_7, NO_REMAP, GPIO_AF_3)
+                            : GPIO_Mode_FLOATING_Init(GPIOC, GPIO_Pin_7, NO_REMAP, GPIO_AF_3);
             }
-        }
-        break;
+            else {
+                if (remapIdx == 0) {
+                    GPIOC_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_1, NO_REMAP, GPIO_AF_6)
+                                : GPIO_Mode_FLOATING_Init(GPIOC, GPIO_Pin_1, NO_REMAP, GPIO_AF_6);
+                }
+            }
+            break;
 #endif
         default: break;
     }
@@ -484,29 +483,29 @@ void BSP_TIM_CH3_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, boo
 {
     switch (*(u32*)&tim) {
         case (u32)TIM1:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_1) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_1);
-        }
-        else {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_4) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_4);
-        }
-        break;
+            if (!remapEn) {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_1)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_1);
+            }
+            else {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_4)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_4);
+            }
+            break;
         case (u32)TIM3:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_4) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_4);
-        }
-        else {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_4) :\
-                GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_4);
-        }
-        break;
+            if (!remapEn) {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_4)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_4);
+            }
+            else {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_4)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_4);
+            }
+            break;
         default: break;
     }
 }
@@ -517,89 +516,89 @@ void BSP_TIM_CH3_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, boo
     switch (*(u32*)&tim) {
 #if defined(TIM1)
         case (u32)TIM1:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_2) :
-                    	  GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_10, 	NO_REMAP, GPIO_AF_2);
-        }
-        else {
-            if (remapIdx == 0) {
+            if (!remapEn) {
                 GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_10, 	NO_REMAP, GPIO_AF_2);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_2)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_2);
             }
-        }
-        break;
+            else {
+                if (remapIdx == 0) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_2);
+                }
+            }
+            break;
 #endif
 #if defined(TIM2)
         case (u32)TIM2:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_2) :
-                          GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_2);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOB_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_2);
-            }
-            if (remapIdx == 1) {
+            if (!remapEn) {
                 GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_2);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_2)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_2);
             }
-            if (remapIdx == 2) {
-                GPIOB_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_2);
+            else {
+                if (remapIdx == 0) {
+                    GPIOB_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_2);
+                }
+                if (remapIdx == 1) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_2);
+                }
+                if (remapIdx == 2) {
+                    GPIOB_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_10, NO_REMAP, GPIO_AF_2);
+                }
             }
-        }
-        break;
+            break;
 #endif
 #if defined(TIM3)
         case (u32)TIM3:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_0, NO_REMAP, GPIO_AF_1) :
-                          GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_0, NO_REMAP, GPIO_AF_1);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOB_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_0, NO_REMAP, GPIO_AF_1) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_0, NO_REMAP, GPIO_AF_1);
+            if (!remapEn) {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_0, NO_REMAP, GPIO_AF_1)
+                            : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_0, NO_REMAP, GPIO_AF_1);
             }
-            if (remapIdx == 1) {
-                GPIOC_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_8, NO_REMAP, GPIO_AF_1) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOC, GPIO_Pin_8, NO_REMAP, GPIO_AF_1);
+            else {
+                if (remapIdx == 0) {
+                    GPIOB_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_0, NO_REMAP, GPIO_AF_1)
+                                : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_0, NO_REMAP, GPIO_AF_1);
+                }
+                if (remapIdx == 1) {
+                    GPIOC_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_8, NO_REMAP, GPIO_AF_1)
+                                : GPIO_Mode_FLOATING_Init(GPIOC, GPIO_Pin_8, NO_REMAP, GPIO_AF_1);
+                }
             }
-        }
-        break;
+            break;
 #endif
 #if defined(TIM4)
         case (u32)TIM4:
-        GPIOB_ClockEnable();
-        (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_8, NO_REMAP, NO_FUNCAF) :
-                	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_8, NO_REMAP, NO_FUNCAF);
-        break;
+            GPIOB_ClockEnable();
+            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_8, NO_REMAP, NO_FUNCAF)
+                        : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_8, NO_REMAP, NO_FUNCAF);
+            break;
 #endif
 #if defined(TIM8)
         case (u32)TIM8:
-        if (!remapEn) {
-            GPIOC_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_8, NO_REMAP, GPIO_AF_3) :
-                          GPIO_Mode_FLOATING_Init(	 GPIOC, GPIO_Pin_8, NO_REMAP, GPIO_AF_3);
-        }
-        else {
-            if (remapIdx == 0) {
+            if (!remapEn) {
                 GPIOC_ClockEnable();
-                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_2, NO_REMAP, GPIO_AF_6) :
-                            	  GPIO_Mode_FLOATING_Init(   GPIOC, GPIO_Pin_2, NO_REMAP, GPIO_AF_6);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_8, NO_REMAP, GPIO_AF_3)
+                            : GPIO_Mode_FLOATING_Init(GPIOC, GPIO_Pin_8, NO_REMAP, GPIO_AF_3);
             }
-        }
-        break;
+            else {
+                if (remapIdx == 0) {
+                    GPIOC_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_2, NO_REMAP, GPIO_AF_6)
+                                : GPIO_Mode_FLOATING_Init(GPIOC, GPIO_Pin_2, NO_REMAP, GPIO_AF_6);
+                }
+            }
+            break;
 #endif
         default: break;
     }
@@ -612,10 +611,10 @@ void BSP_TIM_CH4_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, boo
 {
     switch (*(u32*)&tim) {
         case (u32)TIM1:
-        GPIOA_ClockEnable();
-        (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_4) :\
-            GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_4);
-        break;
+            GPIOA_ClockEnable();
+            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_4)
+                        : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_4);
+            break;
         default: break;
     }
 }
@@ -625,79 +624,79 @@ void BSP_TIM_CH4_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, boo
 {
     switch (*(u32*)&tim) {
         case (u32)TIM1:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_2) :
-                    	  GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_11, 	NO_REMAP, GPIO_AF_2);
-        }
-        else {
-            if (remapIdx == 0) {
+            if (!remapEn) {
                 GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_11, 	NO_REMAP, GPIO_AF_2);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_2)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_2);
             }
-        }
-        break;
+            else {
+                if (remapIdx == 0) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_11, NO_REMAP, GPIO_AF_2);
+                }
+            }
+            break;
         case (u32)TIM2:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_3, NO_REMAP, GPIO_AF_2) :
-                          GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_3, NO_REMAP, GPIO_AF_2);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOB_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_3, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOA, GPIO_Pin_3, NO_REMAP, GPIO_AF_2);
-            }
-            if (remapIdx == 1) {
+            if (!remapEn) {
                 GPIOA_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_2);
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_3, NO_REMAP, GPIO_AF_2)
+                            : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_3, NO_REMAP, GPIO_AF_2);
             }
-            if (remapIdx == 2) {
-                GPIOB_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_2) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_2);
+            else {
+                if (remapIdx == 0) {
+                    GPIOB_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_3, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOA, GPIO_Pin_3, NO_REMAP, GPIO_AF_2);
+                }
+                if (remapIdx == 1) {
+                    GPIOA_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_2);
+                }
+                if (remapIdx == 2) {
+                    GPIOB_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_2)
+                                : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_11, NO_REMAP, GPIO_AF_2);
+                }
             }
-        }
-        break;
+            break;
         case (u32)TIM3:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_1) :
-                          GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_1);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOB_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_1) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_1);
+            if (!remapEn) {
+                GPIOA_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_1)
+                            : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_1);
             }
+            else {
+                if (remapIdx == 0) {
+                    GPIOB_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_1)
+                                : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_1, NO_REMAP, GPIO_AF_1);
+                }
 #if defined(GPIOC)
-            if (remapIdx == 1) {
-                GPIOC_ClockEnable();
-                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_9, NO_REMAP, GPIO_AF_1) :
-                        	  GPIO_Mode_FLOATING_Init(	 GPIOC, GPIO_Pin_9, NO_REMAP, GPIO_AF_1);
-            }
+                if (remapIdx == 1) {
+                    GPIOC_ClockEnable();
+                    (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_9, NO_REMAP, GPIO_AF_1)
+                                : GPIO_Mode_FLOATING_Init(GPIOC, GPIO_Pin_9, NO_REMAP, GPIO_AF_1);
+                }
 #endif
-        }
-        break;
+            }
+            break;
 #if defined(TIM4)
         case (u32)TIM4:
-        GPIOB_ClockEnable();
-        (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_9, NO_REMAP, NO_FUNCAF) :
-                	  GPIO_Mode_FLOATING_Init(	 GPIOB, GPIO_Pin_9, NO_REMAP, NO_FUNCAF);
-        break;
+            GPIOB_ClockEnable();
+            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_9, NO_REMAP, NO_FUNCAF)
+                        : GPIO_Mode_FLOATING_Init(GPIOB, GPIO_Pin_9, NO_REMAP, NO_FUNCAF);
+            break;
 #endif
 #if defined(TIM8)
         case (u32)TIM8:
-        if (!remapEn) {
-            GPIOC_ClockEnable();
-            (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_9, NO_REMAP, GPIO_AF_3) :
-                          GPIO_Mode_FLOATING_Init(	 GPIOC, GPIO_Pin_9, NO_REMAP, GPIO_AF_3);
-        }
-        break;
+            if (!remapEn) {
+                GPIOC_ClockEnable();
+                (inoutMode) ? GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_9, NO_REMAP, GPIO_AF_3)
+                            : GPIO_Mode_FLOATING_Init(GPIOC, GPIO_Pin_9, NO_REMAP, GPIO_AF_3);
+            }
+            break;
 #endif
         default: break;
     }
@@ -714,13 +713,13 @@ void BSP_TIM_CH4_GPIO_Configure(TIM_TypeDef* tim, bool remapEn, u8 remapIdx, boo
 void BSP_TIM_PWM_GPIO_Configure(TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx)
 {
     if (ch & 0x01)
-        BSP_TIM_CH1_GPIO_Configure(tim, remapEn, remapIdx, 1);                         //As output
+        BSP_TIM_CH1_GPIO_Configure(tim, remapEn, remapIdx, 1);  // As output
     if (ch & 0x02)
-        BSP_TIM_CH2_GPIO_Configure(tim, remapEn, remapIdx, 1);                         //As output
+        BSP_TIM_CH2_GPIO_Configure(tim, remapEn, remapIdx, 1);  // As output
     if (ch & 0x04)
-        BSP_TIM_CH3_GPIO_Configure(tim, remapEn, remapIdx, 1);                         //As output
+        BSP_TIM_CH3_GPIO_Configure(tim, remapEn, remapIdx, 1);  // As output
     if (ch & 0x08)
-        BSP_TIM_CH4_GPIO_Configure(tim, remapEn, remapIdx, 1);                         //As output
+        BSP_TIM_CH4_GPIO_Configure(tim, remapEn, remapIdx, 1);  // As output
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -769,9 +768,8 @@ void BSP_TIM_Encoder_GPIO_Configure(TIM_TypeDef* tim, u8 ch, bool remapEn, u8 re
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_TIM_OnePulse_GPIO_Configure(TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx)
 {
-
     BSP_TIM_CH1_GPIO_Configure(tim, remapEn, remapIdx, 1);
-    //BSP_TIM_CH2_GPIO_Configure(tim, remapEn, remapIdx, 0);
+    // BSP_TIM_CH2_GPIO_Configure(tim, remapEn, remapIdx, 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -783,32 +781,32 @@ void BSP_TIM_OnePulse_GPIO_Configure(TIM_TypeDef* tim, u8 ch, bool remapEn, u8 r
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_TIM_6Step_GPIO_Configure(TIM_TypeDef* tim, u8 ch, bool remapEn, u8 remapIdx)
 {
-    //Todo: just config TIM1
+    // Todo: just config TIM1
     GPIOA_ClockEnable();
     GPIOB_ClockEnable();
 
 #if defined(__MM32_MB032) || defined(__MM32_MB033)
     /* TIM1 CH1 ~ CH3 */
-    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_6,  NO_REMAP, GPIO_AF_1);
-    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8,  NO_REMAP, GPIO_AF_1);
+    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_6, NO_REMAP, GPIO_AF_1);
+    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_1);
     GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_1);
     /* TIM1 CH1N ~ CH3N */
-    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_7,  NO_REMAP, GPIO_AF_1);
-    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9,  NO_REMAP, GPIO_AF_1);
-    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0,  NO_REMAP, GPIO_AF_2);
+    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_1);
+    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_1);
+    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_2);
     /* TIM1 Brake input */
-    //GPIO_Mode_FLOATING_Init   (GPIOA, GPIO_Pin_4,  NO_REMAP, GPIO_AF_2);
+    // GPIO_Mode_FLOATING_Init   (GPIOA, GPIO_Pin_4,  NO_REMAP, GPIO_AF_2);
 #else
     /* TIM1 CH1 ~ CH3 */
-    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8,  NO_REMAP, GPIO_AF_2);
-    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9,  NO_REMAP, GPIO_AF_2);
+    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_2);
+    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_2);
     GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_2);
     /* TIM1 CH1N ~ CH3N */
     GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_13, NO_REMAP, GPIO_AF_2);
     GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_14, NO_REMAP, GPIO_AF_2);
     GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_15, NO_REMAP, GPIO_AF_2);
     /* TIM1 Brake input */
-    //GPIO_Mode_FLOATING_Init   (GPIOB, GPIO_Pin_12, NO_REMAP, GPIO_AF_2);
+    // GPIO_Mode_FLOATING_Init   (GPIOB, GPIO_Pin_12, NO_REMAP, GPIO_AF_2);
 #endif
 }
 

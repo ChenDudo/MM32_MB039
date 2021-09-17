@@ -22,7 +22,6 @@
 #ifndef __BSP_I2C_H
 #define __BSP_I2C_H
 
-
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Board_Support_Package
 /// @{
@@ -31,7 +30,6 @@
 /// @defgroup I2C_BSP
 /// @brief  I2C BSP modules
 /// @{
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @defgroup I2C_Exported_Types
@@ -48,42 +46,42 @@
 #endif
 
 #if (I2C_GPIO_CONFIG == 0)
-    #define I2C_SCL_PORT    GPIOA
-    #define I2C_SCL_PIN     GPIO_Pin_0
-    #define I2C_SCL_AF      GPIO_AF_3
+#define I2C_SCL_PORT GPIOA
+#define I2C_SCL_PIN GPIO_Pin_0
+#define I2C_SCL_AF GPIO_AF_3
 
-    #define I2C_SDA_PORT    GPIOA
-    #define I2C_SDA_PIN     GPIO_Pin_1
-    #define I2C_SDA_AF      GPIO_AF_3
+#define I2C_SDA_PORT GPIOA
+#define I2C_SDA_PIN GPIO_Pin_1
+#define I2C_SDA_AF GPIO_AF_3
 #endif
 #if (I2C_GPIO_CONFIG == 1)
-    #define I2C_SCL_PORT    GPIOA
-    #define I2C_SCL_PIN     GPIO_Pin_5
-    #define I2C_SCL_AF      GPIO_AF_3
+#define I2C_SCL_PORT GPIOA
+#define I2C_SCL_PIN GPIO_Pin_5
+#define I2C_SCL_AF GPIO_AF_3
 
-    #define I2C_SDA_PORT    GPIOA
-    #define I2C_SDA_PIN     GPIO_Pin_4
-    #define I2C_SDA_AF      GPIO_AF_3
+#define I2C_SDA_PORT GPIOA
+#define I2C_SDA_PIN GPIO_Pin_4
+#define I2C_SDA_AF GPIO_AF_3
 #endif
 
 #if (I2C_GPIO_CONFIG == 2)
-    #define I2C_SCL_PORT    GPIOA
-    #define I2C_SCL_PIN     GPIO_Pin_0
-    #define I2C_SCL_AF      GPIO_AF_3
+#define I2C_SCL_PORT GPIOA
+#define I2C_SCL_PIN GPIO_Pin_0
+#define I2C_SCL_AF GPIO_AF_3
 
-    #define I2C_SDA_PORT    GPIOA
-    #define I2C_SDA_PIN     GPIO_Pin_4
-    #define I2C_SDA_AF      GPIO_AF_3
+#define I2C_SDA_PORT GPIOA
+#define I2C_SDA_PIN GPIO_Pin_4
+#define I2C_SDA_AF GPIO_AF_3
 #endif
 
 #if (I2C_GPIO_CONFIG == 3)
-    #define I2C_SCL_PORT    GPIOA
-    #define I2C_SCL_PIN     GPIO_Pin_5
-    #define I2C_SCL_AF      GPIO_AF_3
+#define I2C_SCL_PORT GPIOA
+#define I2C_SCL_PIN GPIO_Pin_5
+#define I2C_SCL_AF GPIO_AF_3
 
-    #define I2C_SDA_PORT    GPIOA
-    #define I2C_SDA_PIN     GPIO_Pin_1
-    #define I2C_SDA_AF      GPIO_AF_3
+#define I2C_SDA_PORT GPIOA
+#define I2C_SDA_PIN GPIO_Pin_1
+#define I2C_SDA_AF GPIO_AF_3
 #endif
 
 #endif
@@ -111,13 +109,9 @@ void BSP_I2C_GPIO_Configure(I2C_TypeDef* I2Cx, bool remapEn, u8 remapIdx);
 
 /// @}
 
-
-
 /// @}
 
 /// @}
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif /* __BSP_I2C_H */

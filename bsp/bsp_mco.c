@@ -49,23 +49,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_RCC_GPIO_Configure(void)
 {
-	#if defined(__REGISTER)
-		GPIOA_ClockEnable();
-        RCC->APB2ENR |= RCC_APB2ENR_EXTI;
-		GPIOA->CRH = (GPIOA->CRH & 0xFFFFFFF0) | (PORT_AFPP | PORT_50MHz) << PORT_BIT8; // GPIOA_Pin8-AF_PP
-		#if defined (__MM0N1) || defined(__MM0P1)  || defined(__MM0Q1)
-			GPIOA->AFRH &= 0xFFFFFFF0;                                                  // 8-AF0
-		#endif
-	#else
-        COMMON_EnableIpClock(emCLOCK_GPIOA);
-		COMMON_EnableIpClock(emCLOCK_EXTI);
+#if defined(__REGISTER)
+    GPIOA_ClockEnable();
+    RCC->APB2ENR |= RCC_APB2ENR_EXTI;
+    GPIOA->CRH = (GPIOA->CRH & 0xFFFFFFF0) | (PORT_AFPP | PORT_50MHz) << PORT_BIT8;  // GPIOA_Pin8-AF_PP
+#if defined(__MM0N1) || defined(__MM0P1) || defined(__MM0Q1)
+    GPIOA->AFRH &= 0xFFFFFFF0;  // 8-AF0
+#endif
+#else
+    COMMON_EnableIpClock(emCLOCK_GPIOA);
+    COMMON_EnableIpClock(emCLOCK_EXTI);
 #if defined(__MM0T1)
-        GPIO_Mode_AF_PP_50MHz_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_3);
+    GPIO_Mode_AF_PP_50MHz_Init(GPIOA, GPIO_Pin_7, NO_REMAP, GPIO_AF_3);
 #endif
 #if defined(__MM3N1) || defined(__MM0N1) || defined(__MM3O1) || defined(__MM0P1) || defined(__MM0Q1) || defined(__MM0S1)
-		GPIO_Mode_AF_PP_50MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_0);
+    GPIO_Mode_AF_PP_50MHz_Init(GPIOA, GPIO_Pin_8, NO_REMAP, GPIO_AF_0);
 #endif
-	#endif
+#endif
 }
 
 /// @}

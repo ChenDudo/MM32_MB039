@@ -52,105 +52,103 @@
 #if defined(__MM32_MB032) || defined(__MM32_MB033)
 void BSP_UART_GPIO_Configure(UART_TypeDef* UARTx, bool remapEn, u8 remapIdx)
 {
-    switch(*(u32*)&UARTx) {
+    switch (*(u32*)&UARTx) {
         case (u32)UART1:
-        if(remapEn){
-            //MB032/033
-            GPIO_Mode_AF_PP_50MHz_Init(GPIOA,  GPIO_Pin_12, NO_REMAP, GPIO_AF_1);
-            GPIO_Mode_IPU_Init        (GPIOA,  GPIO_Pin_0,  NO_REMAP, GPIO_AF_1);
-        }
-        else{
-
-        }
-        break;
+            if (remapEn) {
+                // MB032/033
+                GPIO_Mode_AF_PP_50MHz_Init(GPIOA, GPIO_Pin_12, NO_REMAP, GPIO_AF_1);
+                GPIO_Mode_IPU_Init(GPIOA, GPIO_Pin_0, NO_REMAP, GPIO_AF_1);
+            }
+            else {
+            }
+            break;
         case (u32)UART2:
-        if(remapEn){
-            //MB032/033
-            GPIO_Mode_AF_PP_50MHz_Init(GPIOA,  GPIO_Pin_1,  NO_REMAP, GPIO_AF_2);
-            GPIO_Mode_IPU_Init        (GPIOA,  GPIO_Pin_13, NO_REMAP, GPIO_AF_2);
-        }
-        else{
-
-        }
-        break;
-        default:break;
+            if (remapEn) {
+                // MB032/033
+                GPIO_Mode_AF_PP_50MHz_Init(GPIOA, GPIO_Pin_1, NO_REMAP, GPIO_AF_2);
+                GPIO_Mode_IPU_Init(GPIOA, GPIO_Pin_13, NO_REMAP, GPIO_AF_2);
+            }
+            else {
+            }
+            break;
+        default: break;
     }
 }
 #else
 void BSP_UART_GPIO_Configure(UART_TypeDef* UARTx, bool remapEn, u8 remapIdx)
 {
-    GPIO_InitTypeDef 	GPIO_InitStructure;
+    GPIO_InitTypeDef GPIO_InitStructure;
 
     switch (*(u32*)&UARTx) {
         case (u32)UART1:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9,  NO_REMAP, 		GPIO_AF_1);
-            GPIO_Mode_IPU_Init        (GPIOA, GPIO_Pin_10, NO_REMAP, 		GPIO_AF_1);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOB_ClockEnable();
-                GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_6, NO_REMAP, 	GPIO_AF_0);
-                GPIO_Mode_IPU_Init		  (GPIOB, GPIO_Pin_7, NO_REMAP, 	GPIO_AF_0);
+            if (!remapEn) {
+                GPIOA_ClockEnable();
+                GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_1);
+                GPIO_Mode_IPU_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_1);
             }
+            else {
+                if (remapIdx == 0) {
+                    GPIOB_ClockEnable();
+                    GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_6, NO_REMAP, GPIO_AF_0);
+                    GPIO_Mode_IPU_Init(GPIOB, GPIO_Pin_7, NO_REMAP, GPIO_AF_0);
+                }
 
 #if (__CORTEX_M == 0)
-            else if (remapIdx == 1) {
-                GPIOA_ClockEnable();
-                GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, 		GPIO_AF_3);
-                GPIO_Mode_IPU_Init	      (GPIOA, GPIO_Pin_9,  NO_REMAP, 		GPIO_AF_3);
-            }
+                else if (remapIdx == 1) {
+                    GPIOA_ClockEnable();
+                    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_10, NO_REMAP, GPIO_AF_3);
+                    GPIO_Mode_IPU_Init(GPIOA, GPIO_Pin_9, NO_REMAP, GPIO_AF_3);
+                }
 #endif
-        }
-        break;
-		case (u32)UART2:
-        if (!remapEn) {
-            GPIOA_ClockEnable();
-            GPIO_SetBits(GPIOA, GPIO_Pin_2);
-            GPIO_InitStructure.GPIO_Speed = GPIO_Speed_20MHz;
-            GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_2;
-            GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
-            GPIO_Init(GPIOA, &GPIO_InitStructure);
-            exGPIO_PinAFConfig(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_1);
-            //GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_2, NO_REMAP, 		GPIO_AF_1);
-            GPIO_Mode_IPU_Init		  (GPIOA, GPIO_Pin_3, NO_REMAP, 		GPIO_AF_1);
-        }
-        else {
-#if (__CORTEX_M == 0)
-            if (remapIdx == 0) {
-                GPIOA_ClockEnable();
-                GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_14, NO_REMAP, 		GPIO_AF_1);
-                GPIO_Mode_IPU_Init		  (GPIOA, GPIO_Pin_15, NO_REMAP, 		GPIO_AF_1);
             }
+            break;
+        case (u32)UART2:
+            if (!remapEn) {
+                GPIOA_ClockEnable();
+                GPIO_SetBits(GPIOA, GPIO_Pin_2);
+                GPIO_InitStructure.GPIO_Speed = GPIO_Speed_20MHz;
+                GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_2;
+                GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
+                GPIO_Init(GPIOA, &GPIO_InitStructure);
+                exGPIO_PinAFConfig(GPIOA, GPIO_Pin_2, NO_REMAP, GPIO_AF_1);
+                // GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_2, NO_REMAP, 		GPIO_AF_1);
+                GPIO_Mode_IPU_Init(GPIOA, GPIO_Pin_3, NO_REMAP, GPIO_AF_1);
+            }
+            else {
+#if (__CORTEX_M == 0)
+                if (remapIdx == 0) {
+                    GPIOA_ClockEnable();
+                    GPIO_Mode_AF_PP_20MHz_Init(GPIOA, GPIO_Pin_14, NO_REMAP, GPIO_AF_1);
+                    GPIO_Mode_IPU_Init(GPIOA, GPIO_Pin_15, NO_REMAP, GPIO_AF_1);
+                }
 #endif
 #if (__CORTEX_M == 0) && !defined(__MM0N1)
-            else if (remapIdx == 1) {
-                GPIOC_ClockEnable();
-                GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_4, NO_REMAP, 		GPIO_AF_3);
-                GPIO_Mode_IPU_Init		  (GPIOC, GPIO_Pin_5, NO_REMAP, 		GPIO_AF_3);
-            }
+                else if (remapIdx == 1) {
+                    GPIOC_ClockEnable();
+                    GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_4, NO_REMAP, GPIO_AF_3);
+                    GPIO_Mode_IPU_Init(GPIOC, GPIO_Pin_5, NO_REMAP, GPIO_AF_3);
+                }
 #endif
-        }
-        break;
+            }
+            break;
 #if defined(__MM3N1)
         case (u32)UART3:
-        if (!remapEn) {
-            GPIOB_ClockEnable();
-            GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_10, NO_REMAP, 		NO_FUNCAF);
-            GPIO_Mode_IPU_Init		  (GPIOB, GPIO_Pin_11, NO_REMAP, 		NO_FUNCAF);
-        }
-        else {
-            if (remapIdx == 0) {
-                GPIOC_ClockEnable();
-                GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_10, AFIO_MAPR_UART3, NO_FUNCAF);
-                GPIO_Mode_IPU_Init		  (GPIOC, GPIO_Pin_11, AFIO_MAPR_UART3, NO_FUNCAF);
+            if (!remapEn) {
+                GPIOB_ClockEnable();
+                GPIO_Mode_AF_PP_20MHz_Init(GPIOB, GPIO_Pin_10, NO_REMAP, NO_FUNCAF);
+                GPIO_Mode_IPU_Init(GPIOB, GPIO_Pin_11, NO_REMAP, NO_FUNCAF);
             }
-        }
-        break;
+            else {
+                if (remapIdx == 0) {
+                    GPIOC_ClockEnable();
+                    GPIO_Mode_AF_PP_20MHz_Init(GPIOC, GPIO_Pin_10, AFIO_MAPR_UART3, NO_FUNCAF);
+                    GPIO_Mode_IPU_Init(GPIOC, GPIO_Pin_11, AFIO_MAPR_UART3, NO_FUNCAF);
+                }
+            }
+            break;
 #endif
-		default: break;
-	}
+        default: break;
+    }
 }
 #endif
 
@@ -169,8 +167,6 @@ void BSP_UART_GPIO_CONFIGURE(UART_TypeDef* UARTx)
     }
 #if defined(UART3)
     else if (UART3 == UARTx) {
-
-
     }
 #endif
 }

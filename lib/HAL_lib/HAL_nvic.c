@@ -93,8 +93,7 @@ void NVIC_Init(NVIC_InitTypeDef* pInitStruct)
 #if (__CORTEX_M == 0U)
     if (pInitStruct->NVIC_IRQChannelCmd != DISABLE) {
         NVIC->IP[pInitStruct->NVIC_IRQChannel >> 0x02] =
-            NVIC->IP[pInitStruct->NVIC_IRQChannel >> 0x02] &
-                (~(((u32)0xFF) << ((pInitStruct->NVIC_IRQChannel & 0x03) * 8))) |
+            NVIC->IP[pInitStruct->NVIC_IRQChannel >> 0x02] & (~(((u32)0xFF) << ((pInitStruct->NVIC_IRQChannel & 0x03) * 8))) |
             ((((u32)pInitStruct->NVIC_IRQChannelPriority << 6) & 0xFF) << ((pInitStruct->NVIC_IRQChannel & 0x03) * 8));
 
         NVIC->ISER[0] = 0x01 << (pInitStruct->NVIC_IRQChannel & 0x1F);
@@ -119,9 +118,10 @@ void exNVIC_Init(exNVIC_Init_TypeDef* pInitStruct)
         pri = (SCB_AIRCR_PRIGROUP & ~(SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk)) >> SCB_AIRCR_PRIGROUP_Pos;
 
         pri = (((u32)pInitStruct->NVIC_IRQChannelPreemptionPriority << (0x4 - pri)) |
-                     pInitStruct->NVIC_IRQChannelSubPriority & (0x0F >> pri)) << 0x04;
+               pInitStruct->NVIC_IRQChannelSubPriority & (0x0F >> pri))
+              << 0x04;
 
-        NVIC->IP[pInitStruct->NVIC_IRQChannel] = pri;
+        NVIC->IP[pInitStruct->NVIC_IRQChannel]           = pri;
         NVIC->ISER[pInitStruct->NVIC_IRQChannel >> 0x05] = 0x01 << (pInitStruct->NVIC_IRQChannel & 0x1F);
     }
     else {
@@ -132,8 +132,7 @@ void exNVIC_Init(exNVIC_Init_TypeDef* pInitStruct)
 #if (__CORTEX_M == 0U)
     if (pInitStruct->NVIC_IRQChannelCmd != DISABLE) {
         NVIC->IP[pInitStruct->NVIC_IRQChannel >> 0x02] =
-            NVIC->IP[pInitStruct->NVIC_IRQChannel >> 0x02] &
-                (~(((u32)0xFF) << ((pInitStruct->NVIC_IRQChannel & 0x03) * 8))) |
+            NVIC->IP[pInitStruct->NVIC_IRQChannel >> 0x02] & (~(((u32)0xFF) << ((pInitStruct->NVIC_IRQChannel & 0x03) * 8))) |
             //			 ((((u32)pInitStruct->NVIC_IRQChannelPriority << 6)
             //& 0xFF)
             ((((u32)pInitStruct->NVIC_IRQChannelSubPriority << 6) & 0xFF) << ((pInitStruct->NVIC_IRQChannel & 0x03) * 8));
