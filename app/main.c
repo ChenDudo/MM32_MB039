@@ -114,7 +114,6 @@ void AppTaskTick()
     gLwipCounter++;
     processOver();
     scanKey();
-    hci_tick();
 
     if (tickCnt++ >= 500) {
         tickFlag = true;
@@ -125,6 +124,7 @@ void AppTaskTick()
         rf.lcd    = true;
     }
     if (ready) {
+		hci_tick();
         adc_Tick();
         if (rfCnt.rtc++ > 200) {
             rfCnt.rtc = 0;
