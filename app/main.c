@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     MAIN.C
 /// @author   D CHEN
-/// @version  v2.0.0
-/// @date     2019-03-13
-/// @brief    THIS FILE PROVIDES ALL THE UID EXAMPLE.
+/// @version  v1.0.0
+/// @date     2021-03-13
+/// @brief    THIS FILE PROVIDES ALL THE EVBOARD EXAMPLE.
 ////////////////////////////////////////////////////////////////////////////////
 /// @attention
 ///
@@ -14,7 +14,7 @@
 /// HARDWARE AND/OR THE USE OF THE CODING INFORMATION CONTAINED HEREIN IN
 /// CONNECTION WITH PRODUCTS MADE BY CUSTOMERS.
 ///
-/// <H2><CENTER>&COPY; COPYRIGHT 2018-2019 MINDMOTION </CENTER></H2>
+/// <H2><CENTER>&COPY; COPYRIGHT 2018-2021 MINDMOTION </CENTER></H2>
 ////////////////////////////////////////////////////////////////////////////////
 
 // Define to prevent recursive inclusion  --------------------------------------
@@ -25,15 +25,12 @@
 #include "mm32_types.h"
 #include "mm32_system.h"
 #include "common.h"
-
 #include "bsp_lcd.h"
 #include "bsp_led.h"
 #include "bsp_key.h"
 #include "bsp_beep.h"
 #include "bsp_sdio.h"
-
 #include "hal_uart.h"
-
 #include "main.h"
 #include "adc.h"
 #include "hci.h"
@@ -45,9 +42,7 @@
 #include "i2c.h"
 #include "can.h"
 #include "music.h"
-#include "sdio.h"
 #include "spiflash.h"
-
 #include "lwip/timeouts.h"
 #include "eth.h"
 #include "tcp_server.h"
@@ -94,7 +89,7 @@ void initPeri()
     BSP_FLASH_Configure();
     error.flash = !checkSPIFlashId();
     checkRTC();
-    
+
     BSP_BEEP_Configure(1000);
     for(u8 i = 0; i < 2; i++){
         OpenLED();  BEEP_on(1000);  while(!delay(50));
@@ -114,7 +109,7 @@ void AppTaskTick()
     processOver();
     scanKey();
     hci_tick();
-    
+
     if (tickCnt++ >= 500) {
         tickFlag = true;
         tickCnt = 0;
@@ -153,11 +148,6 @@ void AppTaskTick()
             rfCnt.uart2 = 0;
             UART_SendData(UART8, uartTx2--);
         }
-        if (rfCnt.sdio++ > 500) {
-            rfCnt.sdio = 0;
-            sdio_tick();
-            rf.sdio = true;
-        }
         if (rfCnt.eth++ > 500) {
             rfCnt.eth = 0;
             rf.eth = true;
@@ -182,7 +172,7 @@ void processOver()
 			fKeyCnt = 0;		// clear menuOverTime Count
 		}
 	}
-	
+
 	if ((rfOverCnt.i2c++ > 1200)  && (!rf.i2c)){
 		rfOverCnt.i2c = 0;
 		error.i2c = true;
@@ -235,10 +225,10 @@ void refresh()
 int main(void)
 {
     MCUID = SetSystemClock(emSYSTICK_On, AppTaskTick);
-    
+
     initPeri();
     initPara();
-    
+
     initLcdDemo();
 	while (drawBlockCnt < 500){
 		randRefresh();
@@ -246,17 +236,16 @@ int main(void)
 	text.fore = White;
     text.back = DarkCyan;
     clearAllScreen();
-    
-    
+
     ready = true;
     sPlayMusic.MusicNum = 1;
     sPlayMusic.PlayFlag = true;
     dispMUSIC(1);
-    
+
     dispScreen();
 	dispButton();
     fKey2 = true;
-    
+
     while (1) {
         hci_task();
         if (menuCnt == 0) {
@@ -275,7 +264,7 @@ int main(void)
             tickFlag = false;
         }
         sys_check_timeouts();
-        
+
     }
 }
 

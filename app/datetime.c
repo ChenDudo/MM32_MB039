@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     DATETIME.C
 /// @author   D CHEN
-/// @version  v2.0.0
-/// @date     2019-03-13
-/// @brief    THIS FILE PROVIDES ALL THE UID EXAMPLE.
+/// @version  v1.0.0
+/// @date     2021-03-13
+/// @brief    THIS FILE PROVIDES ALL THE EVBOARD EXAMPLE.
 ////////////////////////////////////////////////////////////////////////////////
 /// @attention
 ///
@@ -14,7 +14,7 @@
 /// HARDWARE AND/OR THE USE OF THE CODING INFORMATION CONTAINED HEREIN IN
 /// CONNECTION WITH PRODUCTS MADE BY CUSTOMERS.
 ///
-/// <H2><CENTER>&COPY; COPYRIGHT 2018-2019 MINDMOTION </CENTER></H2>
+/// <H2><CENTER>&COPY; COPYRIGHT 2018-2021 MINDMOTION </CENTER></H2>
 ////////////////////////////////////////////////////////////////////////////////
 
 // Define to prevent recursive inclusion  --------------------------------------
@@ -39,12 +39,12 @@ u32 DateTimeToSeconds(dateTimeDef *tp)
 {
 	u32 LeapY = (tp->year == 2000) ? 0 : (( tp->year - 2000 - 1) / 4 + 1);
 	u32 ComY  = (tp->year - 2000) - LeapY;
-	
-	u32 Days =  ( tp->year % 4) ? 
-		(LeapY * 366 + ComY * 365 + Month_Days_Accu_C[tp->month - 1] + (tp->day - 1)) : 
-		(LeapY * 366 + ComY * 365 + Month_Days_Accu_L[tp->month - 1] + (tp->day - 1)); 
-		
-		
+
+	u32 Days =  ( tp->year % 4) ?
+		(LeapY * 366 + ComY * 365 + Month_Days_Accu_C[tp->month - 1] + (tp->day - 1)) :
+    (LeapY * 366 + ComY * 365 + Month_Days_Accu_L[tp->month - 1] + (tp->day - 1));
+
+
 	return Days * SecsPerDay + tp->hours * 3600 + tp->minute * 60 + tp->second;
 }
 
@@ -84,8 +84,8 @@ u16 GetMouthItem(u32 *sec,  u32 *item)
 ////////////////////////////////////////////////////////////////////////////////
 u16 GetMouth(u16 year, u32* sec)
 {
-	return (year % 4) ? GetMouthItem(sec,  &Month_Secs_Accu_C[0]) : 
-		                GetMouthItem(sec,  &Month_Secs_Accu_L[0]);
+	return (year % 4) ? GetMouthItem(sec,  &Month_Secs_Accu_C[0]) :
+    GetMouthItem(sec,  &Month_Secs_Accu_L[0]);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -105,20 +105,20 @@ u16 GetDay(u16 year, u32 *sec)
 {
 	u16 day = *sec / SecsPerDay;
 	*sec = *sec % SecsPerDay;
-	return (year % 4) ? GetDayItem(day,  &Month_Days_Accu_C[0]) : 
-		                GetDayItem(day,  &Month_Days_Accu_L[0]);
+	return (year % 4) ? GetDayItem(day,  &Month_Days_Accu_C[0]) :
+    GetDayItem(day,  &Month_Days_Accu_L[0]);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void RTC_GetTime(dateTimeDef *tp)
-{ 
+{
 	u32 sec = RTC_GetCounter();
-	
+
 	tp->week = GetWeek(&sec);
 	tp->year = GetYear(&sec);
 	tp->month = GetMouth(tp->year ,&sec);
 	tp->day = GetDay(tp->year ,&sec);
-	
+
 	tp->hours 	=  sec / 3600;
 	tp->minute 	= (sec % 3600) / 60;
 	tp->second 	= (sec % 3600) % 60;
@@ -135,7 +135,7 @@ void adjYear()
 	if (Key3CntF)	{if (--gtp.year < 2016)	gtp.year = 2025;}
 	else 			{if (++gtp.year > 2025)	gtp.year = 2016;}
 	u8 day = Month_Days[gtp.month - 1];
-	if (gtp.year % 4)	day--; 
+	if (gtp.year % 4)	day--;
 	if (gtp.day > day) gtp.day = day;
 }
 void adjMonth()
@@ -143,14 +143,14 @@ void adjMonth()
 	if (Key3CntF)	{if (--gtp.month < 1) 	gtp.month = 12;}
 	else 			{if (++gtp.month > 12) 	gtp.month = 1;}
 	u8 day = Month_Days[gtp.month - 1];
-	if (gtp.year % 4)	day--; 
+	if (gtp.year % 4)	day--;
 	if (gtp.day > day) gtp.day = day;
 }
 
 void adjDay()
 {
 	u8 day = Month_Days[gtp.month - 1];
-	if (gtp.year % 4)	day--; 
+	if (gtp.year % 4)	day--;
 	if (Key3CntF)	{if (--gtp.day < 1)	 	gtp.day = day;}
 	else 			{if (++gtp.day > day) 	gtp.day = 1;}
 }
@@ -159,7 +159,7 @@ void adjHours()
 {
 	if (Key3CntF)	{if (--gtp.hours == -1) gtp.hours = 23;}
 	else 			{if (++gtp.hours > 23) 	gtp.hours = 0;}
-}		
+}
 
 void adjMinute()
 {
@@ -177,13 +177,13 @@ void adjSecond()
 void modifyTime(u8 sel)
 {
 	switch (sel) {
-	case 0:		adjYear();		break;
-	case 1:		adjMonth();		break;
-	case 2:		adjDay();		break;
-	case 3:		adjHours();		break;
-	case 4:		adjMinute();	break;
-	case 5:		adjSecond();	break;
-	default:	RTC_SetTime(&gtp);		break;
+        case 0:		adjYear();		break;
+        case 1:		adjMonth();		break;
+        case 2:		adjDay();		break;
+        case 3:		adjHours();		break;
+        case 4:		adjMinute();	break;
+        case 5:		adjSecond();	break;
+        default:	RTC_SetTime(&gtp);		break;
 	}
 }
 

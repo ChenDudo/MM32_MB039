@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     HCI.H
 /// @author   
-/// @version  v2.0.0
-/// @date     2019-03-13
+/// @version  v1.0.0
+/// @date     2021-03-13
 /// @brief    THIS FILE CONTAINS ALL THE FUNCTIONS PROTOTYPES FOR THE UID
 ///           EXAMPLES.
 ////////////////////////////////////////////////////////////////////////////////
@@ -15,7 +15,7 @@
 /// HARDWARE AND/OR THE USE OF THE CODING INFORMATION CONTAINED HEREIN IN
 /// CONNECTION WITH PRODUCTS MADE BY CUSTOMERS.
 ///
-/// <H2><CENTER>&COPY; COPYRIGHT 2018-2019 MINDMOTION </CENTER></H2>
+/// <H2><CENTER>&COPY; COPYRIGHT 2018-2021 MINDMOTION </CENTER></H2>
 ////////////////////////////////////////////////////////////////////////////////
 
 // Define to prevent recursive inclusion  --------------------------------------

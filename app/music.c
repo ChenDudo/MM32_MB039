@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     MUSIC.C
 /// @author   D CHEN
-/// @version  v2.0.0
-/// @date     2019-03-13
-/// @brief    THIS FILE PROVIDES ALL THE UID EXAMPLE.
+/// @version  v1.0.0
+/// @date     2021-03-13
+/// @brief    THIS FILE PROVIDES ALL THE EVBOARD EXAMPLE.
 ////////////////////////////////////////////////////////////////////////////////
 /// @attention
 ///
@@ -14,7 +14,7 @@
 /// HARDWARE AND/OR THE USE OF THE CODING INFORMATION CONTAINED HEREIN IN
 /// CONNECTION WITH PRODUCTS MADE BY CUSTOMERS.
 ///
-/// <H2><CENTER>&COPY; COPYRIGHT 2018-2019 MINDMOTION </CENTER></H2>
+/// <H2><CENTER>&COPY; COPYRIGHT 2018-2021 MINDMOTION </CENTER></H2>
 ////////////////////////////////////////////////////////////////////////////////
 
 // Define to prevent recursive inclusion  --------------------------------------
@@ -55,7 +55,7 @@ u8 time[] = {
     2,2,2,2,6,2,        3,1,2,2,8,          2,2,2,2,6,2,
     //2,2,2,2,8,          2,2,2,2,6,2,        2,2,2,2,4,4,
     1,1,2,2,2,8,          2,2,2,2,6,2,        2,2,2,2,4,4,
-    2,2,2,2,6,2,        3,1,2,2,8 
+    2,2,2,2,6,2,        3,1,2,2,8
 };
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -66,7 +66,7 @@ u8 music1[]={
     13,12,13,11,        12,12,              12,11,12,13,15,
     16,33,              13,33,              13,33,13,33,
     13,12,13,11,        12,12,              12,11,12,13,15,
-    16    
+    16
 };
 
 u8 time1[] = {
@@ -100,7 +100,7 @@ void setBuzzerFreq(u16 Period)
         TIM_SetCompare2(BEEP_TIMER, Period / 2);
     }
     else
-        TIM_SetCompare1(BEEP_TIMER, Period / 2);    
+        TIM_SetCompare1(BEEP_TIMER, Period / 2);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -114,12 +114,12 @@ void musicTick()
 {
     u16 tonetemp;
     switch(sPlayMusic.PlayStep){
-        ////////////////////////////////////////////////////////////////////////    
+        ////////////////////////////////////////////////////////////////////////
         case PLAYSTEP1:
         setBuzzerEn(DISABLE);
         if(true == sPlayMusic.PlayFlag){
             setBuzzerFreq(tonetime[music[sPlayMusic.ToneNumCount]]);
-            sPlayMusic.PlayStep = PLAYSTEP2;         
+            sPlayMusic.PlayStep = PLAYSTEP2;
         }
         break;
         ////////////////////////////////////////////////////////////////////////
@@ -138,7 +138,7 @@ void musicTick()
                             sPlayMusic.ToneCount =0;
                             sPlayMusic.ToneNumCount ++;
                             tonetemp = tonetime[music[sPlayMusic.ToneNumCount]];
-                            if(tonetemp <= 1000) 
+                            if(tonetemp <= 1000)
                                 setBuzzerEn(DISABLE);
                             else {
                                 setBuzzerFreq(tonetemp);
@@ -165,7 +165,7 @@ void musicTick()
                             sPlayMusic.ToneCount =0;
                             sPlayMusic.ToneNumCount ++;
                             tonetemp = tonetime[music1[sPlayMusic.ToneNumCount]];
-                            if(tonetemp <= 1000) 
+                            if(tonetemp <= 1000)
                                 setBuzzerEn(DISABLE);
                             else {
                                 setBuzzerFreq(tonetemp);
@@ -185,14 +185,14 @@ void musicTick()
         }
         break;
         ////////////////////////////////////////////////////////////////////////
-        case PLAYSTEP3:         
+        case PLAYSTEP3:
         sPlayMusic.PlayFlag = false;
         sPlayMusic.CurrentPlayFlag = false;
         sPlayMusic.MusicNum = 0;
         sPlayMusic.ToneCount = 0;
         sPlayMusic.ToneNumCount = 0;
         sPlayMusic.PlayStep = PLAYSTEP1;
-        break; 
+        break;
     }
 }
 

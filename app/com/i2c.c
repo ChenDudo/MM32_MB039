@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     I2C.C
 /// @author   D CHEN
-/// @version  v2.0.0
-/// @date     2019-03-13
-/// @brief    THIS FILE PROVIDES ALL THE UID EXAMPLE.
+/// @version  v1.0.0
+/// @date     2021-03-13
+/// @brief    THIS FILE PROVIDES ALL THE EVBOARD EXAMPLE.
 ////////////////////////////////////////////////////////////////////////////////
 /// @attention
 ///
@@ -14,7 +14,7 @@
 /// HARDWARE AND/OR THE USE OF THE CODING INFORMATION CONTAINED HEREIN IN
 /// CONNECTION WITH PRODUCTS MADE BY CUSTOMERS.
 ///
-/// <H2><CENTER>&COPY; COPYRIGHT 2018-2019 MINDMOTION </CENTER></H2>
+/// <H2><CENTER>&COPY; COPYRIGHT 2018-2021 MINDMOTION </CENTER></H2>
 ////////////////////////////////////////////////////////////////////////////////
 
 // Define to prevent recursive inclusion  --------------------------------------
@@ -30,12 +30,8 @@
 #include "hal_gpio.h"
 #include "hal_nvic.h"
 #include "hal_rcc.h"
-
 #include "main.h"
 #include "i2c.h"
-
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 void initGPIO_I2C(I2C_TypeDef *I2Cx)
@@ -112,58 +108,7 @@ void i2cComplete(u16 sta)
 ////////////////////////////////////////////////////////////////////////////////
 void I2C2_EV_IRQHandler()
 {
-//    static  u8 n = 0;		// Rcv length or Send length
-//	static  u8 m = 0;		// Rcv length
-//	static	u8 _cnt;
-//
-//    u16 status = I2C2->IC_RAW_INTR_STAT;
-//
-//	if (!i2c.busy) {
-//		i2cComplete(status);
-//	}
-//	else if (i2c.rev == RD) {													// Read
-//		if (status & I2C_IT_TX_ABRT) {
-//			i2cComplete(status);
-//			i2c.ack = FALSE;
-//		}
-//		else {
-//			if (status & I2C_IT_TX_EMPTY) {
-//				(m++ < (i2c.cnt - 1)) ? I2C_ReadCmd(I2C2) : I2C_ClearITPendingBit(I2C2, I2C_IT_TX_EMPTY);
-//			}
-//
-//			if (status & I2C_IT_RX_FULL) {
-//				*i2c.ptr++ = I2C_ReceiveData(I2C2);
-//
-//				if  ((n++ >= (i2c.cnt - 1))){
-//					error.i2c = FALSE;
-//					rf.i2c = TRUE;
-//					i2cComplete(status);
-//				}
-//			}
-//		}
-//	}
-//	else if (status & I2C_IT_TX_EMPTY){
-//		if (i2c.sadd) {															// send slave address
-//			I2C_SendData(I2C2, i2c.sub);
-//			i2c.sadd = FALSE;
-//			 m = 0; n = 0;
-//			_cnt = (i2c.opt == RD) ?  0 : i2c.cnt;								// cnt = 0 if RD , eles _cnt = i2c.cnt
-//		}
-//		else if (n < _cnt) {													// write
-//			I2C_SendData(I2C2, *i2c.ptr++);
-//			n++;
-//		}
-//		else if  (status &  I2C_IT_STOP_DET) {
-//			if (i2c.opt == WR) {
-//				i2cComplete(status);
-//			}
-//			else {
-//				i2c.rev = i2c.opt;
-//				I2C_ReadCmd(I2C2);
-//				I2C_ITConfig(I2C2, I2C_IT_RX_FULL | I2C_IT_RX_OVER , ENABLE);
-//			}
-//		}
-//	}
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -441,8 +386,6 @@ void EEPROM_Read(u8 sub, u8* ptr, u16 len)
         while(i2c.busy);
     } while(!i2c.ack);
 }
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 void BSP_I2C_Configure()

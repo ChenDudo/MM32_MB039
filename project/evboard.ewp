@@ -997,9 +997,6 @@
         <name>$PROJ_DIR$\..\app\com\i2c.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\app\com\sdio.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\..\app\com\spi.c</name>
       </file>
       <file>

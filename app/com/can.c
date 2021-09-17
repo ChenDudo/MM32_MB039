@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     CAN.C
 /// @author   D CHEN
-/// @version  v2.0.0
-/// @date     2019-03-13
-/// @brief    THIS FILE PROVIDES ALL THE UID EXAMPLE.
+/// @version  v1.0.0
+/// @date     2021-03-13
+/// @brief    THIS FILE PROVIDES ALL THE EVBOARD EXAMPLE.
 ////////////////////////////////////////////////////////////////////////////////
 /// @attention
 ///
@@ -14,7 +14,7 @@
 /// HARDWARE AND/OR THE USE OF THE CODING INFORMATION CONTAINED HEREIN IN
 /// CONNECTION WITH PRODUCTS MADE BY CUSTOMERS.
 ///
-/// <H2><CENTER>&COPY; COPYRIGHT 2018-2019 MINDMOTION </CENTER></H2>
+/// <H2><CENTER>&COPY; COPYRIGHT 2018-2021 MINDMOTION </CENTER></H2>
 ////////////////////////////////////////////////////////////////////////////////
 
 // Define to prevent recursive inclusion  --------------------------------------
@@ -86,7 +86,7 @@ void initCAN()
 	else if (canSel == 1)
 		CAN_Peli_InitStruct.STM = DISABLE;
 
-//	CAN_Peli_InitStruct.SRR = ENABLE;
+    //	CAN_Peli_InitStruct.SRR = ENABLE;
 	CAN_Peli_InitStruct.SRR = DISABLE;
 
 	/* Initialize the SM member*/
@@ -95,7 +95,7 @@ void initCAN()
 	CAN_Peli_InitStruct.EWLR = 0x96;
 	CAN_Peli_Init(&CAN_Peli_InitStruct);
 
-///////
+    ///////
 	CAN_Peli_FilterInitTypeDef CAN_Peli_FilterInitStruct;
 
 	CAN_Peli_FilterInitStruct.AFM = CAN_FilterMode_Singal;

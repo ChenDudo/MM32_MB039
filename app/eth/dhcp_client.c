@@ -46,7 +46,7 @@ void dhcp_process(struct netif *netif)
     struct dhcp *dhcp;
 
     switch (dhcp_status) {
-    case DHCP_START:
+        case DHCP_START:
         dhcp_release_and_stop(netif);
         ip_addr_set_zero_ip4(&netif->ip_addr);
         ip_addr_set_zero_ip4(&netif->netmask);
@@ -55,7 +55,7 @@ void dhcp_process(struct netif *netif)
         dhcp_start(netif);
         break;
 
-    case DHCP_PROCESSING:
+        case DHCP_PROCESSING:
         if (dhcp_supplied_address(netif)) {
             dhcp_status = DHCP_SUCCESS;
             gGetIPFlag = 1;
@@ -77,12 +77,12 @@ void dhcp_process(struct netif *netif)
         }
         break;
 
-    case DHCP_CLOSE:
+        case DHCP_CLOSE:
         dhcp_stop(netif);
         dhcp_status = DHCP_OFF;
         break;
 
-    default:    // SUCCESS, FAILED, OFF
+        default:    // SUCCESS, FAILED, OFF
         break;
     }
 #endif

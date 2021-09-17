@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     ETH.C
 /// @author   D CHEN
-/// @version  v2.0.0
+/// @version  v1.0.0
 /// @date     2021-04-21
 /// @brief    THIS FILE PROVIDES ALL THE ETH EXAMPLE.
 ////////////////////////////////////////////////////////////////////////////////
@@ -128,10 +128,10 @@ void InitEthernet(InitEthernet_Typedef config)
 
     if (netif_is_link_up(&gnetif)) {
         netif_set_up(&gnetif);  // When the netif is fully configured this
-                                // function must be called
+        // function must be called
     } else {
         netif_set_down(&gnetif);  // When the netif link is down this function
-                                  // must be called
+        // must be called
     }
 }
 
@@ -155,39 +155,39 @@ u32_t sys_now(void)
 void BSP_HTTP_Configure(void)
 {
     rf.eth = true;
-    
+
     // Set random seed by Device ID.
     srand(*(unsigned int *)(0x1FFFF7E8));
-    
+
     // Initialization Ethernet.
     InitEthernet_Typedef ethConfig = {
         .ip     = { 192,  168,    1,     1},
         .gw     = { 192,  168,    1,     1},
         .mask   = { 255,  255,  255,     0},
         .mac    = {(uint16_t)rand(), (uint16_t)rand(), (uint16_t)rand(),
-                   (uint16_t)rand(), (uint16_t)rand(), (uint16_t)rand()}
+        (uint16_t)rand(), (uint16_t)rand(), (uint16_t)rand()}
     };
-    
+
     // Mac multicast bit must be 0.
     ethConfig.mac[0] &= 0xFE;
 
     BSP_ETH_Configure();
-    
+
     if(EthErr < 0)
         return;
-    
+
     InitEthernet(ethConfig);
 
 #if LWIP_DHCP
     dhcp_pre_check(&gnetif);
 #endif
-    
+
     // Initialization TCP Server (port 5001).
     InitTcpServer(5001);
 
     // Initialization HTTP Server (port 80).
     httpd_init();
-    
+
     enableOK = true;
 }
 

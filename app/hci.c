@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// @file     HCI.C
 /// @author   D CHEN
-/// @version  v2.0.0
-/// @date     2019-03-13
-/// @brief    THIS FILE PROVIDES ALL THE UID EXAMPLE.
+/// @version  v1.0.0
+/// @date     2021-03-13
+/// @brief    THIS FILE PROVIDES ALL THE EVBOARD EXAMPLE.
 ////////////////////////////////////////////////////////////////////////////////
 /// @attention
 ///
@@ -14,7 +14,7 @@
 /// HARDWARE AND/OR THE USE OF THE CODING INFORMATION CONTAINED HEREIN IN
 /// CONNECTION WITH PRODUCTS MADE BY CUSTOMERS.
 ///
-/// <H2><CENTER>&COPY; COPYRIGHT 2018-2019 MINDMOTION </CENTER></H2>
+/// <H2><CENTER>&COPY; COPYRIGHT 2018-2021 MINDMOTION </CENTER></H2>
 ////////////////////////////////////////////////////////////////////////////////
 
 // Define to prevent recursive inclusion  --------------------------------------
@@ -135,7 +135,7 @@ void ProcessLED()
 		case 1:		LD1_off(); 	break;;
 		case 2:		LD2_on(); 	break;
 		default:	LD2_off();
-					ledCnt = 0;		break;
+        ledCnt = 0;		break;
 	}
 	rf.led = true;
 }
@@ -170,7 +170,7 @@ void scanKey()
 	else if (!Key4) {
 		fKeyP4 = false;
 	}
-//-----------------
+    //-----------------
     if (Key1 && !fKeyP1) {
 		fKeyP1 = true;
 		fKey1 = true;
@@ -182,7 +182,7 @@ void scanKey()
 	else {
 		fKeyCnt = 0;
 	}
-//-----------------
+    //-----------------
 	if (Key2 && !fKeyP2) {
 		fKeyP2 = true;
 		fKey2 = true;
@@ -199,7 +199,7 @@ void scanKey()
 			modifyKeyStatus_2();
 		}
 	}
-//-----------------
+    //-----------------
 	if (Key3 && !fKeyP3) {
 		fKeyP3 = true;
 		fKey3 = true;
@@ -251,7 +251,7 @@ void dispButton()
 {
 	char str[8];
 	switch (menuCnt) {
-	case 0:
+        case 0:
 
 		strcpy(str, "Menu");
 		showButton(255, BuOffset + 1 * offsetH, 1, str);
@@ -261,8 +261,8 @@ void dispButton()
 
 		showETH();
 		break;
-	case 1:
-	case 2:
+        case 1:
+        case 2:
 		strcpy(str, "Menu");
 		showButton(255, BuOffset + 1 * offsetH, 1, str);
 
@@ -272,7 +272,7 @@ void dispButton()
 		strcpy(str, "----");
 		showButton(255, BuOffset + 3 * offsetH, 0, str);
 		break;
-	default:
+        default:
 		strcpy(str, "Return");
 		showButton(255, BuOffset + 1 * offsetH, 1, str);
 
@@ -295,10 +295,10 @@ void dispButton()
 void dispMenu(u8 sta)
 {
 	switch (menuCnt) {
-	case 0:										break;
-	case 1:		menuCAN(canSel, 1, sta);		break;
-	case 2:		menuUART(uartSel, 1, sta);		break;
-	default:	menuTIME(timeSel, 1, sta);		break;
+        case 0:										break;
+        case 1:		menuCAN(canSel, 1, sta);		break;
+        case 2:		menuUART(uartSel, 1, sta);		break;
+        default:	menuTIME(timeSel, 1, sta);		break;
 	}
 }
 
@@ -390,15 +390,15 @@ u8 eventKey(u8 key, u8* flag)
 void dispMenuButton(u8 idx)
 {
 	switch (idx) {
-	case 0:
+        case 0:
 		break;
-	case 1:
+        case 1:
 		dispMenu(0);
 		dispButton();
 		break;
-	case 2:
+        case 2:
 		clearMenu();
-	default:
+        default:
 		dispMenu(1);
 		dispButton();
 		break;
